@@ -52,6 +52,10 @@
       withSharedModule = configurationNix: sharedModules: mkHomeMachine configurationNix [] sharedModules;
     in
     {
-      nixosConfigurations.wl = mkOnlyHostConfig ./hosts/wl.nix;
+      nixosConfigurations.wl = withExtraModules
+       ./hosts/wl.nix
+       [
+         ./features/v2ray.nix
+       ];
     };
 }

@@ -3,7 +3,7 @@
 {
   imports = [
     ./nix-features.nix
-
+    ./location.nix
     ./passwordstore.nix
     ./plasma5.nix
     ./resolved.nix
