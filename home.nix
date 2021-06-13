@@ -12,15 +12,15 @@ rec {
   home.username = "dnf";
 #   home.homeDirectory = "/home/dnf";
 
-#   imports = [
-#     inputs.nix-doom-emacs.hmModule
-#   ];
+  imports = [
+    ./home-manager/git.nix
+  ];
 
   home.packages = with pkgs; [
     cachix
     # tig
     # gh
-    # procs # no more: ps -ef | grep 
+    # procs # no more: ps -ef | grep
     # tealdeer
     # zellij
     # ^ easy to forget these; write SRS?

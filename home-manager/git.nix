@@ -28,4 +28,5 @@
         pull.rebase = "true";
       };
     };
+  };
 }
