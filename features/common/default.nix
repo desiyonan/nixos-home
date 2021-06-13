@@ -3,6 +3,7 @@
 {
   imports = [
     ./nix-features.nix
+    ./fonts.nix
     ./location.nix
     ./passwordstore.nix
     ./plasma5.nix
@@ -16,5 +17,15 @@
     wget
     firefox
     git
+
+    bind
+
+    fzf
+    fcitx-configtool
+    flameshot
+    gcc
+    htop
+    nix-index
+    refind
   ];
 }
