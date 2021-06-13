@@ -25,17 +25,10 @@
 
           # Features common to all of my machines
           ./features/users/dnf.nix
-          #   ./features/self-ide.nix
           ./features/caches
-          ./features/resolved.nix
-          ./features/nix-features.nix
+          ./features/common
 
           #   ./features/current-location.nix
-          ./features/packages.nix
-          ./features/passwordstore.nix
-          ./features/v2ray.nix
-          # ./features/zerotierone.nix
-          ./features/plasma5.nix
           #   ./features/syncthing.nix
           #   ./features/protonvpn.nix
           #   ./features/monitor-brightness.nix
