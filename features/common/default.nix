@@ -8,7 +8,7 @@
     ./plasma5.nix
     ./resolved.nix
     ./vscode.nix
-    ./zerotierone.nix
+    # ./zerotierone.nix
   ];
 
   environment.systemPackages = with pkgs; [
