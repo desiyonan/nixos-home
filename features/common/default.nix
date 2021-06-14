@@ -3,6 +3,7 @@
 {
   imports = [
     ./nix-features.nix
+    ./bash.nix
     ./fonts.nix
     ./location.nix
     ./passwordstore.nix
