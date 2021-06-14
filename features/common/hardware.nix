@@ -6,7 +6,7 @@
   hardware = {
     bluetooth = {
       enable = true;
-      config.General.ControllerMode = "bredr";
+      settings.General.ControllerMode = "bredr";
     };
 
     pulseaudio.enable = true;
