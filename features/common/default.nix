@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./hardware.nix
     ./nix-features.nix
     ./bash.nix
     ./fonts.nix
