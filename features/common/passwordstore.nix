@@ -1,4 +1,4 @@
-{ pkgs, ... }: 
+{ pkgs, ... }:
 
 {
   programs.gnupg = {
@@ -6,6 +6,7 @@
     agent = {
       enable = true;
       enableExtraSocket = true;
+      enableSSHSupport = true;
       # pinentryFlavor = "curses";
     };
   };
