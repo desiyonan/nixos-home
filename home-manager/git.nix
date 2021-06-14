@@ -11,7 +11,7 @@
       userEmail = "1310332521@qq.com";
       aliases = {
         ckt = "checkout";
-        cmt = "commit";
+        cmt = "commit -am";
         cma = "commit --amend";
         s = "status";
         st = "status";
