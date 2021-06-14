@@ -42,7 +42,9 @@
               inherit inputs system;
               pkgs = import nixpkgs { inherit system; };
             };
-            home-manager.sharedModules = sharedModules;
+            home-manager.sharedModules = ([
+              ./home-manager/fonts.nix
+            ] ++ sharedModules);
           }
         ] ++ extraModules);
       };

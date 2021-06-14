@@ -2,7 +2,8 @@
 
 {
   fonts = {
-    enableGhostscriptFonts = true;
+    # enableGhostscriptFonts = true;
+    # fontDir.enable = true;
 
     fonts = with pkgs; [
       inconsolata
@@ -17,10 +18,8 @@
       wqy_zenhei
     ];
 
-    fontDir.enable = true;
-
     fontconfig = {
-      enable = true;
+      # enable = true;
       defaultFonts = {
         monospace = [ "Sarasa Mono SC" ];
         sansSerif = [ "Sarasa UI SC" ];
