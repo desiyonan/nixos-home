@@ -3,6 +3,11 @@
 
 {
 
+  home.packages = with pkgs; [
+    tig
+    gh
+  ];
+
   programs = {
     git = {
       # package = pkgs.gitAndTools.gitFull;
