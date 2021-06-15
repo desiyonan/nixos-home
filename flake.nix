@@ -28,9 +28,7 @@
           ./features/caches
           ./features/common
 
-          #   ./features/current-location.nix
           #   ./features/syncthing.nix
-          #   ./features/protonvpn.nix
           #   ./features/monitor-brightness.nix
 
           # home-manager configuration
@@ -43,7 +41,7 @@
               pkgs = import nixpkgs { inherit system; };
             };
             home-manager.sharedModules = ([
-              ./home-manager/fonts.nix
+              ./home-manager/common.nix
             ] ++ sharedModules);
           }
         ] ++ extraModules);
@@ -55,10 +53,9 @@
     in
     {
       nixosConfigurations.wl = withExtraModules
-       ./hosts/wl.nix
-       [
-         ./features/v2ray.nix
-        #  ./features/protonvpn.nix
-       ];
+        ./hosts/wl.nix
+        [
+          ./features/v2ray.nix
+        ];
     };
 }
