@@ -15,20 +15,22 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    direnv
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    firefox
-    git
-
     bind
-
+    direnv
     fzf
     fcitx-configtool
+    firefox
     flameshot
     gcc
+    git
+    gh
     htop
     nix-index
+    p7zip
     refind
+    softmaker-office
+    unar
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
   ];
 }
