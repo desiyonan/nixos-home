@@ -9,6 +9,10 @@
   #   };
   # };
 
+  environment.systemPackages = with pkgs; [
+    qv2ray
+  ];
+
   services = {
     v2ray = {
       enable = true;
