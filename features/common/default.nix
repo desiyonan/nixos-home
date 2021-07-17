@@ -27,10 +27,11 @@
     git
     gh
     htop
+    hugo
     nix-index
     p7zip
     refind
-    softmaker-office
+    #softmaker-office #收费不好用
     unar
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
