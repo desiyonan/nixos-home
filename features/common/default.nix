@@ -15,6 +15,8 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    appimage-run
+    appimagekit
     bind
     direnv
     fzf
