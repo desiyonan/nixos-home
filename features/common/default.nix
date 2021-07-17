@@ -26,6 +26,9 @@
     gcc
     git
     gh
+    jdk8
+    jdk11
+    jetbrains.idea-ultimate
     htop
     hugo
     nix-index
