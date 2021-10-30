@@ -27,6 +27,7 @@
     gcc
     git
     gh
+    gnome.gnome-keyring
     jdk8
     jdk11
     jetbrains.idea-ultimate

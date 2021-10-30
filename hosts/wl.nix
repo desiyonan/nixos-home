@@ -12,10 +12,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "wl";
-
-  networking.useDHCP = false;
-  networking.interfaces.enp33s0.useDHCP = true;
+  networking = {
+    hostName = "wl";
+    useDHCP = true;
+    interfaces.enp33s0.useDHCP = true;
+    extraHosts =
+    ''
+    192.168.123.251 ds.dnfn.tech oss.dnfn.tech
+    '';
+  };
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/1c9802aa-054b-48f7-bc42-13fcc6b62a95";
