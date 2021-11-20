@@ -27,6 +27,7 @@
     gcc
     git
     gh
+    go
     gnome.gnome-keyring
     jdk8
     jdk11
