@@ -34,5 +34,5 @@
 
   swapDevices = [ ];
 
-  system.stateVersion = "21.05"; # Did you read the comment?
+  system.stateVersion = "21.11"; # Did you read the comment?
 }

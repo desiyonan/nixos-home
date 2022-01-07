@@ -20,6 +20,7 @@
     anydesk
     bind
     direnv
+    docker-client
     fzf
     fcitx-configtool
     firefox

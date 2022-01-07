@@ -6,8 +6,11 @@
     # https://status.nixos.org/
     #
     # This ensures that we always use the official # cache.
-    nixpkgs.url = "github:nixos/nixpkgs/432fc2d9a67f92e05438dff5fdc2b39d33f77997";
-    home-manager.url = "github:nix-community/home-manager";
+    nixpkgs.url = "github:nixos/nixos-unstable/77fda7f672726e1a95c8cd200f27bccfc86c870b";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, home-manager, nixpkgs, ... }:
