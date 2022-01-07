@@ -33,7 +33,7 @@
     jdk8
     jdk11
     jetbrains.idea-ultimate
-    libsForQt514.krdc
+    libsForQt5.krdc
     htop
     hugo
     nix-index
