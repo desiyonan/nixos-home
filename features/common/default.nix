@@ -9,7 +9,6 @@
     ./location.nix
     ./passwordstore.nix
     ./plasma5.nix
-    ./wayland.nix
     ./resolved.nix
     ./vscode.nix
     ./zerotierone.nix

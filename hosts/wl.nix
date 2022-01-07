@@ -11,6 +11,9 @@
   boot.extraModulePackages = [ ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # hardware.opengl.extraPackages = [
+  #   rocm-opencl-icd
+  # ];
 
   networking = {
     hostName = "wl";
