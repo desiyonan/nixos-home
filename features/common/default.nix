@@ -10,6 +10,7 @@
     ./passwordstore.nix
     ./plasma5.nix
     ./resolved.nix
+    ./wayland.nix
     ./vscode.nix
     ./zerotierone.nix
   ];
@@ -22,7 +23,15 @@
     direnv
     docker-client
     fzf
-    fcitx-configtool
+    # fcitx-configtool
+    # fcitx5
+    # fcitx5-chinese-addons
+    fcitx5-configtool
+    fcitx5-m17n
+    # fcitx5-pinyin-zhwiki
+    # fcitx5-pinyin-moegirl
+    # fcitx5-with-addons
+    fcitx5-gtk
     firefox
     flameshot
     gcc
@@ -33,7 +42,10 @@
     jdk8
     jdk11
     jetbrains.idea-ultimate
+
+    libsForQt5.fcitx5-qt
     libsForQt5.krdc
+
     htop
     hugo
     nix-index

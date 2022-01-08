@@ -10,11 +10,12 @@
 
   i18n = {
     supportedLocales = ["all"];
-    defaultLocale = "zh_CN.UTF-8";
+    defaultLocale = "zh_CN.utf8";
 
     inputMethod = {
-      enabled = "fcitx";
-      fcitx.engines = with pkgs.fcitx-engines; [ m17n ];
+      enabled = "fcitx5";
+      # fcitx.engines = with pkgs.fcitx-engines; [ m17n ];
+      fcitx5.addons = with pkgs; [ fcitx5-m17n ];
     };
   };
 
