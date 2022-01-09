@@ -17,7 +17,7 @@
 
   networking = {
     hostName = "wl";
-    useDHCP = true;
+    # useDHCP = true;
     interfaces.enp33s0.useDHCP = true;
     extraHosts =
     ''

@@ -14,6 +14,7 @@
     ./vscode.nix
     ./zerotierone.nix
   ];
+  programs.ssh.askPassword = "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
 
   environment.systemPackages = with pkgs; [
     appimage-run
@@ -38,6 +39,7 @@
     git
     gh
     go
+    google-chrome
     gnome.gnome-keyring
     jdk8
     jdk11
