@@ -26,7 +26,7 @@
     GTK_IM_MODULE = "fcitx";
     INPUT_METHOD="fcitx";
     QT_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
+    XMODIFIERS = "\@im=fcitx";
   };
 
   console.keyMap = "us";
