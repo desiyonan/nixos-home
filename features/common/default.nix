@@ -36,6 +36,7 @@
     firefox
     flameshot
     gcc
+    glibc
     git
     gh
     go
@@ -44,9 +45,11 @@
     jdk8
     jdk11
     jetbrains.idea-ultimate
+    latte-dock
 
     libsForQt5.fcitx5-qt
     libsForQt5.krdc
+    libsForQt5.qt5.qtwayland
 
     htop
     hugo
@@ -54,6 +57,7 @@
     p7zip
     refind
     tree
+    # termius
     #softmaker-office #收费不好用
     unar
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
