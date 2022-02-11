@@ -2,6 +2,11 @@
 
 {
   nix = {
+    binaryCaches = [
+    "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+    "https://mirrors.ustc.edu.cn/nix-channels/store"
+    #"https://cache.nixos.org/"
+  ];
     package = pkgs.nixFlakes;
     extraOptions =
       ''
@@ -9,7 +14,7 @@
       '';
     gc = {
       automatic = true;
-      options = "--delete-older-than 15d";
+      options = "--delete-older-than 7d";
     };
    };
   nixpkgs.config.allowUnfree = true;

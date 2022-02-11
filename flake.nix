@@ -6,7 +6,7 @@
     # https://status.nixos.org/
     #
     # This ensures that we always use the official # cache.
-    nixpkgs.url = "github:nixos/nixpkgs/e67c94a1adbb";
+    nixpkgs.url = "github:nixos/nixpkgs/7adc9c14ec74";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,11 +28,7 @@
 
           # Features common to all of my machines
           ./features/users/dnf.nix
-          ./features/caches
           ./features/common
-
-          #   ./features/syncthing.nix
-          #   ./features/monitor-brightness.nix
 
           # home-manager configuration
           home-manager.nixosModules.home-manager
@@ -59,6 +55,12 @@
         ./hosts/wl.nix
         [
           ./features/v2ray.nix
+        ];
+      nixosConfigurations.ws = withExtraModules
+        ./hosts/ws.nix
+        [
+          ./features/packages/nvidia-offload.nix
+          #./features/v2ray.nix
         ];
     };
 }

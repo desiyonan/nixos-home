@@ -2,17 +2,18 @@
 
 {
   imports = [
-    ./hardware.nix
-    ./nix-features.nix
-    ./bash.nix
+    ./display.nix
     ./fonts.nix
-    ./location.nix
+    ./hardware.nix
+    ./im.nix
+    ./network.nix
+    ./nix-features.nix
     ./passwordstore.nix
-    ./plasma5.nix
-    ./resolved.nix
-    ./wayland.nix
-    ./vscode.nix
-    ./zerotierone.nix
+    ./shell.nix
+    ./zone.nix
+
+    ../packages/vscode.nix
+    ../packages/openssh.nix
   ];
   programs.ssh.askPassword = "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
 
@@ -23,6 +24,7 @@
     bind
     direnv
     docker-client
+    dhcp
     fzf
     # fcitx-configtool
     # fcitx5
@@ -46,6 +48,7 @@
     jdk11
     jetbrains.idea-ultimate
     latte-dock
+    ntfs3g
 
     libsForQt5.fcitx5-qt
     libsForQt5.krdc
@@ -55,12 +58,13 @@
     hugo
     nix-index
     p7zip
+    pciutils
     refind
     tree
     # termius
     #softmaker-office #收费不好用
     unar
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     wget
   ];
 }
