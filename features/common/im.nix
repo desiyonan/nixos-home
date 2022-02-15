@@ -19,12 +19,8 @@
       #  fcitx5-configtool
       #  fcitx5-m17n
       # libsForQt5.fcitx5-qt
-    #   (pkgs.latte-dock.override {
-    #    fixupPhase = ''
-    #     mkdir -p $out/etc/xdg/autostart
-    #     cp $out/share/applications/org.kde.latte-dock.desktop $out/etc/xdg/autostart
-    #   '';
-    # })
+
+      ## latte-dock设置QT输入法模块后没法点击窗口
       (pkgs.latte-dock.overrideAttrs (oldAttrs :{
         buildInputs = oldAttrs.buildInputs or [] ++ [ pkgs.makeWrapper ];
         postInstall = oldAttrs.postInstall or "" +''
@@ -47,24 +43,4 @@
     };
   };
 
-
-    #   fixupPhase = ''
-    #     mkdir -p $out/etc/xdg/autostart
-    #     desktop=share/applications/org.kde.latte-dock.desktop
-    #     autostart=etc/xdg/autostart/org.kde.latte-dock.desktop
-    #     sed -i $out/$desktop -e "s|^Exec=|Exec=unset QT_IM_MODULE \&\& |g"
-    #     cp $out/$desktop $out/$autostart
-    #   '';
-    # });
-  # };
-  # pkgs.symlinkJoin {
-  #   name = "latte-dock-${pgks.latte-dock.version}";
-  #   paths = [ pkgs.latte-dock ];
-  #   nativeBuildInputs = [ makeWrapper ];
-
-  #   postBuild = ''
-  #     wrapProgram $out/bin/latte-dock \
-  #       --prefix QT_IM_MODULE : ""
-  #   '';
-  # };
 }
