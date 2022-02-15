@@ -21,22 +21,14 @@
     appimage-run
     appimagekit
     anydesk
+    bash
     bind
     direnv
     docker-client
     dhcp
-    fzf
-    # fcitx-configtool
-    # fcitx5
-    # fcitx5-chinese-addons
-    fcitx5-configtool
-    fcitx5-m17n
-    # fcitx5-pinyin-zhwiki
-    # fcitx5-pinyin-moegirl
-    # fcitx5-with-addons
-    fcitx5-gtk
     firefox
     flameshot
+    fzf
     gcc
     glibc
     git
@@ -50,13 +42,15 @@
     latte-dock
     ntfs3g
 
-    libsForQt5.fcitx5-qt
     libsForQt5.krdc
+    libsForQt5.qt5.qtbase
     libsForQt5.qt5.qtwayland
+    libsForQt5.qtstyleplugins
 
     htop
     hugo
     nix-index
+    netease-cloud-music-gtk
     p7zip
     pciutils
     refind

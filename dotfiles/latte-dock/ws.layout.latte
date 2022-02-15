@@ -29,14 +29,14 @@ immutability=1
 plugin=org.kde.latte.plasmoid
 
 [Containments][12][Applets][122][Configuration]
-PreloadWeight=42
+PreloadWeight=0
 
 [Containments][12][Applets][122][Configuration][General]
+infoBadgeProminentColorEnabled=true
 isInLatteDock=true
 isPreferredForPositionShortcuts=true
-launchers59=applications:org.kde.dolphin.desktop,applications:code.desktop
-leftClickAction=ToggleMinimized
-middleClickAction=CycleThroughTasks
+launchers59=file:///latte-separator3.desktop,applications:org.kde.dolphin.desktop,applications:google-chrome.desktop,applications:firefox.desktop,file:///latte-separator1.desktop,applications:code.desktop,applications:idea-ultimate.desktop,file:///latte-separator2.desktop,applications:org.kde.elisa.desktop,applications:org.kde.konsole.desktop,file:///latte-separator5.desktop
+middleClickAction=ToggleMinimized
 modifierClickAction=ToggleGrouping
 previewWindowAsPopup=true
 showWindowActions=true
@@ -47,7 +47,7 @@ immutability=1
 plugin=org.kde.plasma.binaryclock
 
 [Containments][12][Applets][42][Configuration]
-PreloadWeight=64
+PreloadWeight=0
 
 [Containments][12][Applets][42][Configuration][ConfigDialog]
 DialogHeight=540
@@ -68,21 +68,21 @@ immutability=1
 plugin=org.kde.plasma.colorpicker
 
 [Containments][12][Applets][43][Configuration]
-PreloadWeight=34
+PreloadWeight=0
 
 [Containments][12][Applets][43][Configuration][ConfigDialog]
 DialogHeight=540
 DialogWidth=720
 
 [Containments][12][Applets][43][Configuration][General]
-history=#0f9d58,#232627,#fcfcfc,#dbb189,#abc2eb,#355128,#fde698,#7c5357
+history=#414141,#eff0f1,#232627,#0f9d58,#232627,#fcfcfc,#dbb189,#abc2eb,#355128
 
 [Containments][12][Applets][44]
 immutability=1
 plugin=org.kde.plasma.kickerdash
 
 [Containments][12][Applets][44][Configuration]
-PreloadWeight=84
+PreloadWeight=0
 
 [Containments][12][Applets][44][Configuration][ConfigDialog]
 DialogHeight=540
@@ -101,7 +101,7 @@ DialogHeight=600
 DialogWidth=586
 
 [Containments][12][Configuration]
-PreloadWeight=26
+PreloadWeight=0
 
 [Containments][12][General]
 activeWindowFilter=FromAllScreens
@@ -128,9 +128,13 @@ titleTooltips=false
 zoomLevel=0
 
 [Containments][12][Indicator]
-customType=
+customType=org.kde.latte.dashtopanel
 enabled=true
 type=org.kde.latte.default
+
+[Containments][12][Indicator][org.kde.latte.dashtopanel][General]
+enableCounterShading=false
+maxBackgroundOpacity=0
 
 [Containments][12][Indicator][org.kde.latte.default][General]
 extraDotOnActive=true
@@ -150,7 +154,7 @@ color=blue
 customBackground=
 customTextColor=
 icon=
-lastUsedActivity=
+lastUsedActivity=b0e139f4-3c63-4f86-8424-315d6077eea9
 launchers=
 popUpMargin=-1
 preferredForShortcutsTouched=false

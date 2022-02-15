@@ -2,6 +2,7 @@
 
 {
   programs.xwayland.enable = true;
+  programs.qt5ct.enable = true;
   services = {
     xserver = {
       enable = true;

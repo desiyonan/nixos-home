@@ -6,7 +6,7 @@
     # https://status.nixos.org/
     #
     # This ensures that we always use the official # cache.
-    nixpkgs.url = "github:nixos/nixpkgs/7adc9c14ec74";
+    nixpkgs.url = "github:nixos/nixpkgs/48d63e924a26";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,7 +40,7 @@
               pkgs = import nixpkgs { inherit system; };
             };
             home-manager.sharedModules = ([
-              ./home-manager/common.nix
+              ./home-manager
             ] ++ sharedModules);
           }
         ] ++ extraModules);
