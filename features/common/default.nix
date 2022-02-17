@@ -38,7 +38,16 @@
     gnome.gnome-keyring
     jdk8
     jdk11
-    jetbrains.idea-ultimate
+    ## 太新了 管的严
+    # jetbrains.idea-ultimate
+    (jetbrains.idea-ultimate.overrideAttrs ( oldAttrs: rec {
+      version = "2020.3";
+      name = "idea-ultimate-${version}";
+      src = fetchurl {
+        url = "https://download.jetbrains.com/idea/ideaIU-${version}-no-jbr.tar.gz";
+        sha256 = "43a10e1be8075ebd07bafcbe65ef431db304ee96c3072ff308e188fb9fdbcbd0";
+      };
+    }))
     latte-dock
     ntfs3g
 

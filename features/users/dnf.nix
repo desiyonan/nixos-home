@@ -8,4 +8,5 @@
     initialPassword = "passwd";
     initialHashedPassword = "passwd";
   };
+
 }

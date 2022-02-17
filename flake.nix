@@ -41,6 +41,7 @@
             };
             home-manager.sharedModules = ([
               ./home-manager
+              # (import ./dotfiles/latte-dock/default.nix)
             ] ++ sharedModules);
           }
         ] ++ extraModules);
@@ -60,7 +61,7 @@
         ./hosts/ws.nix
         [
           ./features/packages/nvidia-offload.nix
-          #./features/v2ray.nix
+          ./features/packages/v2ray.nix
         ];
     };
 }
