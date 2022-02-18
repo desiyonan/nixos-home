@@ -41,7 +41,6 @@
             };
             home-manager.sharedModules = ([
               ./home-manager
-              # (import ./dotfiles/latte-dock/default.nix)
             ] ++ sharedModules);
           }
         ] ++ extraModules);

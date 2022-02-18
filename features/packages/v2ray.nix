@@ -1,28 +1,26 @@
 
-{ config, pkgs, lib, makeWrapper, symlinkJoin, ... }:
+{ config, pkgs, lib, ... }:
 
 with pkgs;
 let
   config = ../../dotfiles/v2ray/config.json;
   env_asset = lib.last (builtins.match ".*V2RAY_LOCATION_ASSET (.*)\n.+" pkgs.v2ray.buildCommand);
-  qv2ray-core = (symlinkJoin {
+  qv2ray-core = (pkgs.symlinkJoin {
       name = "qv2ray-core";
 
-      nativeBuildInput = [ makeWrapper ];
+      nativeBuildInput = [ ];
 
       paths = [
         pkgs.v2ray
-        pkgs.qv2ray
       ];
 
       postInstall = ''
+        mk -p /run/current-system/sw/share/v2ray
         ln -s ${env_asset} /run/current-system/sw/share/v2ray
       '';
     });
-  
 in
 {
-  # imports = [ qv2ray-config ];
 
   # networking = {
   #   proxy  = {
@@ -31,9 +29,9 @@ in
   #   };
   # };
 
-  environment.systemPackages = with pkgs; [
-    v2ray
-    qv2ray
+  environment.systemPackages = [
+    pkgs.v2ray
+    pkgs.qv2ray
     # qv2ray-core
   ];
 
