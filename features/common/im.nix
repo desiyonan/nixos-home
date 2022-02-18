@@ -19,15 +19,6 @@
       #  fcitx5-configtool
       #  fcitx5-m17n
       # libsForQt5.fcitx5-qt
-
-      ## latte-dock设置QT输入法模块后没法点击窗口
-      (pkgs.latte-dock.overrideAttrs (oldAttrs :{
-        buildInputs = oldAttrs.buildInputs or [] ++ [ pkgs.makeWrapper ];
-        postInstall = oldAttrs.postInstall or "" +''
-          wrapProgram $out/bin/latte-dock \
-            --prefix QT_IM_MODULE : "xim"
-        '';
-      }))
     ];
     variables = {
       INPUT_METHOD= lib.mkForce "fcitx";

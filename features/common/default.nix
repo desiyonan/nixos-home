@@ -18,6 +18,7 @@
   programs.ssh.askPassword = "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
 
   environment.systemPackages = with pkgs; [
+    ark
     appimage-run
     appimagekit
     anydesk
@@ -41,16 +42,25 @@
     ## 太新了 管的严
     # jetbrains.idea-ultimate
     (jetbrains.idea-ultimate.overrideAttrs ( oldAttrs: rec {
-      version = "2020.3";
+      version = "2021.2";
       name = "idea-ultimate-${version}";
       src = fetchurl {
         url = "https://download.jetbrains.com/idea/ideaIU-${version}-no-jbr.tar.gz";
-        sha256 = "43a10e1be8075ebd07bafcbe65ef431db304ee96c3072ff308e188fb9fdbcbd0";
+        sha256 = "554e0613e69fcb94d899329305df3b8ae0a96604af70ed77034a44e49e0d7d3d";
       };
     }))
-    latte-dock
+    # latte-dock
+    ## latte-dock设置QT输入法模块后没法点击窗口
+    (pkgs.latte-dock.overrideAttrs (oldAttrs :{
+      buildInputs = oldAttrs.buildInputs or [] ++ [ pkgs.makeWrapper ];
+      postInstall = oldAttrs.postInstall or "" +''
+        wrapProgram $out/bin/latte-dock \
+          --prefix QT_IM_MODULE : "xim"
+      '';
+    }))
     ntfs3g
 
+    egl-wayland
     libsForQt5.krdc
     libsForQt5.qt5.qtbase
     libsForQt5.qt5.qtwayland
@@ -58,6 +68,7 @@
 
     htop
     hugo
+    kate
     nix-index
     netease-cloud-music-gtk
     p7zip
@@ -69,5 +80,6 @@
     unar
     vim
     wget
+    wpsoffice
   ];
 }

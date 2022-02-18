@@ -55,7 +55,7 @@
       nixosConfigurations.wl = withExtraModules
         ./hosts/wl.nix
         [
-          ./features/v2ray.nix
+          ./features/packages/v2ray.nix
         ];
       nixosConfigurations.ws = withExtraModules
         ./hosts/ws.nix
