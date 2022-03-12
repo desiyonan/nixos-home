@@ -79,6 +79,8 @@
     #softmaker-office #收费不好用
     unar
     vim
+    vivaldi
+    vivaldi-ffmpeg-codecs
     wget
     wpsoffice
   ];
