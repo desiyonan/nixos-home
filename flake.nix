@@ -16,15 +16,20 @@
   outputs = inputs@{ self, home-manager, nixpkgs, ... }:
     let
       system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+      dotfiles = pkgs.callPackage ./dotfiles {};
 
       mkHomeMachine = configurationNix: extraModules: sharedModules: nixpkgs.lib.nixosSystem {
         inherit system;
+        inherit (self.packages.x86_64-linux) pkgs ;
 
         # Arguments to pass to all modules.
-        specialArgs = { inherit system inputs; };
+        # specialArgs = { inherit system inputs; };
         modules = ([
           # System configuration
           configurationNix
+
+          # ./dotfiles
 
           # Features common to all of my machines
           ./features/users/dnf.nix
@@ -40,6 +45,7 @@
               pkgs = import nixpkgs { inherit system; };
             };
             home-manager.sharedModules = ([
+
               ./home-manager
             ] ++ sharedModules);
           }
@@ -51,6 +57,12 @@
       withSharedModule = configurationNix: sharedModules: mkHomeMachine configurationNix [] sharedModules;
     in
     {
+      packages = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all  (system:
+        dotfiles.override
+        {
+          pkgs = pkgs // removeAttrs self.packages.${system} [ "profiles" "pkgs" ];
+        }
+      );
       nixosConfigurations.wl = withExtraModules
         ./hosts/wl.nix
         [

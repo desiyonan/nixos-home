@@ -49,15 +49,15 @@
         sha256 = "554e0613e69fcb94d899329305df3b8ae0a96604af70ed77034a44e49e0d7d3d";
       };
     }))
-    # latte-dock
+    latte-dock
     ## latte-dock设置QT输入法模块后没法点击窗口
-    (pkgs.latte-dock.overrideAttrs (oldAttrs :{
-      buildInputs = oldAttrs.buildInputs or [] ++ [ pkgs.makeWrapper ];
-      postInstall = oldAttrs.postInstall or "" +''
-        wrapProgram $out/bin/latte-dock \
-          --prefix QT_IM_MODULE : "xim"
-      '';
-    }))
+    # (pkgs.latte-dock.overrideAttrs (oldAttrs :{
+    #   buildInputs = oldAttrs.buildInputs or [] ++ [ pkgs.makeWrapper ];
+    #   postInstall = oldAttrs.postInstall or "" +''
+    #     wrapProgram $out/bin/latte-dock \
+    #       --prefix QT_IM_MODULE : "xim"
+    #   '';
+    # }))
     ntfs3g
 
     egl-wayland

@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ./display.nix
+    # ./display.nix
     ./git.nix
   ];
 }
