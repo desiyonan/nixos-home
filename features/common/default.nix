@@ -69,6 +69,7 @@
     htop
     hugo
     kate
+    maven
     nix-index
     netease-cloud-music-gtk
     p7zip
