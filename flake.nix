@@ -18,13 +18,14 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
       dotfiles = pkgs.callPackage ./dotfiles {};
+      mpkgs = pkgs.callPackage ./features/packages {};
 
       mkHomeMachine = configurationNix: extraModules: sharedModules: nixpkgs.lib.nixosSystem {
         inherit system;
         inherit (self.packages.x86_64-linux) pkgs ;
 
         # Arguments to pass to all modules.
-        # specialArgs = { inherit system inputs; };
+        specialArgs = { inherit pkgs mpkgs; };
         modules = ([
           # System configuration
           configurationNix
