@@ -1,4 +1,4 @@
-{ pkgs, mpkgs, ... }:
+{ pkgs, mpkgs, modulesPath, ... }:
 
 {
   imports = [
@@ -12,11 +12,10 @@
     ./shell.nix
     ./zone.nix
 
+    ./openssh.nix
+
     ../env/dev.nix
-    ../packages/vscode.nix
-    ../packages/openssh.nix
   ];
-  programs.ssh.askPassword = "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
 
   environment.systemPackages =  with pkgs; [
     ark
@@ -36,7 +35,7 @@
     go
     google-chrome
     gnome.gnome-keyring
-    latte-dock
+    # latte-dock
     (mpkgs.latte-dock)
     ntfs3g
 
@@ -66,4 +65,13 @@
     wget
     wpsoffice
   ];
+
+  environment = {
+    variables = {
+      DOCKER_HOST = "dk.dnfn.tech:5732";
+    };
+    sessionVariables = {
+      DOCKER_HOST = "dk.dnfn.tech:5732";
+    };
+  };
 }

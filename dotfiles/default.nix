@@ -1,6 +1,9 @@
-{ pkgs, callPackage, ...}:
-
+{ pkgs, ...}:
+with pkgs;
+let
+  c = callPackage;
+in
 {
-  pkgs = pkgs ;
-  latte-dock = pkgs.callPackage ./latte-dock {};
+  latte-dock= import ./latte-dock;
+  v2ray = import ./v2ray;
 }

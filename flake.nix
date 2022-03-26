@@ -16,9 +16,13 @@
   outputs = inputs@{ self, home-manager, nixpkgs, ... }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [];
+      };
       dotfiles = pkgs.callPackage ./dotfiles {};
-      mpkgs = pkgs.callPackage ./features/packages {};
+      mpkgs = pkgs.callPackage ./pkgs { inherit dotfiles;};
 
       mkHomeMachine = configurationNix: extraModules: sharedModules: nixpkgs.lib.nixosSystem {
         inherit system;
@@ -29,8 +33,6 @@
         modules = ([
           # System configuration
           configurationNix
-
-          # ./dotfiles
 
           # Features common to all of my machines
           ./features/users/dnf.nix
@@ -67,13 +69,13 @@
       nixosConfigurations.wl = withExtraModules
         ./hosts/wl.nix
         [
-          ./features/packages/v2ray.nix
+          ./pkgs/v2ray.nix
         ];
       nixosConfigurations.ws = withExtraModules
         ./hosts/ws.nix
         [
-          ./features/packages/nvidia-offload.nix
-          ./features/packages/v2ray.nix
+          ./pkgs/nvidia-offload.nix
+          ./pkgs/v2ray.nix
         ];
     };
 }

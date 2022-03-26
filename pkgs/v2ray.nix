@@ -1,9 +1,9 @@
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, dotfiles, ... }:
 
 with pkgs;
 let
-  config = ../../dotfiles/v2ray/config.json;
+  config = dotfiles.v2ray.conf;
   env_asset = lib.last (builtins.match ".*V2RAY_LOCATION_ASSET (.*)\n.+" pkgs.v2ray.buildCommand);
   qv2ray-core = (pkgs.symlinkJoin {
       name = "qv2ray-core";
