@@ -1,4 +1,4 @@
 { pkgs, ...}:
 {
-  idea-ultimate = pkgs.callPackage ./idea-ultimate {};
+  idea-ultimate = pkgs.callPackage ./idea-ultimate.nix  {};
 }
