@@ -25,7 +25,7 @@
         inherit (self.packages.x86_64-linux) pkgs ;
 
         # Arguments to pass to all modules.
-        specialArgs = { inherit pkgs mpkgs; };
+        specialArgs = { inherit pkgs mpkgs dotfiles; };
         modules = ([
           # System configuration
           configurationNix

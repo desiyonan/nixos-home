@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, mpkgs, ... }:
 
 {
   imports = [
@@ -18,7 +18,7 @@
   ];
   programs.ssh.askPassword = "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages =  with pkgs; [
     ark
     appimage-run
     appimagekit
@@ -33,12 +33,11 @@
     fzf
     gcc
     glibc
-    git
-    gh
     go
     google-chrome
     gnome.gnome-keyring
     latte-dock
+    (mpkgs.latte-dock)
     ntfs3g
 
     egl-wayland

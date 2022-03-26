@@ -11,6 +11,8 @@
     pkgs.jdk8
     pkgs.jdk11
     pkgs.maven
+    pkgs.git
+    pkgs.gh
 
     mpkgs.idea-ultimate
   ];
