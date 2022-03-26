@@ -1,9 +1,9 @@
 {pkgs,...}:
-
+with pkgs;
 let
   ## 太新了 管的严
   # jetbrains.idea-ultimate
-  myidea-ultimate = with pkgs ; jetbrains.idea-ultimate.overrideAttrs ( oldAttrs: rec {
+  myidea-ultimate = jetbrains.idea-ultimate.overrideAttrs ( oldAttrs: rec {
       version = "2021.2";
       name = "idea-ultimate-${version}";
       src = fetchurl {
