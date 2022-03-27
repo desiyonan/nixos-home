@@ -2,10 +2,7 @@
   description = "DnF's NixOS configuration";
 
   inputs = {
-    # To update nixpkgs (and thus NixOS), pick the nixos-unstable rev from
     # https://status.nixos.org/
-    #
-    # This ensures that we always use the official # cache.
     nixpkgs.url = "github:nixos/nixpkgs/48d63e924a26";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -13,17 +10,34 @@
     };
   };
 
-  outputs = inputs@{ self, home-manager, nixpkgs, ... }:
+  outputs = { self, home-manager, nixpkgs, ... }@inputs:
     let
-      system = "x86_64-linux";
+      inherit (nixpkgs) lib;
+
+
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
         overlays = [];
       };
-      dotfiles = pkgs.callPackage ./dotfiles {};
-      mpkgs = pkgs.callPackage ./pkgs { inherit dotfiles;};
 
+      dotfiles = import ./dotfiles {inherit pkgs;};
+      mpkgs = import ./pkgs {
+        inherit dotfiles pkgs ;
+      };
+
+      utils = import ./lib {
+        inherit system pkgs lib mpkgs ;
+      };
+      users = import ./users {inherit pkgs;};
+      hosts = import ./hosts ;
+
+      defaultUser = users.default;
+
+      inherit (utils) user;
+      inherit (utils) host;
+
+      system = "x86_64-linux";
       mkHomeMachine = configurationNix: extraModules: sharedModules: nixpkgs.lib.nixosSystem {
         inherit system;
         inherit (self.packages.x86_64-linux) pkgs ;
@@ -54,28 +68,31 @@
           }
         ] ++ extraModules);
       };
-
       mkOnlyHostConfig = configurationNix: mkHomeMachine configurationNix [] [];
       withExtraModules = configurationNix: extraModules:  mkHomeMachine configurationNix extraModules [];
       withSharedModule = configurationNix: sharedModules: mkHomeMachine configurationNix [] sharedModules;
     in
     {
-      packages = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all  (system:
-        dotfiles.override
-        {
-          pkgs = pkgs // removeAttrs self.packages.${system} [ "profiles" "pkgs" ];
-        }
-      );
+      # packages = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all  (system:
+      #   dotfiles.override
+      #   {
+      #     pkgs = pkgs // removeAttrs self.packages.${system} [ "profiles" "pkgs" ];
+      #   }
+      # );
       nixosConfigurations.wl = withExtraModules
         ./hosts/wl.nix
         [
-          ./pkgs/v2ray.nix
         ];
       nixosConfigurations.ws = withExtraModules
         ./hosts/ws.nix
         [
           ./pkgs/nvidia-offload.nix
-          ./pkgs/v2ray.nix
         ];
+
+      nixosConfigurations.test = utils.host.mkHost (
+        hosts.wl // {
+          users = [defaultUser];
+        }
+      );
     };
 }

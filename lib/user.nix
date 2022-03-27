@@ -1,9 +1,7 @@
-{ pkgs, home-manager, lib, system, overlays, ... }:
+{ pkgs, ... }:
 with builtins;
 {
-  mkHMUser = { # To be completed later };
-
-  mkSystemUser = { name, groups, uid, shell, ... }:
+  mkSystemUser = { name, groups, uid, shell?pkgs.bash, ... }:
   {
     users.users."${name}" = {
       name = name;
@@ -15,4 +13,5 @@ with builtins;
       shell = shell;
     };
   };
+  
 }

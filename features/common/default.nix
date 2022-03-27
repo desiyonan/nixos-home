@@ -36,7 +36,6 @@
     google-chrome
     gnome.gnome-keyring
     # latte-dock
-    (mpkgs.latte-dock)
     ntfs3g
 
     egl-wayland
@@ -64,6 +63,9 @@
     vivaldi-ffmpeg-codecs
     wget
     wpsoffice
+
+    (mpkgs.latte-dock)
+    (mpkgs.qv2ray-full)
   ];
 
   environment = {
