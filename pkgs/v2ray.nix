@@ -5,18 +5,18 @@ with pkgs;
 let
   config = dotfiles.v2ray.conf;
   env_asset = lib.last (builtins.match ".*V2RAY_LOCATION_ASSET (.*)\n.+" pkgs.v2ray.buildCommand);
-  qv2ray-core = (pkgs.symlinkJoin {
-      name = "qv2ray-core";
-
-      nativeBuildInput = [ ];
+  qv2ray-full = (pkgs.symlinkJoin {
+      name = "qv2ray-full";
 
       paths = [
+        env_asset
         pkgs.v2ray
+        pkgs.qv2ray
       ];
 
-      postInstall = ''
-        mk -p /run/current-system/sw/share/v2ray
-        ln -s ${env_asset} /run/current-system/sw/share/v2ray
+      postBuild = ''
+        mkdir -p $out/share/v2ray
+        mv $out/geo* $out/share/v2ray
       '';
     });
 in
@@ -30,16 +30,16 @@ in
   # };
 
   environment.systemPackages = [
-    pkgs.v2ray
-    pkgs.qv2ray
-    # qv2ray-core
+    # pkgs.v2ray
+    # pkgs.qv2ray
+    qv2ray-full
   ];
 
-  services = {
-    v2ray = {
-      enable = true;
-      configFile = "${config}";
-    };
-  };
+  # services = {
+  #   v2ray = {
+  #     enable = true;
+  #     configFile = "${config}";
+  #   };
+  # };
 
 }
