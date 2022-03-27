@@ -14,7 +14,6 @@
     let
       inherit (nixpkgs) lib;
 
-
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
@@ -27,17 +26,18 @@
       };
 
       utils = import ./lib {
-        inherit system pkgs lib mpkgs ;
+        inherit system pkgs lib mpkgs home-manager ;
       };
       users = import ./users {inherit pkgs;};
       hosts = import ./hosts ;
 
-      defaultUser = users.default;
+      defaultUsers = [users.default];
 
       inherit (utils) user;
       inherit (utils) host;
 
       system = "x86_64-linux";
+
       mkHomeMachine = configurationNix: extraModules: sharedModules: nixpkgs.lib.nixosSystem {
         inherit system;
         inherit (self.packages.x86_64-linux) pkgs ;
@@ -89,10 +89,11 @@
           ./pkgs/nvidia-offload.nix
         ];
 
-      nixosConfigurations.test = utils.host.mkHost (
-        hosts.wl // {
-          users = [defaultUser];
-        }
-      );
+      nixosConfigurations = {
+        test = utils.host.mkHost (hosts.wl // {
+          systemPackages = [mpkgs.nvidia-offload];
+        }) defaultUsers;
+      };
+
     };
 }

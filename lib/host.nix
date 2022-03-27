@@ -7,13 +7,13 @@ with builtins;
     fs,
     NICs,
     systemConfig,
-    users,
+    systemPackages ? [],
     kernelPackage ? pkgs.linuxPackages_latest,
     kernelParams ? [],
     swap? [],
     cpuCores ? 4,
     wifi ? []
-  }:
+  }: users:
 
   let
     networkCfg = listToAttrs (map (n: {
@@ -41,6 +41,7 @@ with builtins;
         boot.loader.efi.canTouchEfiVariables = true;
 
         # jd = systemConfig;
+        environment.systemPackages = systemPackages;
 
         networking.hostName = "${name}";
         networking.interfaces = networkCfg;
