@@ -1,9 +1,10 @@
-{ config, pkgs, mpkgs, ... }:
+{ config, pkgs, mpkgs, lib, ... }:
+with lib;
 
 let
-  cfg = config.nvidia-offload;
+  cfg = config.services.nvidia-offload;
 in {
-  options.nvidia-offload = {
+  options.services.nvidia-offload = {
     enable = mkOption {
       description = "Enable nvidia-offload";
       type = types.bool;

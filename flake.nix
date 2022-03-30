@@ -73,25 +73,13 @@
       withSharedModule = configurationNix: sharedModules: mkHomeMachine configurationNix [] sharedModules;
     in
     {
-      # packages = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all  (system:
-      #   dotfiles.override
-      #   {
-      #     pkgs = pkgs // removeAttrs self.packages.${system} [ "profiles" "pkgs" ];
-      #   }
-      # );
-      nixosConfigurations.wl = withExtraModules
-        ./hosts/wl.nix
-        [
-        ];
-      nixosConfigurations.ws = withExtraModules
-        ./hosts/ws.nix
-        [
-          ./pkgs/nvidia-offload.nix
-        ];
 
       nixosConfigurations = {
-        test = utils.host.mkHost (hosts.wl // {
-          systemPackages = [mpkgs.nvidia-offload];
+        wl = utils.host.mkHost  hosts.wl defaultUsers;
+        ws = utils.host.mkHost (hosts.ws // {
+            services = {
+                services.nvidia-offload.enable = true;
+            };
         }) defaultUsers;
       };
 

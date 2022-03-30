@@ -6,8 +6,9 @@ with builtins;
     initrdMods, kernelMods,
     fs,
     NICs,
-    systemConfig,
+    systemConfig ? {},
     systemPackages ? [],
+    services ? {},
     kernelPackage ? pkgs.linuxPackages_latest,
     kernelParams ? [],
     swap? [],
@@ -29,8 +30,10 @@ with builtins;
       {
         imports = [
           # (modulesPath + "/installer/scan/not-detected.nix")
+          ../modules
           ../features/common
         ] ++ sys_users;
+
         hardware.enableRedistributableFirmware = lib.mkDefault true;
 
         boot.initrd.availableKernelModules = initrdMods;
@@ -40,7 +43,7 @@ with builtins;
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
 
-        # jd = systemConfig;
+        systemConfig = systemConfig;
         environment.systemPackages = systemPackages;
 
         networking.hostName = "${name}";
@@ -52,6 +55,8 @@ with builtins;
 
         nixpkgs.pkgs = pkgs;
         nix.settings.max-jobs = lib.mkDefault cpuCores;
+
+        services = services;
 
         fileSystems = fs;
         swapDevices = swap;

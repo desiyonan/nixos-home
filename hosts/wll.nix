@@ -25,5 +25,4 @@
   # };
   NICs = [ "enp33s0" ];
 
-  systemConfig = [];
 }
