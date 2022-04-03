@@ -4,7 +4,7 @@
   initrdMods = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   kernelMods = [ "kvm-intel" ];
 
-  NICs = [ "wlp0s20f3" "enp0s20f0u11u1" "enp0s20f0u13u1"];
+  NICs = [ "wlp0s20f3" ];
   wifi = [ "wlp0s20f3" ];
 
   fs = {

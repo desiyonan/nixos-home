@@ -24,12 +24,20 @@
     anydesk
     bash
     bind
+    bat
+
     direnv
     docker-client
     dhcp
+    dog
+    duf
+
     firefox
     flameshot
     fzf
+    fd
+    fx
+
     gcc
     glibc
     go
@@ -43,15 +51,22 @@
     libsForQt5.qt5.qtbase
     libsForQt5.qt5.qtwayland
     libsForQt5.qtstyleplugins
+    jq
 
     htop
     hugo
+    httpie
+    hexyl
+
     kate
     mutt
+    mcfly
     nix-index
     netease-cloud-music-gtk
     p7zip
     pciutils
+    procs
+
     refind
     tree
     tmux
