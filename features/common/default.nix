@@ -51,6 +51,7 @@
     libsForQt5.qt5.qtbase
     libsForQt5.qt5.qtwayland
     libsForQt5.qtstyleplugins
+    inetutils
     jq
 
     htop
@@ -78,6 +79,7 @@
     vivaldi-ffmpeg-codecs
     wget
     wpsoffice
+    xournal
 
     (mpkgs.latte-dock)
     (mpkgs.qv2ray-full)
