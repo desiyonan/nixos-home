@@ -3,7 +3,7 @@
 
   inputs = {
     # https://status.nixos.org/
-    nixpkgs.url = "github:nixos/nixpkgs/48d63e924a26";
+    nixpkgs.url = "github:nixos/nixpkgs/ff9efb0724de";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,40 +37,6 @@
       inherit (utils) host;
 
       system = "x86_64-linux";
-
-      mkHomeMachine = configurationNix: extraModules: sharedModules: nixpkgs.lib.nixosSystem {
-        inherit system;
-        inherit (self.packages.x86_64-linux) pkgs ;
-
-        # Arguments to pass to all modules.
-        specialArgs = { inherit pkgs mpkgs dotfiles; };
-        modules = ([
-          # System configuration
-          configurationNix
-
-          # Features common to all of my machines
-          ./features/users/dnf.nix
-          ./features/common
-
-          # home-manager configuration
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.dnf = import ./home.nix {
-              inherit inputs system;
-              pkgs = import nixpkgs { inherit system; };
-            };
-            home-manager.sharedModules = ([
-
-              ./home-manager
-            ] ++ sharedModules);
-          }
-        ] ++ extraModules);
-      };
-      mkOnlyHostConfig = configurationNix: mkHomeMachine configurationNix [] [];
-      withExtraModules = configurationNix: extraModules:  mkHomeMachine configurationNix extraModules [];
-      withSharedModule = configurationNix: sharedModules: mkHomeMachine configurationNix [] sharedModules;
     in
     {
 
