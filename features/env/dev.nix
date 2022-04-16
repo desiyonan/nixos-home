@@ -10,7 +10,7 @@
     pkgs.vscode
 
     mpkgs.idea-ultimate
-    mpkgs.latte-dock
+    # mpkgs.latte-dock
   ];
 
 }

@@ -7,7 +7,8 @@ let
         cp ${conf} $out/share/plasma/shells/org.kde.latte.shell/contents/templates/Common.layout.latte
         cp ${conf} $out/share/plasma/shells/org.kde.latte.shell/contents/templates/Default.layout.latte
         wrapProgram $out/bin/latte-dock \
-          --prefix QT_IM_MODULE : "xim"
+          --set QT_QPA_PLATFORMTHEME qt5ct \
+          --set QT_IM_MODULE fcitx \
       '';
     });
 

@@ -5,7 +5,7 @@
     ./display.nix
     ./fonts.nix
     ./hardware.nix
-    ./im.nix
+    # ./im.nix
     ./network.nix
     ./nix-features.nix
     ./passwordstore.nix
@@ -75,13 +75,14 @@
     #softmaker-office #收费不好用
     unar
     vim
-    vivaldi
-    vivaldi-ffmpeg-codecs
+    # vivaldi
+    # vivaldi-ffmpeg-codecs
     wget
     wpsoffice
     xournal
 
-    (mpkgs.latte-dock)
+    latte-dock
+    # (mpkgs.latte-dock)
     (mpkgs.qv2ray-full)
   ];
 

@@ -27,9 +27,9 @@
       XMODIFIERS = lib.mkForce ''@im=fcitx'';
     };
     sessionVariables = {
-      INPUT_METHOD= lib.mkForce "fcitx5";
-      GTK_IM_MODULE = lib.mkForce "fcitx5";
-      XMODIFIERS = lib.mkForce ''@im=fcitx5'';
+      INPUT_METHOD= lib.mkForce "fcitx";
+      GTK_IM_MODULE = lib.mkForce "fcitx";
+      XMODIFIERS = lib.mkForce ''@im=fcitx'';
       QT_IM_MODULE = lib.mkForce "fcitx";
     };
   };
