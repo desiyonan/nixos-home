@@ -5,7 +5,7 @@
     ./display.nix
     ./fonts.nix
     ./hardware.nix
-    # ./im.nix
+    ./im.nix
     ./network.nix
     ./nix-features.nix
     ./passwordstore.nix
@@ -49,7 +49,6 @@
     egl-wayland
     libsForQt5.krdc
     libsForQt5.qt5.qtbase
-    libsForQt5.qt5.qtwayland
     libsForQt5.qtstyleplugins
     inetutils
     jq
@@ -81,8 +80,8 @@
     wpsoffice
     xournal
 
-    latte-dock
-    # (mpkgs.latte-dock)
+    # latte-dock
+    (mpkgs.latte-dock)
     (mpkgs.qv2ray-full)
   ];
 

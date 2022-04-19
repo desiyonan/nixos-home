@@ -17,7 +17,23 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
+  environment = {
+    systemPackages = with pkgs; [
+      mesa
+      weston
+      libdrm
+      libinput
+      xwayland
       egl-wayland
-  ];
+      wayland-protocols
+      libsForQt5.plasma-wayland-protocols
+      libsForQt5.qt5.qtwayland
+    ];
+    variables = {
+      MOZ_ENABLE_WAYLAND="1";
+    };
+    sessionVariables = {
+      MOZ_ENABLE_WAYLAND="1";
+    };
+  };
 }
