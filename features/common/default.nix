@@ -49,7 +49,6 @@
     egl-wayland
     libsForQt5.krdc
     libsForQt5.qt5.qtbase
-    libsForQt5.qtstyleplugins
     inetutils
     jq
 
@@ -70,6 +69,7 @@
     refind
     tree
     tmux
+    thunderbird
     # termius
     #softmaker-office #收费不好用
     unar

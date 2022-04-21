@@ -42,6 +42,7 @@ with builtins;
         boot.kernelPackages = kernelPackage;
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
+        hardware.opengl.enable = true;
 
         systemConfig = systemConfig;
         environment.systemPackages = systemPackages;
