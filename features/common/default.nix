@@ -81,9 +81,16 @@
     xournal
 
     # latte-dock
-    (mpkgs.latte-dock)
-    (mpkgs.qv2ray-full)
-  ];
+  ] ++
+  (with mpkgs;
+  [
+    latte-dock
+    qv2ray-full
+    wechat-uos
+    netease-cloud-music
+  ])
+
+  ;
 
   environment = {
     variables = {

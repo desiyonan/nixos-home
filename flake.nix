@@ -9,9 +9,15 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-cn = {
+      url = "github:nixos-cn/flakes";
+      # 强制 nixos-cn 和该 flake 使用相同版本的 nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
-  outputs = { self, home-manager, nixpkgs, ... }@inputs:
+  outputs = { self, home-manager, nixpkgs, nixos-cn, ... }@inputs:
     let
       inherit (nixpkgs) lib;
 
@@ -23,7 +29,7 @@
 
       dotfiles = import ./dotfiles {inherit pkgs;};
       mpkgs = import ./pkgs {
-        inherit dotfiles pkgs ;
+        inherit dotfiles pkgs nixos-cn;
       };
 
       utils = import ./lib {

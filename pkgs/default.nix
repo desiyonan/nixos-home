@@ -1,4 +1,4 @@
-{ pkgs, dotfiles, ...}:
+{ pkgs, dotfiles, nixos-cn, ...}:
 with pkgs;
 {
   pkgs = pkgs;
@@ -6,4 +6,4 @@ with pkgs;
   latte-dock =   pkgs.callPackage  ./latte-dock.nix { inherit dotfiles;};
   qv2ray-full = import ./v2ray.nix {inherit pkgs lib dotfiles;};
   nvidia-offload = import ./nvidia-offload.nix {inherit pkgs;};
-}
+} // nixos-cn.legacyPackages.${system}
