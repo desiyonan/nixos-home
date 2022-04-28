@@ -33,7 +33,7 @@
       };
 
       utils = import ./lib {
-        inherit system pkgs lib mpkgs home-manager ;
+        inherit system pkgs lib mpkgs home-manager nixpkgs ;
       };
       users = import ./users {inherit pkgs;};
       hosts = import ./hosts ;

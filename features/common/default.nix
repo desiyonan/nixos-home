@@ -95,9 +95,11 @@
   environment = {
     variables = {
       DOCKER_HOST = "dk.dnfn.tech:5732";
+      QT_DEBUG_PLUGINS= "1";
     };
     sessionVariables = {
       DOCKER_HOST = "dk.dnfn.tech:5732";
+      QT_DEBUG_PLUGINS= "1";
     };
   };
 }

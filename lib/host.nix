@@ -1,4 +1,4 @@
-{ system, pkgs, lib, user, mpkgs, ... }:
+{ system, pkgs, lib, user, mpkgs, nixpkgs, ... }:
 with builtins;
 {
   mkHost = {
@@ -27,9 +27,15 @@ with builtins;
     inherit system;
     specialArgs = { inherit pkgs mpkgs dotfiles; };
     modules = [
+      nixpkgs.nixosModules.notDetected
+      ({ config, pkgs, ...}:
+        let
+          overlay-unstable = final: prev: {
+            mpkgs = mpkgs;
+          };
+      )
       {
         imports = [
-          # (modulesPath + "/installer/scan/not-detected.nix")
           ../modules
           ../features/common
         ] ++ sys_users;
