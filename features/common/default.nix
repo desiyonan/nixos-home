@@ -80,17 +80,11 @@
     wpsoffice
     xournal
 
-    # latte-dock
-  ] ++
-  (with mpkgs;
-  [
-    latte-dock
-    qv2ray-full
-    wechat-uos
-    netease-cloud-music
-  ])
-
-  ;
+    mpkgs.latte-dock
+    mpkgs.qv2ray-full
+    mpkgs.wechat-uos
+    mpkgs.netease-cloud-music
+  ];
 
   environment = {
     variables = {

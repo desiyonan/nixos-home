@@ -28,11 +28,16 @@ with builtins;
     specialArgs = { inherit pkgs mpkgs dotfiles; };
     modules = [
       nixpkgs.nixosModules.notDetected
-      ({ config, pkgs, ...}:
+      (
+        { config, pkgs, ...}:
         let
-          overlay-unstable = final: prev: {
+          overlay-mpkgs = final: prev: {
             mpkgs = mpkgs;
           };
+        in
+          {
+            nixpkgs.overlays = [overlay-mpkgs];
+          }
       )
       {
         imports = [
