@@ -7,6 +7,7 @@
 
     fonts = with pkgs; [
       inconsolata
+      inconsolata-nerdfont
       jetbrains-mono
       dejavu_fonts
       dejavu_fontsEnv
@@ -19,7 +20,7 @@
     ];
 
     fontconfig = {
-      # enable = true;
+      enable = true;
       defaultFonts = {
         monospace = [ "Sarasa Mono SC" ];
         sansSerif = [ "Sarasa UI SC" ];

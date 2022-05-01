@@ -43,12 +43,12 @@
     go
     google-chrome
     gnome.gnome-keyring
-    # latte-dock
     ntfs3g
 
     egl-wayland
+    libsForQt5.full
+    libsForQt5.qt5.qttools
     libsForQt5.krdc
-    libsForQt5.qt5.qtbase
     inetutils
     jq
 
@@ -58,6 +58,8 @@
     hexyl
 
     kate
+    kdiff3
+    kompare
     mutt
     mcfly
     nix-index
@@ -90,10 +92,14 @@
     variables = {
       DOCKER_HOST = "dk.dnfn.tech:5732";
       QT_DEBUG_PLUGINS= "1";
+      QT_QPA_PLATFORMTHEME="qt5ct";
+      # QT_QPA_PLATFORM="wayland";
     };
     sessionVariables = {
       DOCKER_HOST = "dk.dnfn.tech:5732";
       QT_DEBUG_PLUGINS= "1";
+      QT_QPA_PLATFORMTHEME="qt5ct";
+      # QT_QPA_PLATFORM="wayland";
     };
   };
 }

@@ -2,8 +2,24 @@
 let
   conf = dotfiles.latte-dock.conf;
   latte-dock = pkgs.latte-dock.overrideAttrs (oldAttrs :{
+      buildInputs = oldAttrs.buildInputs or [] ++
+      ( with pkgs; [
+        # libsForQt5.kimageformats
+        # libsForQt5.qt5.qtsvg
+        # libinput
+        # qt5ct
+        # libdrm
+        # libinput
+        # wayland
+        # xwayland
+        # egl-wayland
+        # wayland-protocols
+        # libsForQt5.plasma-wayland-protocols
+        # libsForQt5.qt5.qtwayland
+      ]);
+
       nativeBuildInputs = oldAttrs.nativeBuildInputs or [] ++ [
-        # pkgs.libsForQt5.qt5.qttools
+        pkgs.libsForQt5.qt5.qttools
 
         pkgs.libsForQt5.qt5.wrapQtAppsHook
       ];
@@ -13,8 +29,9 @@ let
         wrapQtApp $out/bin/latte-dock
       '';
       qtWrapperArgs = [
+        ''--set-default QT_QPA_PLATFORMTHEME qt5ct''
         ''--set-default QT_QPA_PLATFORM xcb''
-        
+
       ];
     });
 
