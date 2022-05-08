@@ -82,7 +82,7 @@
     wpsoffice
     xournal
 
-    mpkgs.latte-dock
+    # mpkgs.latte-dock
     mpkgs.qv2ray-full
     mpkgs.wechat-uos
     mpkgs.netease-cloud-music
