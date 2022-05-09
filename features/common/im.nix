@@ -14,24 +14,24 @@
     };
   };
 
-  environment = {
-     systemPackages = with pkgs; [
-      #  fcitx5-configtool
-      #  fcitx5-m17n
-      # libsForQt5.fcitx5-qt
-    ];
-    variables = {
-      INPUT_METHOD= lib.mkForce "fcitx";
-      GTK_IM_MODULE = lib.mkForce "fcitx";
-      QT_IM_MODULE = lib.mkForce "fcitx";
-      XMODIFIERS = lib.mkForce ''@im=fcitx'';
-    };
-    sessionVariables = {
-      INPUT_METHOD= lib.mkForce "fcitx";
-      GTK_IM_MODULE = lib.mkForce "fcitx";
-      XMODIFIERS = lib.mkForce ''@im=fcitx'';
-      QT_IM_MODULE = lib.mkForce "fcitx";
-    };
-  };
+  # environment = {
+  #    systemPackages = with pkgs; [
+  #     #  fcitx5-configtool
+  #     #  fcitx5-m17n
+  #     # libsForQt5.fcitx5-qt
+  #   ];
+  #   variables = {
+  #     INPUT_METHOD= lib.mkForce "fcitx";
+  #     GTK_IM_MODULE = lib.mkForce "fcitx";
+  #     QT_IM_MODULE = lib.mkForce "fcitx";
+  #     XMODIFIERS = lib.mkForce ''@im=fcitx'';
+  #   };
+  #   sessionVariables = {
+  #     INPUT_METHOD= lib.mkForce "fcitx";
+  #     GTK_IM_MODULE = lib.mkForce "fcitx";
+  #     XMODIFIERS = lib.mkForce ''@im=fcitx'';
+  #     QT_IM_MODULE = lib.mkForce "fcitx";
+  #   };
+  # };
 
 }
