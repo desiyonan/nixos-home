@@ -2,6 +2,9 @@
 , extra-cmake-modules }:
 
 with pkgs.libsForQt5;
+let
+  conf = dotfiles.latte-dock.conf;
+in
 mkDerivation rec {
   pname = "latte-dock";
   version = "0.10.8";
@@ -12,21 +15,38 @@ mkDerivation rec {
     name = "${pname}-${version}.tar.xz";
   };
 
-  buildInputs = [ plasma-framework xorg.libpthreadstubs xorg.libXdmcp xorg.libSM ];
+  buildInputs = [
+    plasma-framework
+    xorg.libpthreadstubs
+    xorg.libXdmcp
+    xorg.libSM
+  ];
 
   nativeBuildInputs =
   with pkgs.libsForQt5;
-  [ extra-cmake-modules cmake karchive kwindowsystem
-    qtx11extras kcrash knewstuff
+  [ extra-cmake-modules
+    cmake
+    karchive
+    kwindowsystem
+    qtx11extras
+    kcrash
+    knewstuff
+    qt5.qttools
     qt5.wrapQtAppsHook
   ];
   # patches = [
   #   ./0001-close-user-autostart.patch
   # ];
-  # fixupPhase = ''
-  #   mkdir -p $out/etc/xdg/autostart
-  #   cp $out/share/applications/org.kde.latte-dock.desktop $out/etc/xdg/autostart
-  # '';
+  fixupPhase = ''
+    mkdir -p $out/etc/xdg/autostart
+    cp $out/share/applications/org.kde.latte-dock.desktop $out/etc/xdg/autostart
+    cp ${conf} $out/share/plasma/shells/org.kde.latte.shell/contents/templates/Common.layout.latte
+    wrapQtApp $out/bin/latte-dock
+    '';
+    # qtWrapperArgs = [
+      # ''--set-default QT_QPA_PLATFORMTHEME qt5ct''
+      # ''--set-default QT_QPA_PLATFORM xcb''
+    # ];
 
   meta = with lib; {
     description = "Dock-style app launcher based on Plasma frameworks";
@@ -39,7 +59,6 @@ mkDerivation rec {
 
 # {pkgs, dotfiles, makeWrapper, ...}:
 # let
-#   conf = dotfiles.latte-dock.conf;
 #   latte-dock = pkgs.latte-dock.overrideAttrs (oldAttrs :{
 
 #       buildInputs = oldAttrs.buildInputs or [] ++

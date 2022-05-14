@@ -82,8 +82,8 @@
     wpsoffice
     xournal
 
-    latte-dock
-    # mpkgs.latte-dock
+    # latte-dock
+    mpkgs.latte-dock
     mpkgs.qv2ray-full
     mpkgs.wechat-uos
     mpkgs.netease-cloud-music
