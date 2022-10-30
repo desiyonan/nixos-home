@@ -2,7 +2,8 @@
 
 {
 #   programs.xwayland.enable = true;
-  programs.qt5ct.enable = true;
+#   programs.qt5ct.enable = true;
+  qt5.platformTheme = "kde";
   services = {
     xserver = {
       enable = true;
