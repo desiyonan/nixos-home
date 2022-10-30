@@ -5,13 +5,13 @@
     inputMethod = {
       enabled = "fcitx5" ;
       # enabled = "ibus" ;
-      ibus.panel = "${pkgs.plasma5Packages.plasma-desktop}/lib/libexec/kimpanel-ibus-panel";
-      ibus.engines = with pkgs.ibus-engines;
-      [
-        table-chinese
-        libpinyin
-        uniemoji
-      ];
+      # ibus.panel = "${pkgs.plasma5Packages.plasma-desktop}/lib/libexec/kimpanel-ibus-panel";
+      # ibus.engines = with pkgs.ibus-engines;
+      # [
+      #   table-chinese
+      #   libpinyin
+      #   uniemoji
+      # ];
       fcitx5.addons = with pkgs; [
         fcitx5-chinese-addons
         fcitx5-configtool

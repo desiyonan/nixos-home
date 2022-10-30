@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./zerotierone.nix
+#     ./zerotierone.nix
   ];
 
   services.resolved = {

@@ -57,10 +57,15 @@
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
+  fileSystems."/boot/efi" =
     { device = "/dev/disk/by-uuid/FA49-7E4A";
       fsType = "vfat";
     };
+
+  /*fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/FA49-7E4A";
+      fsType = "vfat";
+  */  };
 
  fileSystems."/data" =
    { device = "/dev/disk/by-uuid/09C1B27DA5EB573A";
