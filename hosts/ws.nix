@@ -13,9 +13,15 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
+#   boot.loader.systemd-boot.enable = true;
+#   boot.loader.efi.canTouchEfiVariables = true;
+#
+#   boot.loader = {
+#     efi = {
+#
+#     };
+#   };
+#
   networking = {
     hostName = "ws";
     useDHCP = false;
@@ -57,7 +63,7 @@
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
+  fileSystems."/boot/efi" =
     { device = "/dev/disk/by-uuid/FA49-7E4A";
       fsType = "vfat";
     };
