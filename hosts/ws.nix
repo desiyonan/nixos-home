@@ -25,14 +25,14 @@
          useDHCP = true;
          name = "wlan0";
        };
-       #enp0s20f0u11u1 = {
-       #  useDHCP = true;
-       #  name = "eth0";
-       #};
-       #enp0s20f0u13u1 = {
-       #  useDHCP = true;
-       #  name = "eth1";
-       #};
+       enp0s20f0u11u1 = {
+        useDHCP = true;
+        name = "eth0";
+       };
+       enp0s20f0u13u1 = {
+        useDHCP = true;
+        name = "eth1";
+       };
     };
     wireless = {
       enable = true;
@@ -55,11 +55,6 @@
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/7aaabf7b-8b28-4feb-b60a-81cb35968663";
       fsType = "ext4";
-    };
-
-  fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/FA49-7E4A";
-      fsType = "vfat";
     };
 
   fileSystems."/boot" =
