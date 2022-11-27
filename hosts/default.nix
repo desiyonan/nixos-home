@@ -1,4 +1,4 @@
 {
-  wl = import ./wll.nix;
-  ws = import ./wss.nix;
+  wl = import ./wl.nix;
+  ws = import ./ws.nix;
 }
