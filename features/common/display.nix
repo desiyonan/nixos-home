@@ -3,7 +3,7 @@
 {
 #   programs.xwayland.enable = true;
 #   programs.qt5ct.enable = true;
-  qt5.platformTheme = "kde";
+#  qt5.platformTheme = "qt5ct";
   services = {
     xserver = {
       enable = true;
@@ -22,6 +22,7 @@
 
   environment = {
     systemPackages = with pkgs; [
+      qt5ct
       # mesa
       # weston
       # libdrm

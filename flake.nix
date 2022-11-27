@@ -3,8 +3,8 @@
 
   inputs = {
     # https://status.nixos.org/
-    # nixpkgs.url = "github:nixos/nixpkgs/ff9efb0724de";
-    nixpkgs.url = "github:nixos/nixpkgs/ba187fbdc5e3";
+    # nixpkgs.url = "github:nixos/nixpkgs/ba187fbdc5e3";
+    nixpkgs.url = "github:nixos/nixpkgs/040c6d8374d0";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,7 +51,7 @@
         wl = utils.host.mkHost  hosts.wl defaultUsers;
         ws = utils.host.mkHost (hosts.ws // {
             services = {
-                nvidia-offload.enable = true;
+                nvidia-offload.enable = false;
             };
         }) defaultUsers;
       };

@@ -9,7 +9,7 @@
     pkgs.gh
     pkgs.vscode
 
-    mpkgs.idea-ultimate
+    # mpkgs.idea-ultimate
     # mpkgs.latte-dock
   ];
 

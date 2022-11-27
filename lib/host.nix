@@ -51,8 +51,19 @@ with builtins;
         boot.kernelModules = kernelMods;
         boot.kernelParams = kernelParams;
         boot.kernelPackages = kernelPackage;
-        boot.loader.systemd-boot.enable = true;
-        boot.loader.efi.canTouchEfiVariables = true;
+        boot.loader = {
+          systemd-boot.enable = true;
+          efi = {
+            canTouchEfiVariables = true;
+            efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+          };
+#        grub = {
+#          efiSupport = true;
+          #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+#         device = "nodev";
+#        };
+  };
+
         hardware.opengl.enable = true;
 
         systemConfig = systemConfig;
@@ -73,7 +84,7 @@ with builtins;
         fileSystems = fs;
         swapDevices = swap;
 
-        system.stateVersion = "21.05";
+        system.stateVersion = "22.05";
       }
     ];
   };
