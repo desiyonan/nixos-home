@@ -7,11 +7,11 @@
     # "https://mirrors.ustc.edu.cn/nix-channels/store"
     # "https://cache.nixos.org/"
     # ];
-    package = pkgs.nixVersions.stable;
-#     extraOptions =
-#       ''
-#         experimental-features = nix-command flakes
-#       '';
+    # extraOptions =
+    # ''
+    #   experimental-features = nix-command flakes
+    # '';
+    # package = pkgs.nixVersions.stable;
     gc = {
       automatic = true;
       options = "--delete-older-than 7d";
@@ -24,6 +24,13 @@
       experimental-features = [ "nix-command" "flakes" ];
     };
   };
-  nixpkgs.config.allowUnfree = true;
+
+  nixpkgs.config = {
+    permittedInsecurePackages = [
+      "qtwebkit-5.212.0-alpha4"
+    ];
+
+    allowUnfree = true;
+  };
   # nixpkgs.config.allowBroken = true;
 }
