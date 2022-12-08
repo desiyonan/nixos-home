@@ -1,4 +1,4 @@
-{ system, pkgs, lib, mpkgs, home, nixpkgs, ...}:
+{ system, pkgs, lib, mpkgs, nixpkgs, ...}:
 rec
 {
   # user = import ./user.nix { inherit system pkgs lib home-manager;};
