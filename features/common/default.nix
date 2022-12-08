@@ -44,9 +44,9 @@
     gnome.gnome-keyring
     ntfs3g
 
-    libsForQt5.full
-    libsForQt5.qt5.qttools
-    libsForQt5.krdc
+    # libsForQt5.full
+    # libsForQt5.qt5.qttools
+    # libsForQt5.krdc
     inetutils
     jq
 
