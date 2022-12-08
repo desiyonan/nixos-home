@@ -5,10 +5,10 @@
     # https://status.nixos.org/
     # nixpkgs.url = "github:nixos/nixpkgs/ba187fbdc5e3";
     nixpkgs.url = "github:nixos/nixpkgs/040c6d8374d0";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # home-manager = {
+      # url = "github:nix-community/home-manager";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    # };
     nixos-cn = {
       url = "github:nixos-cn/flakes";
       # 强制 nixos-cn 和该 flake 使用相同版本的 nixpkgs
@@ -17,7 +17,7 @@
 
   };
 
-  outputs = { self, home-manager, nixpkgs, nixos-cn, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-cn, ... }@inputs:
     let
       inherit (nixpkgs) lib;
 
@@ -33,7 +33,7 @@
       };
 
       utils = import ./lib {
-        inherit system pkgs lib mpkgs home-manager nixpkgs ;
+        inherit system pkgs lib mpkgs nixpkgs ;
       };
       users = import ./users {inherit pkgs;};
       hosts = import ./hosts ;

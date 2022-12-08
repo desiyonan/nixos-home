@@ -8,9 +8,6 @@
     pkgs.git
     pkgs.gh
     pkgs.vscode
-
-    # mpkgs.idea-ultimate
-    # mpkgs.latte-dock
   ];
 
 }

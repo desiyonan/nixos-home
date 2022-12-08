@@ -4,20 +4,10 @@
   i18n = {
     inputMethod = {
       enabled = "fcitx5" ;
-      # enabled = "ibus" ;
-      # ibus.panel = "${pkgs.plasma5Packages.plasma-desktop}/lib/libexec/kimpanel-ibus-panel";
-      # ibus.engines = with pkgs.ibus-engines;
-      # [
-      #   table-chinese
-      #   libpinyin
-      #   uniemoji
-      # ];
       fcitx5.addons = with pkgs; [
         fcitx5-chinese-addons
         fcitx5-configtool
         fcitx5-m17n
-        fcitx5-rime
-        libsForQt5.fcitx5-qt
       ];
     };
   };
