@@ -97,7 +97,7 @@
     sessionVariables = {
       DOCKER_HOST = "dk.dnfn.tech:5732";
       QT_DEBUG_PLUGINS= "1";
-      QT_QPA_PLATFORMTHEME="qt5ct";
+      # QT_QPA_PLATFORMTHEME="qt5ct";
       # QT_QPA_PLATFORM="wayland";
     };
   };

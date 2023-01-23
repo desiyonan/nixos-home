@@ -51,7 +51,7 @@
         wl = utils.host.mkHost  hosts.wl defaultUsers;
         ws = utils.host.mkHost (hosts.ws // {
             services = {
-                nvidia-offload.enable = false;
+                nvidia-offload.enable = true;
             };
         }) defaultUsers;
       };

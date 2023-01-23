@@ -57,7 +57,7 @@ with builtins;
             canTouchEfiVariables = true;
             efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
           };
-  };
+        };
 
         hardware.opengl.enable = true;
 
@@ -79,7 +79,7 @@ with builtins;
         fileSystems = fs;
         swapDevices = swap;
 
-        system.stateVersion = "22.05";
+        # system.stateVersion = "22.05";
       }
     ];
   };
