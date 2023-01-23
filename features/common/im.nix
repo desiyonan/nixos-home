@@ -12,24 +12,21 @@
     };
   };
 
-  # environment = {
-  #    systemPackages = with pkgs; [
-  #     #  fcitx5-configtool
-  #     #  fcitx5-m17n
-  #     # libsForQt5.fcitx5-qt
-  #   ];
-  #   variables = {
-  #     INPUT_METHOD= lib.mkForce "fcitx";
-  #     GTK_IM_MODULE = lib.mkForce "fcitx";
-  #     QT_IM_MODULE = lib.mkForce "fcitx";
-  #     XMODIFIERS = lib.mkForce ''@im=fcitx'';
-  #   };
-  #   sessionVariables = {
-  #     INPUT_METHOD= lib.mkForce "fcitx";
-  #     GTK_IM_MODULE = lib.mkForce "fcitx";
-  #     XMODIFIERS = lib.mkForce ''@im=fcitx'';
-  #     QT_IM_MODULE = lib.mkForce "fcitx";
-  #   };
-  # };
+  environment = {
+    variables = {
+      INPUT_METHOD= "fcitx";
+      GTK_IM_MODULE = "fcitx";
+      QT_IM_MODULE = "fcitx";
+      XMODIFIERS = ''@im=fcitx'';
+    };
+    sessionVariables = {
+      # ISSUE: fcitx5 don't work on wayland (https://github.com/NixOS/nixpkgs/issues/129442)
+      NIX_PROFILES = "${lib.concatStringsSep " " (lib.reverseList config.environment.profiles)}";
+      INPUT_METHOD= "fcitx";
+      GTK_IM_MODULE = "fcitx";
+      QT_IM_MODULE =  "fcitx";
+      XMODIFIERS =  ''@im=fcitx'';
+    };
+  };
 
 }
