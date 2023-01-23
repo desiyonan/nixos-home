@@ -80,7 +80,7 @@
     wpsoffice
     xournal
 
-    latte-dock
+    # latte-dock
     # mpkgs.latte-dock
     # mpkgs.qv2ray-full
     # mpkgs.wechat-uos
