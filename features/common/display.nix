@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-#   programs.xwayland.enable = true;
+  programs.xwayland.enable = true;
 #   programs.qt5ct.enable = true;
   services = {
     xserver = {
