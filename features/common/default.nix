@@ -62,6 +62,9 @@
     mcfly
     nix-index
     netease-cloud-music-gtk
+
+    opencv
+    
     p7zip
     pciutils
     procs
