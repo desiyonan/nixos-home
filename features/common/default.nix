@@ -66,7 +66,9 @@
     pciutils
     procs
 
+    rustup
     refind
+
     tree
     tmux
     thunderbird
