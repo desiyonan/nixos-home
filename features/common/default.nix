@@ -25,6 +25,10 @@
     bind
     bat
 
+    cmake
+    clang
+    clangStdenv
+
     direnv
     docker-client
     dhcp
@@ -64,7 +68,7 @@
     netease-cloud-music-gtk
 
     opencv
-    
+
     p7zip
     pciutils
     procs
@@ -85,6 +89,8 @@
     wpsoffice
     xournal
 
+    llvm
+    libclang
     latte-dock
     # mpkgs.latte-dock
     # mpkgs.qv2ray-full
@@ -96,12 +102,14 @@
     variables = {
       DOCKER_HOST = "dk.dnfn.tech:5732";
       QT_DEBUG_PLUGINS= "1";
+      LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       # QT_QPA_PLATFORMTHEME="qt5ct";
       # QT_QPA_PLATFORM="wayland";
     };
     sessionVariables = {
       DOCKER_HOST = "dk.dnfn.tech:5732";
       QT_DEBUG_PLUGINS= "1";
+      LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       # QT_QPA_PLATFORMTHEME="qt5ct";
       # QT_QPA_PLATFORM="wayland";
     };
