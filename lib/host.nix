@@ -79,7 +79,7 @@ with builtins;
         fileSystems = fs;
         swapDevices = swap;
 
-        # system.stateVersion = "22.05";
+        system.stateVersion = "22.11";
       }
     ];
   };
