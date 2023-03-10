@@ -18,17 +18,17 @@
     };
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      qt5ct
-      # qt5.full
-      qt6.full
-    ];
-    variables = {
-      MOZ_ENABLE_WAYLAND="1";
-    };
-    sessionVariables = {
-      MOZ_ENABLE_WAYLAND="1";
-    };
-  };
+  # environment = {
+  #   systemPackages = with pkgs; [
+  #     qt5ct
+  #     # qt5.full
+  #     qt6.full
+  #   ];
+  #   variables = {
+  #     MOZ_ENABLE_WAYLAND="1";
+  #   };
+  #   sessionVariables = {
+  #     MOZ_ENABLE_WAYLAND="1";
+  #   };
+  # };
 }
