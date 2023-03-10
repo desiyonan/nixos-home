@@ -1,4 +1,4 @@
-{ system, pkgs, lib, user, mpkgs, nixpkgs, ... }:
+{ system, pkgs, lib, user, mpkgs, nixpkgs, dotfiles, nixos-cn, ... }:
 with builtins;
 {
   mkHost = {
@@ -43,6 +43,12 @@ with builtins;
         imports = [
           ../modules
           ../features/common
+          # 将nixos-cn flake提供的registry添加到全局registry列表中
+          # 可在`nixos-rebuild switch`之后通过`nix registry list`查看
+          # nixos-cn.nixosModules.nixos-cn-registries
+
+          # 引入nixos-cn flake提供的NixOS模块
+          # nixos-cn.nixosModules.nixos-cn
         ] ++ sys_users;
 
         hardware.enableRedistributableFirmware = lib.mkDefault true;
@@ -79,6 +85,7 @@ with builtins;
         fileSystems = fs;
         swapDevices = swap;
 
+        # system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
         system.stateVersion = "22.11";
       }
     ];

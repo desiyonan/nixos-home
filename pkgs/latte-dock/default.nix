@@ -1,48 +1,67 @@
-{ dotfiles, pkgs, lib, cmake, xorg, fetchurl
-, extra-cmake-modules }:
+{ mkDerivation, lib, cmake, xorg, plasma-framework, plasma-wayland-protocols, fetchFromGitLab,
+extra-cmake-modules, karchive, kwindowsystem, qtx11extras, qtwayland, kcrash, knewstuff, wayland,
+dotfiles, pkgs
+ }:
 
-with pkgs.libsForQt5;
 let
   conf = dotfiles.latte-dock.conf;
 in
 mkDerivation rec {
   pname = "latte-dock";
-  version = "0.10.8";
+  version = "unstable-2022-09-06";
 
-  src = fetchurl {
-    url = "https://download.kde.org/stable/${pname}/${pname}-${version}.tar.xz";
-    sha256 = "00aab59d97b877f43292fc082c8bfe7f634b265cbee8ab5a2d2c78e0414c912a";
-    name = "${pname}-${version}.tar.xz";
+  src = fetchFromGitLab {
+    domain = "invent.kde.org";
+    owner = "plasma";
+    repo = "latte-dock";
+    rev = "cd36798a61a37652eb549d7dfcdf06d2028eddc4";
+    sha256 = "sha256-X2PzI2XJje4DpPh7gTtYnMIwerR1IDY53HImvEtFmF4=";
   };
 
-  buildInputs = [
+  buildInputs = [ 
     plasma-framework
-    xorg.libpthreadstubs
+    plasma-wayland-protocols
+    qtwayland
+    xorg.libpthreadstubs 
     xorg.libXdmcp
-    xorg.libSM
-  ];
+    xorg.libSM 
+    wayland 
+    ];
 
-  nativeBuildInputs =
-  with pkgs.libsForQt5;
-  [ extra-cmake-modules
+  # nativeBuildInputs =
+  # with pkgs.libsForQt5;
+  # [ extra-cmake-modules
+  #   cmake
+  #   karchive
+  #   kwindowsystem
+  #   qtx11extras
+  #   kcrash
+  #   knewstuff
+  #   qt5.qttools
+  #   qt5.wrapQtAppsHook
+  # ];
+
+
+  nativeBuildInputs = [ 
+    extra-cmake-modules
     cmake
     karchive
     kwindowsystem
-    qtx11extras
-    kcrash
-    knewstuff
-    qt5.qttools
-    qt5.wrapQtAppsHook
+    qtx11extras 
+    kcrash 
+    knewstuff 
   ];
-  # patches = [
-  #   ./0001-close-user-autostart.patch
-  # ];
-  fixupPhase = ''
+
+  patches = [
+    ./0001-close-user-autostart.patch
+  ];
+  
+  postInstall = ''
     mkdir -p $out/etc/xdg/autostart
     cp $out/share/applications/org.kde.latte-dock.desktop $out/etc/xdg/autostart
-    cp ${conf} $out/share/plasma/shells/org.kde.latte.shell/contents/templates/Common.layout.latte
-    wrapQtApp $out/bin/latte-dock
+    cp ${conf} $out/share/plasma/shells/org.kde.latte.shell/contents/templates/Custom.layout.latte
     '';
+    # wrapQtApp $out/bin/latte-dock
     # qtWrapperArgs = [
       # ''--set-default QT_QPA_PLATFORMTHEME qt5ct''
       # ''--set-default QT_QPA_PLATFORM xcb''
@@ -53,7 +72,7 @@ mkDerivation rec {
     homepage = "https://github.com/psifidotos/Latte-Dock";
     license = licenses.gpl2;
     platforms = platforms.unix;
-    maintainers = [ maintainers.benley maintainers.ysndr ];
+    maintainers = [ maintainers.ysndr ];
   };
 }
 

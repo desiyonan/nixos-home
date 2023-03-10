@@ -26,8 +26,9 @@
     bat
 
     cmake
-    clang
-    clangStdenv
+    # clang
+    llvmPackages.clangUseLLVM
+    llvmPackages.libclang
 
     direnv
     docker-client
@@ -62,10 +63,13 @@
     kate
     kdiff3
     kompare
+
     mutt
     mcfly
+    # musl
+    
     nix-index
-    netease-cloud-music-gtk
+    # netease-cloud-music-gtk
 
     opencv
 
@@ -89,10 +93,11 @@
     wpsoffice
     xournal
 
-    llvm
-    libclang
-    latte-dock
-    # mpkgs.latte-dock
+    # llvm
+    # libclang
+    # latte-dock
+    mpkgs.latte-dock
+    mpkgs.idea-ultimate
     # mpkgs.qv2ray-full
     # mpkgs.wechat-uos
     # mpkgs.netease-cloud-music
