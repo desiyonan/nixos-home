@@ -11,7 +11,7 @@
       # pinentryFlavor = "curses";
     };
   };
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
   environment.systemPackages = with pkgs; [
     # pass
   ];

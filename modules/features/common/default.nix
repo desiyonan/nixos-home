@@ -13,7 +13,7 @@
 
     ./openssh.nix
 
-    ../env/dev.nix
+    # ../env/dev.nix
   ];
 
   environment.systemPackages =  with pkgs; [
@@ -31,12 +31,12 @@
     llvmPackages.libclang
 
     direnv
-    docker-client
+    # docker-client
     dhcp
     dog
     duf
 
-    firefox
+    # firefox
     flameshot
     fzf
     fd
@@ -44,9 +44,8 @@
 
     gcc
     glibc
-    go
-    google-chrome
-    gnome.gnome-keyring
+    # google-chrome
+    # gnome.gnome-keyring
     ntfs3g
 
     # libsForQt5.full
@@ -60,7 +59,6 @@
     httpie
     hexyl
 
-    kate
     kdiff3
     kompare
 
@@ -77,7 +75,6 @@
     pciutils
     procs
 
-    rustup
     refind
 
     tree
@@ -87,8 +84,6 @@
     #softmaker-office #收费不好用
     unar
     vim
-    # vivaldi
-    # vivaldi-ffmpeg-codecs
     wget
     wpsoffice
     xournal

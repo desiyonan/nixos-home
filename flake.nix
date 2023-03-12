@@ -26,7 +26,7 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-        overlays = [];
+        # overlays = [];
       };
 
       dotfiles = import ./dotfiles {inherit pkgs;};

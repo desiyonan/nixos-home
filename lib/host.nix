@@ -28,21 +28,21 @@ with builtins;
     specialArgs = { inherit pkgs mpkgs dotfiles; };
     modules = [
       nixpkgs.nixosModules.notDetected
-      (
-        { config, pkgs, ...}:
-        let
-          overlay-mpkgs = final: prev: {
-            mpkgs = mpkgs;
-          };
-        in
-          {
-            nixpkgs.overlays = [overlay-mpkgs];
-          }
-      )
+      # (
+      #   { config, pkgs, ...}:
+      #   let
+      #     overlay-mpkgs = final: prev: {
+      #       mpkgs = mpkgs;
+      #     };
+      #   in
+      #     {
+      #       nixpkgs.overlays = [overlay-mpkgs];
+      #     }
+      # )
       {
         imports = [
           ../modules
-          ../features/common
+          # ../features/common
           # 将nixos-cn flake提供的registry添加到全局registry列表中
           # 可在`nixos-rebuild switch`之后通过`nix registry list`查看
           # nixos-cn.nixosModules.nixos-cn-registries
@@ -81,6 +81,7 @@ with builtins;
         nix.settings.max-jobs = lib.mkDefault cpuCores;
 
         services = services;
+        features.enable = true;
 
         fileSystems = fs;
         swapDevices = swap;

@@ -1,6 +1,7 @@
 { pkgs, ...}:
 {
   imports = [
+    ./features
     ./nvidia-offload.nix
   ];
 
