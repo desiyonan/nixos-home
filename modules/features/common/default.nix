@@ -94,7 +94,7 @@
     # latte-dock
     mpkgs.latte-dock
     mpkgs.idea-ultimate
-    # mpkgs.qv2ray-full
+    mpkgs.qv2ray-full
     # mpkgs.wechat-uos
     # mpkgs.netease-cloud-music
   ];
