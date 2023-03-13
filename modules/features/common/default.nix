@@ -95,6 +95,7 @@
     mpkgs.latte-dock
     mpkgs.idea-ultimate
     mpkgs.qv2ray-full
+    clash
     # mpkgs.wechat-uos
     # mpkgs.netease-cloud-music
   ];
