@@ -88,6 +88,7 @@
     wpsoffice
     xournal
 
+    zip
     # llvm
     # libclang
     # latte-dock
