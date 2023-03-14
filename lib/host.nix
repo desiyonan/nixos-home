@@ -45,10 +45,10 @@ with builtins;
           # ../features/common
           # 将nixos-cn flake提供的registry添加到全局registry列表中
           # 可在`nixos-rebuild switch`之后通过`nix registry list`查看
-          # nixos-cn.nixosModules.nixos-cn-registries
+          nixos-cn.nixosModules.nixos-cn-registries
 
           # 引入nixos-cn flake提供的NixOS模块
-          # nixos-cn.nixosModules.nixos-cn
+          nixos-cn.nixosModules.nixos-cn
         ] ++ sys_users;
 
         hardware.enableRedistributableFirmware = lib.mkDefault true;

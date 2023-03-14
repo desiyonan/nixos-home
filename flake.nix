@@ -10,19 +10,19 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     # };
     # nixos-cn = {};
-    # nixos-cn = {
-    #   # url = "github:nixos-cn/flakes";
-    #   url = "github:nixos-cn/flakes/0bd347e7b01c590b9adb602847587bb2d5216bbc";
-    #   # 强制 nixos-cn 和该 flake 使用相同版本的 nixpkgs
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    nixos-cn = {
+      # url = "github:nixos-cn/flakes";
+      url = "github:nixos-cn/flakes/0bd347e7b01c590b9adb602847587bb2d5216bbc";
+      # 强制 nixos-cn 和该 flake 使用相同版本的 nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-cn, ... }@inputs:
     let
       inherit (nixpkgs) lib;
-      nixos-cn = {};
+      # nixos-cn = {};
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;

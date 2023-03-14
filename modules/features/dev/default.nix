@@ -12,4 +12,7 @@
     ./rust
   ];
 
+  environment.systemPackages = with pkgs;[
+    feishu
+  ];
 }
