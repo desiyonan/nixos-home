@@ -4,7 +4,7 @@
   environment.systemPackages = [
     pkgs.git
     pkgs.gh
-    pkgs.vscode
+    pkgs.subversionClient
   ];
 
 }
