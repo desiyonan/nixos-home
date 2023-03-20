@@ -6,6 +6,7 @@ let
   common = import ./common;
   container = import ./container;
   dev = import ./dev;
+  system = import ./system;
 in {
   options.features = {
     enable = mkOption {
@@ -29,6 +30,7 @@ in {
     common
     container
     dev
+    system
   ] ;
 #    if cfg.enable then [
         # common

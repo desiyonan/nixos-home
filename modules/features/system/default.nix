@@ -4,6 +4,7 @@
 
   environment.systemPackages = with pkgs;[
     cargo
+    gparted
     rustup
   ];
   systemd.extraConfig = 
