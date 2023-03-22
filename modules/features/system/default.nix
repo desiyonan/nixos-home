@@ -3,13 +3,14 @@
 {
 
   environment.systemPackages = with pkgs;[
+    iw
     cargo
     gparted
     rustup
   ];
   systemd.extraConfig = 
   ''
-  DefaultTimeoutStopSec=20s
+  DefaultTimeoutStopSec=10s
   '';
 
 }

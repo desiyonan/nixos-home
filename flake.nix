@@ -52,6 +52,7 @@
       nixosConfigurations = {
         wl = utils.host.mkHost hosts.wl defaultUsers;
         ws = utils.host.mkHost hosts.ws defaultUsers;
+        wss = utils.host.mkHost hosts.wss defaultUsers;
       };
 
     };
