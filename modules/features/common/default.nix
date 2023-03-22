@@ -96,7 +96,7 @@
     # libclang
     # latte-dock
     mpkgs.latte-dock
-    mpkgs.idea-ultimate
+    # mpkgs.idea-ultimate
     mpkgs.qv2ray-full
     clash
     # mpkgs.wechat-uos

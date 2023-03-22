@@ -43,7 +43,7 @@ in {
 
   config = mkIf(cfg.enable) {
     environment.systemPackages = with mpkgs; [
-    
+      mpkgs.wechat-uos
     ];
   };
 }

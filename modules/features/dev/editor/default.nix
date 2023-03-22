@@ -7,7 +7,8 @@
     vim
 
     kate
-    mpkgs.idea-ultimate
+    jetbrains.idea-ultimate
+    # mpkgs.idea-ultimate
   ];
 
 }
