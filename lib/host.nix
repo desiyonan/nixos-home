@@ -66,6 +66,14 @@ with builtins;
         };
 
         hardware.opengl.enable = true;
+        hardware.opengl.driSupport32Bit = true;
+        hardware.opengl.extraPackages = with pkgs; [ 
+          intel-ocl 
+          intel-media-driver # LIBVA_DRIVER_NAME=iHD 
+          vaapiIntel          # LIBVA_DRIVER_NAME=i965 （较旧但适用于 Firefox/Chromium） 
+          vaapiVdpau
+          libvdpau-va-gl
+          ];
 
         systemConfig = systemConfig;
         environment.systemPackages = systemPackages;

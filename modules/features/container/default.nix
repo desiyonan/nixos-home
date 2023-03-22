@@ -8,4 +8,8 @@
     ./etcd
   ];
 
+  environment.systemPackages = with pkgs; [
+    rancher
+  ]
+
 }

@@ -17,6 +17,20 @@
       };
     };
   };
+  programs.dconf.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    vaapiIntel
+    libvdpau-va-gl 
+    vaapiVdpau 
+    intel-ocl 
+    mesa 
+    glxinfo 
+  ];
+
+  environment.variables = {
+    VDPAU_DRIVER = pkgs.lib.mkIf config.hardware.opengl.enable (pkgs.lib.mkDefault "va_gl");
+  };
 
   # environment = {
   #   systemPackages = with pkgs; [
