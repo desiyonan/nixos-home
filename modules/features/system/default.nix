@@ -3,6 +3,7 @@
 {
 
   environment.systemPackages = with pkgs;[
+    xclip
     iw
     cargo
     gparted

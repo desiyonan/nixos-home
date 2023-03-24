@@ -31,6 +31,7 @@ in {
     container
     dev
     system
+    ./cloud
   ] ;
 #    if cfg.enable then [
         # common
