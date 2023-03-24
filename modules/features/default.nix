@@ -1,4 +1,4 @@
-{ config, pkgs, mpkgs, lib, ... }:
+{ config, pkgs, mpkgs, lib, system, ... }:
 with lib;
 
 let
@@ -6,7 +6,7 @@ let
   common = import ./common;
   container = import ./container;
   dev = import ./dev;
-  system = import ./system;
+  sys = import ./system;
 in {
   options.features = {
     enable = mkOption {
@@ -30,7 +30,7 @@ in {
     common
     container
     dev
-    system
+    sys
     ./cloud
   ] ;
 #    if cfg.enable then [

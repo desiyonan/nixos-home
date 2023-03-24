@@ -9,7 +9,7 @@
 
   programs.git = {
     enable = true;
-    userName  = "dengfan";
-    userEmail = "1310332521@qq.com";
+    # userName  = "dengfan";
+    # userEmail = "1310332521@qq.com";
   };
 }

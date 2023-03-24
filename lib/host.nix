@@ -25,7 +25,7 @@ with builtins;
     sys_users = (map (u: user.mkSystemUser u) users);
   in lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit pkgs mpkgs dotfiles; };
+    specialArgs = { inherit pkgs mpkgs dotfiles system; };
     modules = [
       nixpkgs.nixosModules.notDetected
       # (
