@@ -32,9 +32,6 @@ in {
       # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
       nvidiaBusId = cfg.nvidiaBusId;
     };
-    hardware.opengl.enable = true;
-    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-    hardware.nvidia.forceFullCompositionPipeline = true;
 
     environment.systemPackages = with mpkgs; [
       # nvidia-offload
@@ -45,19 +42,11 @@ in {
         export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
         export __GLX_VENDOR_LIBRARY_NAME=nvidia
         export __VK_LAYER_NV_optimus=NVIDIA_only
-        exec "$@"
+        exec -a "$0" "$@"
         ''
       )
     ];
 
-    services.xserver.videoDrivers = [ 
-      "nvidia" 
-      "amdgpu"
-      "radeon"
-      "nouveau"
-      "modesetting"
-      "fbdev"
-      # "amdgpu-pro"
-    ];
+    services.xserver.videoDrivers = [ "nvidia" ];
   };
 }

@@ -86,9 +86,6 @@
     vim
     wget
     wpsoffice
-    weston
-    qt6.qtwayland
-    glxinfo
     xournal
 
     zip
