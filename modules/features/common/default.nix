@@ -25,11 +25,13 @@
     bind
     bat
 
+    gnumake
     cmake
-    # clang
+    clang
     llvmPackages.clangUseLLVM
     llvmPackages.libclang
-
+  
+    iptables
     direnv
     # docker-client
     dhcp
@@ -70,6 +72,7 @@
     # netease-cloud-music-gtk
 
     opencv
+    openssl
 
     p7zip
     pciutils

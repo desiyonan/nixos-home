@@ -16,16 +16,22 @@ let
   k3s_1_24 = old_pkgs.k3s;
 in
 {
+  # imports = [
+  # ];
   networking.firewall.allowedTCPPorts = [ 6443 ];
   services.k3s.enable = true;
   services.k3s.role = "server";
-  services.k3s.extraFlags = toString [
+  # services.k3s.extraFlags = toString [
     # "--kubelet-arg=v=4" # Optionally add additional args to k3s
-  ];
+  # ];
   services.k3s.package = k3s_1_24;
 
   environment.systemPackages =  with pkgs; [
     # k3s
     k3s_1_24
+    kube3d
   ];
+  # TODO server 分开
+  # networking.firewall.allowedTCPPorts = [ 6443 ];
+  services.k3s.extraFlags = "--disable traefik --flannel-backend=host-gw --snapshotter=zfs --container-runtime-endpoint unix:///run/containerd/containerd.sock";
 }

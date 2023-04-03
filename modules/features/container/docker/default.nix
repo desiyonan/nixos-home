@@ -3,7 +3,9 @@
 {
 
   environment.systemPackages =  with pkgs; [
+    docker
     docker-client
+    containerd
   ];
 
   environment = {
