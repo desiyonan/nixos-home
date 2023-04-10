@@ -33,6 +33,7 @@
   
     iptables
     direnv
+    nix-direnv
     # docker-client
     dhcp
     dog
@@ -77,6 +78,10 @@
     p7zip
     pciutils
     procs
+    pipewire
+    # pipewire-media-session
+    wireplumber
+
 
     refind
 

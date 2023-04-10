@@ -20,7 +20,7 @@
           fi
         fi
       '';
-    shellInit="eval '$(direnv hook bash)'";
+    # shellInit="eval '$(direnv hook bash)'";
   };
 
   # environment.binsh = "${pkgs.bash}/bin/bash";
