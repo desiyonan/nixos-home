@@ -25,7 +25,7 @@ with builtins;
     sys_users = (map (u: user.mkSystemUser u) users);
   in lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit pkgs mpkgs dotfiles system; };
+    specialArgs = { inherit pkgs mpkgs dotfiles system systemConfig; };
     modules = [
       nixpkgs.nixosModules.notDetected
       # (
@@ -67,7 +67,7 @@ with builtins;
 
         hardware.opengl.enable = true;
 
-        systemConfig = systemConfig;
+        # systemConfig = systemConfig;
         environment.systemPackages = systemPackages;
 
         networking.hostName = "${name}";
@@ -81,7 +81,7 @@ with builtins;
         nix.settings.max-jobs = lib.mkDefault cpuCores;
 
         services = services;
-        features.enable = true;
+        # features.enable = true;
 
         fileSystems = fs;
         swapDevices = swap;

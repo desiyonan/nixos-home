@@ -2,7 +2,7 @@
 , pkgs
 ,system
 , ...
-}: 
+}:
 
 let
 
@@ -11,7 +11,7 @@ let
     sha256 = "19a98q762lx48gxqgp54f5chcbq4cpbq85lcinpd0gh944qindmm";
   }) { inherit system; };
   k3s_1_24 = old_pkgs.k3s;
-in 
+in
 {
   config = {
     services.k3s.enable = true;
@@ -36,6 +36,11 @@ in
     systemd.services.k3s = {
       wants = [ "containerd.service" ];
       after = [ "containerd.service" ];
+    };
+
+    systemd.services.containerd.environment = {
+      HTTP_PROXY = "http://127.0.0.1:7890";
+      HTTPS_PROXY = "http://127.0.0.1:7890";
     };
 
     systemd.services.containerd.serviceConfig = {

@@ -8,27 +8,32 @@
   wifi = [ "wlp0s20f3" ];
 
   fs = {
-    "/" =
-    { device = "/dev/disk/by-uuid/98ea2a72-1ef8-4449-b08d-698ca3e135df";
+    "/" = {
+      device = "/dev/disk/by-uuid/18c5b20e-6a1b-4a57-8d17-5f2896e7a83a";
       fsType = "ext4";
     };
-    "/boot/efi" =
-    { device = "/dev/disk/by-uuid/FA49-7E4A";
+    "/nix" = {
+      device = "/dev/disk/by-uuid/7a9e469e-1b7c-40bf-9053-492fe921a528";
+      fsType = "ext4";
+    };
+    "/boot/efi" = {
+      device = "/dev/disk/by-uuid/35AE-5282";
       fsType = "vfat";
     };
-    "/data" =
-    { device = "/dev/disk/by-uuid/09C1B27DA5EB573A";
+    "/data" = {
+      device = "/dev/disk/by-uuid/57C1A6B90246AEF0";
       fsType = "ntfs-3g";
       # remove_hiberfile
     };
   };
 
-  swap =
-  [ { device = "/dev/disk/by-uuid/e9a24aef-1fac-45ef-af49-aba05e2426f9"; }
+  swap =[
+    { device = "/dev/disk/by-uuid/af337d1b-bb00-4715-9b78-2b770dc9aec6"; }
   ];
 
   services = {
     nvidia-offload.enable = true;
+    clash.enable = true;
   };
 
   # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
