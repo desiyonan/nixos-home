@@ -34,6 +34,7 @@
   services = {
     nvidia-offload.enable = true;
     clash.enable = true;
+    dockerd.enable =true;
   };
 
   # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

@@ -30,7 +30,7 @@
     clang
     llvmPackages.clangUseLLVM
     llvmPackages.libclang
-  
+
     iptables
     direnv
     nix-direnv
@@ -40,6 +40,7 @@
     duf
 
     # firefox
+    filelight
     flameshot
     fzf
     fd
@@ -68,10 +69,11 @@
     mutt
     mcfly
     # musl
-    
+
     nix-index
     # netease-cloud-music-gtk
 
+    obs-studio
     opencv
     openssl
 

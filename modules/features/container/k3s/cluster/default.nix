@@ -15,7 +15,7 @@ in
 {
   config = {
     services.k3s.enable = true;
-    services.k3s.package = k3s_1_24;
+    # services.k3s.package = k3s_1_24;
     virtualisation.containerd.enable = true;
     virtualisation.containerd.settings = {
       version = 2;
@@ -39,6 +39,7 @@ in
     };
 
     systemd.services.containerd.environment = {
+      ALL_PROXY = "http://127.0.0.1:7890";
       HTTP_PROXY = "http://127.0.0.1:7890";
       HTTPS_PROXY = "http://127.0.0.1:7890";
     };
