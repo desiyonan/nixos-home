@@ -6,7 +6,7 @@
   hardware = {
     bluetooth = {
       enable = true;
-      settings.General.ControllerMode = "bredr";
+      settings.General.ControllerMode = "dual";
     };
 
     pulseaudio.enable = true;

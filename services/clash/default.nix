@@ -36,6 +36,9 @@ in {
         "multi-user.target"
         "network-online.target"
       ];
+      wantedBy = [
+        "multi-user.target"
+      ];
       after = [
         "network-online.target"
       ];

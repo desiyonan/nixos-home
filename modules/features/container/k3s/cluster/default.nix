@@ -14,7 +14,7 @@ let
 in
 {
   config = {
-    services.k3s.enable = true;
+    services.k3s.enable = false;
     # services.k3s.package = k3s_1_24;
     virtualisation.containerd.enable = true;
     virtualisation.containerd.settings = {
