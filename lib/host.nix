@@ -87,7 +87,7 @@ with builtins;
         swapDevices = swap;
 
         # system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
-        system.stateVersion = "22.11";
+        system.stateVersion = "23.05";
       }
     ];
   };

@@ -2,24 +2,15 @@
 
 {
   nix = {
-    # binaryCaches = [
-    # "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
-    # "https://mirrors.ustc.edu.cn/nix-channels/store"
-    # "https://cache.nixos.org/"
-    # ];
-    # extraOptions =
-    # ''
-    #   experimental-features = nix-command flakes
-    # '';
-    # package = pkgs.nixVersions.stable;
     gc = {
       automatic = true;
       options = "--delete-older-than 7d";
     };
     settings = {
       substituters = [
-        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
         "https://mirrors.ustc.edu.cn/nix-channels/store"
+        "https://mirror.sjtu.edu.cn/nix-channels/store"
+        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
       ];
       experimental-features = [ "nix-command" "flakes" ];
     };

@@ -3,8 +3,8 @@
 
   inputs = {
     # https://status.nixos.org/
-    # nixpkgs.url = "github:nixos/nixpkgs/ba187fbdc5e3";
-    nixpkgs.url = "github:nixos/nixpkgs/5528350186a9";
+    nixpkgs.url = "github:nixos/nixpkgs/5528350186a9"; #22.11
+    # nixpkgs.url = "github:nixos/nixpkgs/261abe8a44a7"; #23.05
     # home-manager = {
       # url = "github:nix-community/home-manager";
       # inputs.nixpkgs.follows = "nixpkgs";
