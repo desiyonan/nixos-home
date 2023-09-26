@@ -21,6 +21,9 @@
     appimage-run
     appimagekit
     anydesk
+    adb-sync-unstable
+    adbfs-rootless
+
     bash
     bind
     bat
@@ -28,17 +31,21 @@
     gnumake
     cmake
     clang
+    du-dust
+
+    lsof
+
     llvmPackages.clangUseLLVM
     llvmPackages.libclang
 
     iptables
-    direnv
     nix-direnv
     # docker-client
     dhcp
     dog
     duf
 
+    envsubst
     # firefox
     filelight
     flameshot
@@ -70,6 +77,7 @@
     mcfly
     # musl
 
+    ncdu
     nix-index
     # netease-cloud-music-gtk
 
@@ -84,8 +92,10 @@
     # pipewire-media-session
     wireplumber
 
-
+    redli
     refind
+
+    scrcpy
 
     tree
     tmux
@@ -97,6 +107,7 @@
     wget
     wpsoffice
     xournal
+    vlc
 
     zip
     # llvm
