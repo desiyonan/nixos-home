@@ -20,10 +20,9 @@
           fi
         fi
       '';
-    # shellInit="eval '$(direnv hook bash)'";
+    interactiveShellInit = ''eval "$(direnv hook bash)"'';
   };
 
   # environment.binsh = "${pkgs.bash}/bin/bash";
   # users.defaultUserShell = pkgs.bash;
-
 }

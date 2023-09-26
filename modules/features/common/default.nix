@@ -21,7 +21,7 @@
     appimage-run
     appimagekit
     anydesk
-    adb-sync-unstable
+    # adb-sync-unstable
     adbfs-rootless
 
     bash
@@ -38,6 +38,7 @@
     llvmPackages.clangUseLLVM
     llvmPackages.libclang
 
+    direnv
     iptables
     nix-direnv
     # docker-client
