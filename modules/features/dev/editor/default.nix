@@ -8,6 +8,7 @@
 
     kate
     jetbrains.idea-ultimate
+    jetbrains.pycharm-professional
     # mpkgs.idea-ultimate
   ];
 
