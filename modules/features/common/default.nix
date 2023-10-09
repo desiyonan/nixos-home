@@ -54,6 +54,7 @@
     fd
     fx
 
+    git-lfs
     gcc
     glibc
     # google-chrome
