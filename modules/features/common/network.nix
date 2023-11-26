@@ -6,6 +6,11 @@
   ];
 
   networking.enableIPv6 = false;
+  networking.proxy = {
+    allProxy = "http://localhost:7890";
+    httpProxy = "http://localhost:7890";
+    httpsProxy = "http://localhost:7890";
+  };
   services.resolved = {
     enable = true;
     dnssec = "false";

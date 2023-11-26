@@ -23,6 +23,7 @@
     anydesk
     # adb-sync-unstable
     adbfs-rootless
+    android-tools
 
     bash
     bind
@@ -34,7 +35,7 @@
     du-dust
 
     lsof
-
+    lshw
     llvmPackages.clangUseLLVM
     llvmPackages.libclang
 
@@ -125,14 +126,14 @@
 
   environment = {
     variables = {
-      DOCKER_HOST = "dk.dnfn.tech:5732";
+      # DOCKER_HOST = "dk.dnfn.tech:5732";
       QT_DEBUG_PLUGINS= "1";
       LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       # QT_QPA_PLATFORMTHEME="qt5ct";
       # QT_QPA_PLATFORM="wayland";
     };
     sessionVariables = {
-      DOCKER_HOST = "dk.dnfn.tech:5732";
+      # DOCKER_HOST = "dk.dnfn.tech:5732";
       QT_DEBUG_PLUGINS= "1";
       LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       # QT_QPA_PLATFORMTHEME="qt5ct";

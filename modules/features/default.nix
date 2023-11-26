@@ -32,15 +32,8 @@ in {
     dev
     sys
     ./cloud
+    ./nvidia-sync
   ] ;
-#    if cfg.enable then [
-        # common
-        # container
-        # dev
-    # ] 
-#   else
-    # [];
-
 
   config = mkIf(cfg.enable) {
     environment.systemPackages = with mpkgs; [

@@ -9,11 +9,11 @@
   ];
 
   environment = {
-    variables = {
-      DOCKER_HOST = "dk.dnfn.tech:5732";
-    };
-    sessionVariables = {
-      DOCKER_HOST = "dk.dnfn.tech:5732";
-    };
+    # variables = {
+    #   DOCKER_HOST = "dk.dnfn.tech:5732";
+    # };
+    # sessionVariables = {
+    #   DOCKER_HOST = "dk.dnfn.tech:5732";
+    # };
   };
 }

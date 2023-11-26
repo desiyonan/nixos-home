@@ -32,7 +32,8 @@
   ];
 
   services = {
-    nvidia-offload.enable = true;
+    # nvidia-offload.enable = true;
+    nvidia-sync.enable = true;
     clash.enable = true;
     dockerd.enable =true;
   };

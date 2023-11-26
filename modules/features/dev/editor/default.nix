@@ -9,6 +9,7 @@
     kate
     jetbrains.idea-ultimate
     jetbrains.pycharm-professional
+    jetbrains.reust-cover
     # mpkgs.idea-ultimate
   ];
 

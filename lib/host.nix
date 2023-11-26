@@ -65,7 +65,11 @@ with builtins;
           };
         };
 
-        hardware.opengl.enable = true;
+        hardware.opengl = {
+          enable = true;
+          driSupport = true;
+          driSupport32Bit = true;
+        };
 
         # systemConfig = systemConfig;
         environment.systemPackages = systemPackages;
@@ -87,7 +91,7 @@ with builtins;
         swapDevices = swap;
 
         # system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
-        system.stateVersion = "23.05";
+        system.stateVersion = "22.11";
       }
     ];
   };
