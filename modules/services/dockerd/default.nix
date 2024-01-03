@@ -6,7 +6,7 @@ let
 in {
   options.services.dockerd = {
     enable = mkOption {
-      description = "Enable Clash daemon Systemd Service";
+      description = "Enable Docker daemon Systemd Service";
       type = types.bool;
       default = false;
     };

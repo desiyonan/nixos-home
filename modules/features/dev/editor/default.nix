@@ -9,7 +9,8 @@
     kate
     jetbrains.idea-ultimate
     jetbrains.pycharm-professional
-    jetbrains.reust-cover
+    jetbrains.rust-rover
+    # rust-rover
     # mpkgs.idea-ultimate
   ];
 

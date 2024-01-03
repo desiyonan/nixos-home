@@ -43,7 +43,7 @@
     iptables
     nix-direnv
     # docker-client
-    dhcp
+    # dhcp
     dog
     duf
 
@@ -119,7 +119,7 @@
     mpkgs.latte-dock
     # mpkgs.idea-ultimate
     mpkgs.qv2ray-full
-    clash
+    clash-meta
     # mpkgs.wechat-uos
     # mpkgs.netease-cloud-music
   ];

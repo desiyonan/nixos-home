@@ -35,9 +35,9 @@ in {
     ./nvidia-sync
   ] ;
 
-  config = mkIf(cfg.enable) {
-    environment.systemPackages = with mpkgs; [
-      mpkgs.wechat-uos
-    ];
-  };
+  # config = mkIf(cfg.enable) {
+  #   environment.systemPackages = with mpkgs; [
+  #     mpkgs.wechat-uos
+  #   ];
+  # };
 }

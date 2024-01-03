@@ -1,5 +1,6 @@
 {
   name = "wl";
+  system = "x86_64-linux";
 
   initrdMods = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   kernelMods = [ "kvm-amd" ];

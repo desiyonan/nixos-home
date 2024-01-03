@@ -17,12 +17,12 @@
     # registry.nixpkgs.flake = nixpkgs;
   };
 
-  nixpkgs.config = {
-    permittedInsecurePackages = [
-      "qtwebkit-5.212.0-alpha4"
-    ];
+  # nixpkgs.config = {
+  #   permittedInsecurePackages = [
+  #     "qtwebkit-5.212.0-alpha4"
+  #   ];
 
-    allowUnfree = true;
-  };
+  #   allowUnfree = true;
+  # };
   # nixpkgs.config.allowBroken = true;
 }

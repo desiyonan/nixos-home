@@ -1,11 +1,17 @@
-{ system, pkgs, lib, user, mpkgs, nixpkgs, dotfiles, nixos-cn, ... }:
+{ pkgs,
+  nixpkgs,
+  ...
+}:
+with pkgs;
 with builtins;
 {
   mkHost = {
     name,
-    initrdMods, kernelMods,
+    initrdMods,
+    kernelMods,
     fs,
     NICs,
+    system,
     systemConfig ? {},
     systemPackages ? [],
     services ? {},
@@ -22,33 +28,25 @@ with builtins;
       value = { useDHCP = true; };
     }) NICs);
 
-    sys_users = (map (u: user.mkSystemUser u) users);
-  in lib.nixosSystem {
+    sys_users = (map (u: lib.mkSystemUser u) users);
+  in nixpkgs.lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit pkgs mpkgs dotfiles system systemConfig; };
+    specialArgs = {
+      inherit pkgs;
+      mpkgs = pkgs.mpkgs;
+    };
     modules = [
       nixpkgs.nixosModules.notDetected
-      # (
-      #   { config, pkgs, ...}:
-      #   let
-      #     overlay-mpkgs = final: prev: {
-      #       mpkgs = mpkgs;
-      #     };
-      #   in
-      #     {
-      #       nixpkgs.overlays = [overlay-mpkgs];
-      #     }
-      # )
       {
         imports = [
           ../modules
-          # ../features/common
+          ../modules/services
           # 将nixos-cn flake提供的registry添加到全局registry列表中
           # 可在`nixos-rebuild switch`之后通过`nix registry list`查看
-          nixos-cn.nixosModules.nixos-cn-registries
+          # nixos-cn.nixosModules.nixos-cn-registries
 
           # 引入nixos-cn flake提供的NixOS模块
-          nixos-cn.nixosModules.nixos-cn
+          # nixos-cn.nixosModules.nixos-cn
         ] ++ sys_users;
 
         hardware.enableRedistributableFirmware = lib.mkDefault true;
@@ -81,17 +79,14 @@ with builtins;
         networking.useDHCP = false;
         networking.networkmanager.enable = true;
 
-        nixpkgs.pkgs = pkgs;
         nix.settings.max-jobs = lib.mkDefault cpuCores;
 
-        services = services;
-        # features.enable = true;
+        # services = services;
 
         fileSystems = fs;
         swapDevices = swap;
 
-        # system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
-        system.stateVersion = "22.11";
+        # system.stateVersion = "22.11";
       }
     ];
   };

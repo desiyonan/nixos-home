@@ -9,10 +9,11 @@
     gparted
     rustup
   ];
-  systemd.extraConfig = 
+  systemd.extraConfig =
   ''
   DefaultTimeoutStopSec=10s
   '';
+  services.flatpak.enable = true;
 
 }
 

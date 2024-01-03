@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+# { pkgs, ...}:
 
 {
   latte-dock= import ./latte-dock;

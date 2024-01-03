@@ -5,7 +5,7 @@
     # enableGhostscriptFonts = true;
     # fontDir.enable = true;
 
-    fonts = with pkgs; [
+    packages = with pkgs; [
       inconsolata
       inconsolata-nerdfont
       jetbrains-mono

@@ -1,7 +1,7 @@
-{ pkgs, lib, system, ... }:
+{ pkgs, ... }:
 with builtins;
 {
-  mkSystemUser = { name, groups, uid, shell?pkgs.bash, ... }:
+  mkSystemUser = { name, groups, uid, shell? pkgs.bash, ... }:
   {
     users.users."${name}" = {
       name = name;
