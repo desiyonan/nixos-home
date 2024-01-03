@@ -28,7 +28,7 @@ in {
     systemd.services.clash = {
       enable = true;
       description = "Clash daemon, A rule-based proxy in Go.";
-      script = "${pkgs.clash}/bin/clash -d ${cfg.configDir}";
+      script = "${pkgs.clash-meta}/bin/clash-meta -d ${cfg.configDir}";
       serviceConfig = {
         Restart = "always";
         RestartSec = 5;

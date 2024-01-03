@@ -40,7 +40,7 @@ with builtins;
       {
         imports = [
           ../modules
-          ../modules/services
+          # ../modules/services
           # 将nixos-cn flake提供的registry添加到全局registry列表中
           # 可在`nixos-rebuild switch`之后通过`nix registry list`查看
           # nixos-cn.nixosModules.nixos-cn-registries
@@ -82,6 +82,7 @@ with builtins;
         nix.settings.max-jobs = lib.mkDefault cpuCores;
 
         # services = services;
+        inherit services;
 
         fileSystems = fs;
         swapDevices = swap;
