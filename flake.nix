@@ -23,6 +23,7 @@
       system = "x86_64-linux";
       nixpkgs = base_pkgs;
       pkgs = import nixpkgs {
+        # inherit (stdenv.hostPlatform) system;
         inherit system;
         config.allowUnfree = true;
         overlays = (import ./overlays (inputs // {
