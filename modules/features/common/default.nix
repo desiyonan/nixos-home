@@ -115,9 +115,8 @@
     zip
     # llvm
     # libclang
-    # latte-dock
-    mpkgs.latte-dock
-    # mpkgs.idea-ultimate
+    latte-dock
+    # mpkgs.latte-dock
     mpkgs.qv2ray-full
     clash-meta
     # mpkgs.wechat-uos

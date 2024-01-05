@@ -9,6 +9,9 @@
       enableExtraSocket = true;
       enableSSHSupport = true;
       # pinentryFlavor = "curses";
+      settings = {
+        default-cache-ttl = 2 * 60 * 60;
+      };
     };
   };
   # programs.ssh.startAgent = true;

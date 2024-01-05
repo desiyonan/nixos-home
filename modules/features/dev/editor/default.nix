@@ -10,8 +10,6 @@
     jetbrains.idea-ultimate
     jetbrains.pycharm-professional
     jetbrains.rust-rover
-    # rust-rover
-    # mpkgs.idea-ultimate
   ];
 
 }
