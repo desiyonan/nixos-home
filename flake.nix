@@ -26,7 +26,7 @@
         inherit system;
         config.allowUnfree = true;
         overlays = (import ./overlays (inputs // {
-          inherit nixpkgs;
+          inherit nixpkgs system;
         }));
       };
     in

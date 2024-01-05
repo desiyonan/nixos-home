@@ -32,7 +32,6 @@ in {
     dev
     sys
     ./cloud
-    ./nvidia-sync
   ] ;
 
   # config = mkIf(cfg.enable) {
