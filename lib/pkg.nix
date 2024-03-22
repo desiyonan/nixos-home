@@ -1,7 +1,7 @@
-{ pkgs, ...}:
+{ lib, mlib }:
 
 {
-  forEachAllSystems = pkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
+  forEachAllSystems = lib.genAttrs lib.systems.flakeExposed;
   allSystemsPkgs = pkgs: buildPkgsFn: forEachAllSystems (system:
     let pkgs =
       import pkgs {

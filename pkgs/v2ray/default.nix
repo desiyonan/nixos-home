@@ -1,9 +1,9 @@
 
-{ pkgs, lib, dotfiles, ... }:
+{ pkgs, lib,  ... }:
 
 with pkgs;
 let
-  config = dotfiles.v2ray.conf;
+  # config = dotfiles.v2ray.conf;
   # env_asset = lib.last (builtins.match ".*V2RAY_LOCATION_ASSET (.*)\n.+" pkgs.v2ray.buildCommand);
 in
 pkgs.symlinkJoin {

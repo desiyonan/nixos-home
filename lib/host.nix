@@ -1,8 +1,4 @@
-{ pkgs,
-  nixpkgs,
-  ...
-}:
-with pkgs;
+{ lib, mlib }:
 with builtins;
 {
   mkHost = {
@@ -12,6 +8,7 @@ with builtins;
     fs,
     NICs,
     system,
+    groups ? [],
     systemConfig ? {},
     systemPackages ? [],
     services ? {},
@@ -28,19 +25,18 @@ with builtins;
       value = { useDHCP = true; };
     }) NICs);
 
-    sys_users = (map (u: lib.mkSystemUser u) users);
-  in nixpkgs.lib.nixosSystem {
+    sys_users = (map (u: mlib.mkSystemUser u) users);
+  in lib.nixosSystem {
     inherit system;
-    specialArgs = {
-      inherit pkgs;
-      mpkgs = pkgs.mpkgs;
-    };
+    # specialArgs = {
+    #   inherit pkgs;
+    #   mpkgs = pkgs.mpkgs;
+    # };
     modules = [
-      nixpkgs.nixosModules.notDetected
+      # nixpkgs.nixosModules.notDetected
       {
         imports = [
           ../modules
-          # ../modules/services
           # 将nixos-cn flake提供的registry添加到全局registry列表中
           # 可在`nixos-rebuild switch`之后通过`nix registry list`查看
           # nixos-cn.nixosModules.nixos-cn-registries
@@ -80,6 +76,11 @@ with builtins;
         networking.networkmanager.enable = true;
 
         nix.settings.max-jobs = lib.mkDefault cpuCores;
+
+        # overlays =
+      #   (import ./overlays (inputs // {
+      #     inherit nixpkgs system;
+      #   }));
 
         # services = services;
         inherit services;

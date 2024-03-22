@@ -1,12 +1,5 @@
-{lib, ...}:
+{pkgs, lib, mlibs, ...}:
 with lib;
 {
-  imports =  builtins.map
-    (f: ./. + "/${f}")
-    (builtins.attrNames
-      (filterAttrs
-        (name: type: type == "directory")
-        (builtins.readDir ./.)
-      )
-    );
+  imports = mlibs.module.listModules {path=./.;};
 }

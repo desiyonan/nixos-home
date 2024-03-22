@@ -1,5 +1,3 @@
-{pkgs,...}:
-
 {
   name = "dnf";
   groups = [ "wheel" "networkmanager" "video" "libvirtd" "root"];

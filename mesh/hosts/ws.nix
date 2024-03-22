@@ -39,6 +39,8 @@
     dockerd.enable =true;
   };
 
+  groups = [ "manage" "develop" "gateway" "server" "worker" "edge" ];
+
   # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   # hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
