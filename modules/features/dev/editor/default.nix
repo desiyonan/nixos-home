@@ -1,4 +1,4 @@
-{ pkgs, mpkgs, ... }:
+{ pkgs,  ... }:
 
 {
 
@@ -9,7 +9,7 @@
     kate
     jetbrains.idea-ultimate
     jetbrains.pycharm-professional
-    jetbrains.rust-rover
+    # jetbrains.rust-rover
   ];
 
 }

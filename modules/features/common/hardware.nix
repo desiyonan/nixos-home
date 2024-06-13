@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  sound.enable = true;
+  sound.enable = false;
 
   hardware = {
     bluetooth = {
@@ -9,6 +9,6 @@
       settings.General.ControllerMode = "dual";
     };
 
-    pulseaudio.enable = true;
+    pulseaudio.enable = false;
   };
 }

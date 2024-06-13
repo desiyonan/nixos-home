@@ -6,6 +6,7 @@
     # the current pinned base version
     nixpkgs.url = "github:nixos/nixpkgs/7f7851dfc570"; #23.11
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
     nixos-cn = {
       # url = "github:nixos-cn/flakes";
       url = "github:nixos-cn/flakes/0bd347e7b01c590b9adb602847587bb2d5216bbc";
@@ -16,9 +17,12 @@
 
   outputs = { self, nixpkgs, unstable, ... }@inputs:
     let
-      overlays = import ./overlays;
+      mesh = import ./mesh;
+      # overlays = import ./overlays;
       lib = import ./lib {
+        inherit nixpkgs unstable;
         lib = nixpkgs.lib;
+        root_inputs = inputs;
       };
       # pkgs = import nixpkgs {
       #   # inherit (stdenv.hostPlatform) system;
@@ -29,7 +33,6 @@
       #     inherit nixpkgs system;
       #   }));
       # };
-      mesh = import ./mesh;
     in
     with lib;
     with mesh;

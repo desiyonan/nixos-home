@@ -1,25 +1,25 @@
-{ lib, mlib }:
+{ lib, mlib,... }:
 
-{
-  listModuleDirs = {path ? ./.}:
+rec {
+  listModuleDirs = moduleDir:
     builtins.map
-      (d: ./. + "/${d}")
+      (d: moduleDir + "/${d}")
       (builtins.attrNames
-        (filterAttrs
+        (lib.filterAttrs
           (name: type: type == "directory")
-          (builtins.readDir path)
+          (builtins.readDir moduleDir)
         )
       );
 
-  listNixFiles = {path ? ./.}:
+  listNixFiles = moduleDir:
     builtins.map
-      (f: ./. + "/${f}")
+      (f: moduleDir + "/${f}")
       (builtins.attrNames
-        (filterAttrs
-          (name: type: type == "regular" && hasSuffix name ".nix" && name != "default.nix")
-          (builtins.readDir path)
+        (lib.filterAttrs
+          (name: type: type == "regular" && lib.hasSuffix name ".nix" && name != "default.nix")
+          (builtins.readDir moduleDir)
         )
       );
 
-  listModules = {path ? ./.}@ins: [] ++ (listModuleDirs ins) ++ (listNixFiles ins);
+  listModules = moduleDir: [] ++ (listModuleDirs moduleDir) ++ (listNixFiles moduleDir);
 }

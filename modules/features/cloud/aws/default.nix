@@ -1,4 +1,4 @@
-{ pkgs, mpkgs, modulesPath, ... }:
+{ pkgs, modulesPath, ... }:
 
 {
   environment.systemPackages =  with pkgs; [

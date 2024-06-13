@@ -1,10 +1,9 @@
-{lib}:
+{lib, nixpkgs, root_inputs, ...}@args:
 let
   mlib = lib.makeExtensible(self: let
-      callLibs = file: import file {
-        inherit lib;
+      callLibs = file: import file ({
         mlib = self;
-      };
+      } // args);
     in {
       host = callLibs ./host.nix;
       user = callLibs ./user.nix;

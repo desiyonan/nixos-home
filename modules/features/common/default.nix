@@ -1,4 +1,4 @@
-{ pkgs, mpkgs, modulesPath, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -117,7 +117,7 @@
     # libclang
     latte-dock
     # mpkgs.latte-dock
-    mpkgs.qv2ray-full
+    # mpkgs.qv2ray-full
     clash-meta
     # mpkgs.wechat-uos
     # mpkgs.netease-cloud-music
@@ -138,5 +138,19 @@
       # QT_QPA_PLATFORMTHEME="qt5ct";
       # QT_QPA_PLATFORM="wayland";
     };
+  };
+
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    wireplumber.enable= true;
+    audio.enable = true;
+    pulse.enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+    jack.enable = true;
   };
 }

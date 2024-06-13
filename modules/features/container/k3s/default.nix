@@ -1,14 +1,14 @@
-{ pkgs, mpkgs, modulesPath, system, ... }:
+{ pkgs,  modulesPath, system, ... }:
 
 let
   # old_pkgs = import (builtins.fetchGit {
-  #        # Descriptive name to make the store path easier to identify                
-  #        name = "my-old-revision";                                                 
-  #        url = "https://github.com/NixOS/nixpkgs/";                       
+  #        # Descriptive name to make the store path easier to identify
+  #        name = "my-old-revision";
+  #        url = "https://github.com/NixOS/nixpkgs/";
   #        ref = "refs/heads/nixos-22.11";
   #        # get version 1.24.4+k3s1
-  #        rev = "c2c0373ae7abf25b7d69b2df05d3ef8014459ea3";                                           
-  #    }) {}; 
+  #        rev = "c2c0373ae7abf25b7d69b2df05d3ef8014459ea3";
+  #    }) {};
   old_pkgs = import (builtins.fetchTarball {
     url = "https://github.com/NixOS/nixpkgs/archive/c2c0373ae7abf25b7d69b2df05d3ef8014459ea3.tar.gz";
     sha256 = "19a98q762lx48gxqgp54f5chcbq4cpbq85lcinpd0gh944qindmm";

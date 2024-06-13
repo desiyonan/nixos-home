@@ -1,4 +1,4 @@
-{ pkgs, mpkgs, modulesPath, system, ... }:
+{ pkgs,  modulesPath, system, ... }:
 
 {
   # This is required so that pod can reach the API server (running on port 6443 by default)

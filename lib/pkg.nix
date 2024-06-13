@@ -1,5 +1,6 @@
-{ lib, mlib }:
+{ lib, mlib, ...}:
 
+rec
 {
   forEachAllSystems = lib.genAttrs lib.systems.flakeExposed;
   allSystemsPkgs = pkgs: buildPkgsFn: forEachAllSystems (system:

@@ -1,5 +1,8 @@
-{pkgs, lib, mlibs, ...}:
-with lib;
+{pkgs, mlib, ...}:
 {
-  imports = mlibs.module.listModules {path=./.;};
+  # imports = mlib.listModules ./.;
+  imports = [
+    ./features
+    ./services
+  ];
 }

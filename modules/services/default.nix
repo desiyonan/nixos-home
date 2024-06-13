@@ -1,12 +1,9 @@
-{lib, ...}:
-with lib;
+{mlib, ...}:
 {
-  imports =  builtins.map
-    (f: ./. + "/${f}")
-    (builtins.attrNames
-      (filterAttrs
-        (name: type: type == "directory")
-        (builtins.readDir ./.)
-      )
-    );
+  # imports =  mlib.listModules ./.;
+  imports = [
+    ./clash
+    ./dockerd
+    ./nvidia-sync
+  ] ;
 }

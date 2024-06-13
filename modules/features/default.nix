@@ -1,4 +1,4 @@
-{ config, pkgs, mpkgs, lib, system, ... }:
+{ config, pkgs, lib, system, ... }:
 with lib;
 
 let
