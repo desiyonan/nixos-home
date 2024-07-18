@@ -1,15 +1,11 @@
-{ lib, mlib, nixpkgs, root_inputs, ... }@args:
+{ lib, inputs, ... }@args:
 {
   mkHost = hostConfigs: users:
   let
-    # networkCfg = builtins.listToAttrs (map (n: {
-    #   name = "${n}";
-    #   value = { useDHCP = true; };
-    # }) NICs);
-    sys_users = (map (u: mlib.mkSystemUser u) users);
+    sys_users = (map (u: lib.mkSystemUser u) users);
   in lib.nixosSystem {
     specialArgs = {
-      inherit lib mlib root_inputs;
+      inherit lib inputs;
     };
     modules = [
       # nixpkgs.nixosModules.notDetected

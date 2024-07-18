@@ -1,4 +1,4 @@
-{ lib, mlib, ...}:
+{ lib, ...}:
 
 rec
 {
@@ -11,5 +11,5 @@ rec
       };
     in buildPkgsFn pkgs
   );
-  buildPkgs = buildPkgsFn: allSystemsPkgs pkgs buildPkgsFn;
+  # buildPkgs = buildPkgsFn: allSystemsPkgs inputs.nixpkgs buildPkgsFn;
 }

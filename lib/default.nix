@@ -1,9 +1,12 @@
-{lib, nixpkgs, root_inputs, ...}@args:
+{...}@args: # flake self
+
+finalLib: prevLib: # lib overlay
 let
-  mlib = lib.makeExtensible(self: let
-      callLibs = file: import file ({
-        mlib = self;
-      } // args);
+  inherit (prevLib) makeExtensible;
+
+  mlib = makeExtensible(self:
+    let
+      callLibs = file: import file ({ lib = finalLib;} // args);
     in {
       host = callLibs ./host.nix;
       user = callLibs ./user.nix;
@@ -14,10 +17,9 @@ let
       inherit (self.user) mkSystemUser;
       inherit (self.module) listModuleDirs listNixFiles listModules;
   });
-  extendLib = lib.extend (final: prev: {
-    inherit mlib;
-    inherit (mlib) host user pkg module;
-
-    inherit (mlib) mkHost mkSystemUser listModuleDirs listNixFiles listModules;
-  });
-in extendLib
+in
+{
+  inherit mlib;
+  inherit (mlib) host user pkg module;
+  inherit (mlib) mkHost mkSystemUser listModuleDirs listNixFiles listModules;
+}

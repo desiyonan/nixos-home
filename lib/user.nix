@@ -1,5 +1,4 @@
-{ lib, mlib, ... }:
-with builtins;
+{ ... }:
 {
   mkSystemUser = { name, groups, uid, ... }:
   {

@@ -17,14 +17,13 @@
   ...
 }:
 
-{pkgs, lib, root_inputs, ...}:
+{pkgs, lib, ...}:
 let
   networkCfg = builtins.listToAttrs (map (n: {
     name = "${n}";
     value = { useDHCP = true; };
   }) NICs);
 in
-# root_inputs.flake-utils.lib.eachDefaultSystem (system:
 {
   imports = [
     # ../overlays
@@ -79,4 +78,3 @@ in
 
   # system.stateVersion = "23.11";
 }
-# )

@@ -18,16 +18,13 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
     let
       mesh = import ./mesh;
-      # overlays = import ./overlays;
-      lib = import ./lib {
-        inherit nixpkgs nixpkgs-unstable;
-        lib = nixpkgs.lib;
-        root_inputs = inputs;
-      };
+      mlib = import ./lib self;
+      lib = nixpkgs.lib.extend mlib;
     in
     with lib;
     with mesh;
     {
+      inherit lib;
       nixosConfigurations = {
         wl = mkHost hosts.wl users.defaults;
         ws = mkHost hosts.ws users.defaults;

@@ -1,8 +1,8 @@
-{root_inputs, ...}:
+{inputs, ...}:
 
 final: _prev:
 let
-  nixpkgs-unstable = root_inputs.nixpkgs-unstable;
+  nixpkgs-unstable = inputs.nixpkgs-unstable;
 in
 {
   unstable = import nixpkgs-unstable {

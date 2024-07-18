@@ -1,4 +1,4 @@
-{ lib, mlib,... }:
+{ lib, ... }:
 
 rec {
   listModuleDirs = moduleDir:
@@ -16,7 +16,7 @@ rec {
       (f: moduleDir + "/${f}")
       (builtins.attrNames
         (lib.filterAttrs
-          (name: type: type == "regular" && lib.hasSuffix name ".nix" && name != "default.nix")
+          (name: type: type == "regular" && name != "default.nix" && lib.hasSuffix ".nix" name)
           (builtins.readDir moduleDir)
         )
       );
