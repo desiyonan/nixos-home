@@ -28,12 +28,14 @@
     bash
     bind
     bat
+    blender
 
     gnumake
     cmake
     clang
     du-dust
 
+    lightworks
     lsof
     lshw
     llvmPackages.clangUseLLVM

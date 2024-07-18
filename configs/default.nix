@@ -9,7 +9,7 @@
   systemConfig ? {},
   systemPackages ? [],
   services ? {},
-  # kernelPackage ? pkgs.linuxPackages_latest,
+  # kernelPackage ? (import <nixos-unstable> {}).linuxPackages_latest,
   kernelParams ? [],
   swap? [],
   cpuCores ? 4,
