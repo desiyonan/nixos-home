@@ -38,7 +38,7 @@ in
   ];
 
   # hardware.enableRedistributableFirmware = lib.mkDefault true;
-  nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.hostPlatform = system;
 
   boot.initrd.availableKernelModules = initrdMods;
   boot.kernelModules = kernelMods;

@@ -9,8 +9,17 @@
 #     (f: f != "default.nix")
 #     (builtins.attrNames (builtins.readDir ./.)))
 # ./overlays/default.nix
-{ nixpkgs, mlib, ... }:
+{ nixpkgs, mlib, root_inputs, ... }:
 
 {
-  nixpkgs.overlays = mlib.listModules ./.;
+  # nixpkgs.overlays = mlib.listModules ./.;
+
+  nixpkgs.overlays = [
+    (import ./mesh.nix {inherit nixpkgs;})
+    (import ./unstable.nix {inherit nixpkgs root_inputs;})
+    (import ./pkgs.nix {inherit nixpkgs;})
+    (import ./rust-rover.nix {inherit nixpkgs root_inputs;})
+    (import ./vscode.nix {inherit nixpkgs;})
+    (import ./latte-dock.nix {inherit nixpkgs;})
+  ];
 }
