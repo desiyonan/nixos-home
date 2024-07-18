@@ -22,4 +22,9 @@ rec {
       );
 
   listModules = moduleDir: [] ++ (listModuleDirs moduleDir) ++ (listNixFiles moduleDir);
+
+  importModules = moduleDir: args:
+    builtins.map
+      (m: import m args)
+      (listModules moduleDir);
 }

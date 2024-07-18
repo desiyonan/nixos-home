@@ -1,4 +1,4 @@
-{nixpkgs, ...}:
+{...}:
 
 final: prev:
 {

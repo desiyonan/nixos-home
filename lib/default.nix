@@ -15,11 +15,11 @@ let
 
       inherit (self.host) mkHost;
       inherit (self.user) mkSystemUser;
-      inherit (self.module) listModuleDirs listNixFiles listModules;
+      inherit (self.module) listModuleDirs listNixFiles listModules importModules;
   });
 in
 {
   inherit mlib;
   inherit (mlib) host user pkg module;
-  inherit (mlib) mkHost mkSystemUser listModuleDirs listNixFiles listModules;
+  inherit (mlib) mkHost mkSystemUser listModuleDirs listNixFiles listModules importModules;
 }
