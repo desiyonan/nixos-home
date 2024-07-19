@@ -1,16 +1,7 @@
-{ pkgs,  ... }:
+{ pkgs, lib, ... }:
 
 {
-  imports = [
-    ./browser
-    ./clang
-    ./editor
-    ./git
-    ./golang
-    ./java
-    ./javascript
-    ./rust
-  ];
+  imports = lib.listModules ./.;
 
   environment.systemPackages = with pkgs;[
     feishu

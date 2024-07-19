@@ -1,9 +1,4 @@
-{mlib, ...}:
+{lib, ...}:
 {
-  # imports =  mlib.listModules ./.;
-  imports = [
-    ./clash
-    ./dockerd
-    ./nvidia-sync
-  ] ;
+  imports =  lib.listModules ./.;
 }

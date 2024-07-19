@@ -1,8 +1,4 @@
-{pkgs, mlib, ...}:
+{pkgs, lib, ...}:
 {
-  # imports = mlib.listModules ./.;
-  imports = [
-    ./features
-    ./services
-  ];
+  imports = lib.listModules ./.;
 }
