@@ -13,6 +13,14 @@
       # 强制 nixos-cn 和该 flake 使用相同版本的 base_pkgs
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    # with secrets by base on sops-nix;
+    secret-hub = {
+      #url = "github:desiyonan/secret-hub"; #./secrets
+      url = "git+ssh://git@github.com/desiyonan/secret-hub.git"; #./secrets
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:

@@ -11,8 +11,8 @@
     ./shell.nix
     ./zone.nix
 
-    ./openssh.nix
-
+    # ./openssh.nix
+    ./gpg.nix
     # ../env/dev.nix
   ];
 

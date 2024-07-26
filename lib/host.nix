@@ -11,6 +11,7 @@
       # nixpkgs.nixosModules.notDetected
       (import ../configs hostConfigs)
       (import ../overlays)
+      (inputs.secret-hub.nixosModules.default)
     ] ++ sys_users;
   };
 }
