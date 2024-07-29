@@ -4,7 +4,7 @@
   inputs = {
     # https://status.nixos.org/
     # the current pinned base version
-    nixpkgs.url = "github:nixos/nixpkgs/7f7851dfc570"; #23.11
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05"; #23.11
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nixos-cn = {
@@ -14,16 +14,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager = {
+      # url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix.url = "github:Mic92/sops-nix";
     # with secrets by base on sops-nix;
     secret-hub = {
-      #url = "github:desiyonan/secret-hub"; #./secrets
       url = "git+ssh://git@github.com/desiyonan/secret-hub.git"; #./secrets
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
     let
       mesh = import ./mesh;
       mlib = import ./lib self;

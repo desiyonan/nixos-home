@@ -4,17 +4,30 @@
   programs.xwayland.enable = true;
 #   programs.qt5ct.enable = true;
   services = {
+    desktopManager={
+      plasma6={
+        enable=true;
+      };
+    };
+    displayManager= {
+      sddm={
+        enable=true;
+        wayland.enable=true;
+      };
+      defaultSession = "plasma";
+    };
     xserver = {
       enable = true;
       desktopManager = {
-        plasma5.enable = true;
+        # plasma5.enable = true;
         # plasma5.runUsingSystemd = true;
       };
-      displayManager = {
-        gdm.enable = true;
-        gdm.wayland = true;
-        defaultSession = "plasmawayland";
-      };
+      # displayManager = {
+      #   gdm.enable = true;
+      #   gdm.wayland = true;
+      #   # defaultSession = "plasmawayland";
+      #   defaultSession = "plasma";
+      # };
     };
   };
 

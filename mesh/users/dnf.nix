@@ -1,6 +1,6 @@
 {
   name = "dnf";
-  groups = [ "wheel" "networkmanager" "video" "libvirtd" "root"];
+  groups = [ "users" "wheel" "networkmanager" "video" "libvirtd" "root"];
   uid = 1000;
   # shell = pkgs.bash;
 }

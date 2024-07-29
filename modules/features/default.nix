@@ -7,6 +7,7 @@ let
   container = import ./container;
   dev = import ./dev;
   sys = import ./system;
+  modules = lib.listModules ./.;
 in {
   options.features = {
     enable = mkOption {
@@ -28,11 +29,11 @@ in {
 
   imports = [
     common
-    container
-    dev
-    sys
-    ./cloud
-  ] ;
+    # container
+    # dev
+    # sys
+    # ./cloud
+  ] ++ modules;
 
   # config = mkIf(cfg.enable) {
   #   environment.systemPackages = with mpkgs; [
