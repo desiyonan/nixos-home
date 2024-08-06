@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  programs.xwayland.enable = true;
+  # programs.xwayland.enable = true;
+  programs.xwayland.enable = false;
 #   programs.qt5ct.enable = true;
   services = {
     desktopManager={
