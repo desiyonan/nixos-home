@@ -35,6 +35,8 @@
     clang
     du-dust
 
+    dbeaver-bin
+
     lightworks
     lsof
     lshw
