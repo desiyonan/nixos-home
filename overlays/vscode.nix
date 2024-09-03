@@ -13,6 +13,11 @@ rec {
       vscodevim.vim
       esbenp.prettier-vscode
       vscode-icons-team.vscode-icons
+
+      vue.volar
+      ms-python.python
+      ms-python.vscode-pylance
+      matthewpi.caddyfile-support
     ] ++
     prev.vscode-utils.extensionsFromVscodeMarketplace [
     ];
