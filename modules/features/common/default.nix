@@ -15,6 +15,7 @@
     ./gpg.nix
     # ../env/dev.nix
     ./multimedia.nix
+    ./tailscale.nix
   ];
 
   environment.systemPackages =  with pkgs; [
@@ -108,6 +109,7 @@
     tree
     tmux
     thunderbird
+    tailscale
     # termius
     #softmaker-office #收费不好用
     unar
