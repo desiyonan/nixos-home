@@ -31,6 +31,7 @@
     bind
     bat
     blender
+    conda
 
     gnumake
     cmake
@@ -71,6 +72,7 @@
     # libsForQt5.full
     # libsForQt5.qt5.qttools
     # libsForQt5.krdc
+    openiscsi
     inetutils
     jq
 
@@ -129,6 +131,23 @@
     clash-meta
     # mpkgs.wechat-uos
     # mpkgs.netease-cloud-music
+
+    envsubst
+    gdb
+    gImageReader
+    redli
+    scrcpy
+    tesseract
+    vlc
+    # umbrello
+    drawio
+    android-tools
+    adbfs-rootless
+    # adb-sync-unstable
+    # emulator
+    normcap
+    patchelf
+    todoist-electron
   ];
 
   environment = {
@@ -147,5 +166,8 @@
       # QT_QPA_PLATFORM="wayland";
     };
   };
-
+  services.openiscsi = {
+    enable = true;
+    name = "iqn.2020-08.org.linux-iscsi.initiatorhost:ws";
+  };
 }

@@ -5,7 +5,7 @@
   environment.systemPackages = with pkgs;[
     xclip
     iw
-    cargo
+    # cargo
     gparted
     rustup
   ];

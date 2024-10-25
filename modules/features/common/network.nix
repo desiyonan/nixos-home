@@ -15,7 +15,7 @@
     enable = true;
     dnssec = "false";
     domains = [
-      "dnfn.tech"
+      "nodes.dnfn.tech"
     ];
     fallbackDns = [
       "223.5.5.5"

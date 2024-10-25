@@ -10,15 +10,17 @@
 
   fs = {
     "/" = {
-      device = "/dev/disk/by-uuid/18c5b20e-6a1b-4a57-8d17-5f2896e7a83a";
+      # device = "/dev/disk/by-uuid/18c5b20e-6a1b-4a57-8d17-5f2896e7a83a";
+      device = "/dev/disk/by-uuid/10f9afd3-03b2-4724-adb1-914ea33964d7";
       fsType = "ext4";
     };
     "/nix" = {
-      device = "/dev/disk/by-uuid/7a9e469e-1b7c-40bf-9053-492fe921a528";
+      # device = "/dev/disk/by-uuid/7a9e469e-1b7c-40bf-9053-492fe921a528";
+      device = "/dev/disk/by-uuid/bcf85f76-8953-4897-a3d3-f1bbb6075950";
       fsType = "ext4";
     };
     "/boot/efi" = {
-      device = "/dev/disk/by-uuid/35AE-5282";
+      device = "/dev/disk/by-uuid/4D9F-C385";
       fsType = "vfat";
     };
     "/data" = {
