@@ -19,8 +19,4 @@
   environment.systemPackages = with pkgs; [
     # pass
   ];
-  services.openssh = {
-    enable = true;
-  };
-
 }

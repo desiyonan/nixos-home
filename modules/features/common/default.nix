@@ -11,7 +11,7 @@
     ./shell.nix
     ./zone.nix
 
-    # ./openssh.nix
+    ./openssh.nix
     ./gpg.nix
     # ../env/dev.nix
     ./multimedia.nix
@@ -95,6 +95,7 @@
     obs-studio
     opencv
     openssl
+    pkg-config
 
     p7zip
     pciutils
@@ -107,6 +108,7 @@
     refind
 
     scrcpy
+    sops
 
     tree
     tmux
@@ -124,7 +126,7 @@
     zip
     # llvm
     # libclang
-    latte-dock
+    # latte-dock
     # mpkgs.latte-dock
     # mpkgs.qv2ray-full
     qv2ray-full

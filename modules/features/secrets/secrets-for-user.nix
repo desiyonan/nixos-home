@@ -51,6 +51,7 @@ in rec {
             "C+ /home/${n}/.ssh - - - - /run/secrets/hosts/%l/ssh"
             "Z  /home/${n}/.ssh 600 ${uid} ${gid} - -"
             "z  /home/${n}/.ssh/*.pub 644 ${uid} ${gid} - -"
+            "z  /home/${n}/.ssh/config.d 700 ${uid} ${gid} - -"
             "z  /home/${n}/.ssh 700 ${uid} ${gid} - -"
           ]
         );

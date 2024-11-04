@@ -18,6 +18,7 @@ rec {
       ms-python.python
       ms-python.vscode-pylance
       matthewpi.caddyfile-support
+      signageos.signageos-vscode-sops
     ] ++
     prev.vscode-utils.extensionsFromVscodeMarketplace [
     ];
