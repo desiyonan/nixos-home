@@ -2,15 +2,17 @@
 
 {
   environment.systemPackages = [
-    pkgs.jdk8
+    # pkgs.jdk17
+    # pkgs.jdk8
     # pkgs.jdk8_headless
-    pkgs.jdk11
+    # pkgs.jdk11
     # pkgs.jdk11_headless
-    pkgs.maven
+    # pkgs.maven
+    pkgs.liquibase
   ];
 
- programs.java = {
+  programs.java = {
     enable = true;
-    package = pkgs.jdk8;
+    package = pkgs.jdk17;
   };
 }

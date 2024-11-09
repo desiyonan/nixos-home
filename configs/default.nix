@@ -44,11 +44,19 @@ in
   boot.kernelParams = kernelParams;
   # boot.kernelPackages = kernelPackage;
   boot.loader = {
-    systemd-boot.enable = true;
     efi = {
       canTouchEfiVariables = true;
       efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
     };
+    systemd-boot = {
+      enable = true;
+      # edk2-uefi-shell.enable = true;
+    };
+    # grub = {
+    #   efiSupport = true;
+    #   device = "nodev";
+    #   entryOptions = " fsck.mode=force fsck.repair=yes ";
+    # };
   };
 
   hardware.opengl = {

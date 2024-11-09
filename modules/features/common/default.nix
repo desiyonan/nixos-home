@@ -150,6 +150,7 @@
     normcap
     patchelf
     todoist-electron
+    linux-wifi-hotspot
   ];
 
   environment = {
