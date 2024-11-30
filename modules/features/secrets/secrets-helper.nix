@@ -21,7 +21,17 @@ let
 
 in rec {
   user = rec {
-    runtime = {
+    buildCleanRules = g: u: (
+      program.buildCleanRules g u ++
+      runtime.buildCleanRules g u
+    );
+
+    buildMountRules = g: u: (
+      runtime.buildMountRules g u ++
+      program.buildMountRules g u
+    );
+
+    runtime = rec {
       buildCleanRules = callTmpFilesRules (
         {n, uid, gid, ...} : [
           "R! /run/user/${uid}/secrets 700 ${uid} ${gid} - -"
@@ -30,10 +40,8 @@ in rec {
 
       buildMountRules = callTmpFilesRules (
         {n, uid, gid, ...} : [
-            # "e  /run/user/${uid}/secrets - - - 0"
           "R  /run/user/${uid}/secrets 700 ${uid} ${gid} 0 -"
-          # "d  /run/user/${uid}/secrets 700 ${uid} ${gid} - -"
-          "C+ /run/user/${uid}/secrets/ - - - - /run/secrets/hosts/%l"
+          "C+ /run/user/${uid}/secrets/ - - - - /run/secrets/hosts/%l/${n}"
           "Z  /run/user/${uid}/secrets/ 400 ${uid} ${gid} - -"
         ]
       );
@@ -48,7 +56,7 @@ in rec {
         buildMountRules = callTmpFilesRules (
           {n, uid, gid, ...} : [
             "R  /home/${n}/.ssh 700 ${uid} ${gid} - -"
-            "C+ /home/${n}/.ssh - - - - /run/secrets/hosts/%l/ssh"
+            "C+ /home/${n}/.ssh - - - - /run/secrets/hosts/%l/${n}/.ssh"
             "Z  /home/${n}/.ssh 600 ${uid} ${gid} - -"
             "z  /home/${n}/.ssh/*.pub 644 ${uid} ${gid} - -"
             "z  /home/${n}/.ssh/config.d 700 ${uid} ${gid} - -"
@@ -65,25 +73,57 @@ in rec {
       );
     };
 
-    buildCleanRules = g: u: (
-      program.buildCleanRules g u ++
-      runtime.buildCleanRules g u
-    );
-
-    buildMountRules = g: u: (
-      runtime.buildMountRules g u ++
-      program.buildMountRules g u
-    );
   };
 
-  boot = {
+  host = rec {
+    runtime = rec {
+      buildCleanRules = callTmpFilesRules (
+        {n, uid, gid, ...} : [
+          "R! /run/user/${uid}/secrets 700 ${uid} ${gid} - -"
+        ]
+      );
+
+      buildMountRules = callTmpFilesRules (
+        {n, uid, gid, ...} : [
+          "R  /run/user/${uid}/secrets 700 ${uid} ${gid} 0 -"
+          "C+ /run/user/${uid}/secrets/ - - - - /run/secrets/hosts/%l/${n}"
+          "Z  /run/user/${uid}/secrets/ 400 ${uid} ${gid} - -"
+        ]
+      );
+    };
+    program = rec {
+      clash = {
+        buildCleanRules = callTmpFilesRules (
+          {n, uid, gid, ...} : [
+            "R! /etc/clash/config.yaml 700 0 0 - -"
+          ]
+        );
+        buildMountRules = callTmpFilesRules (
+          {n, uid, gid, ...} : [
+            "R  /etc/clash/config.yaml 700 0 0 - -"
+            "C+ /etc/clash/config.yaml - - - - /run/secrets/programs/clash/clash.yaml"
+            "z  /etc/clash/config.yaml 644 0 0 - -"
+          ]
+        );
+      };
+
+      buildCleanRules = g: u: (
+        clash.buildCleanRules g u
+      );
+
+      buildMountRules = g: u: (
+        clash.buildMountRules g u
+      );
+    };
+
     buildCleanRules = g: u: (
       user.buildCleanRules g u
     );
 
     buildMountRules = g: u: (
-      # callTmpFilesRules g u ({n, uid, gid, ...} : [])
-      []
+      user.buildCleanRules g u ++
+      # runtime.buildMountRules g u ++
+      program.buildMountRules g u
     );
   };
 

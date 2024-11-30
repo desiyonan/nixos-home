@@ -1,6 +1,6 @@
 {config, lib, pkgs, ...}@args:
 let
-  helper = import ./secrets-for-user.nix args;
+  helper = import ./secrets-helper.nix args;
 
   host = config.networking.hostName;
   all_users = config.users.users;
@@ -9,13 +9,13 @@ let
   # members
   users = lib.attrsets.mapAttrsToList (n: u: u) (lib.attrsets.filterAttrs (n: u: builtins.elem n ug.members) all_users);
 
-  host_clean_conf = pkgs.writeTextFile {
+  host_conf = pkgs.writeTextFile {
     name = "nixos-tmpfiles.d";
     destination = "/lib/tmpfiles.d/00-host-${host}.conf";
     text = ''
       # This file is created automatically and should not be modified.
 
-      ${lib.strings.concatStringsSep "\n" (helper.boot.buildCleanRules ug users)}
+      ${lib.strings.concatStringsSep "\n" (helper.host.buildMountRules ug users)}
     '';
   };
   u = all_users.dnf;
@@ -67,7 +67,7 @@ let
 in
 {
   systemd.tmpfiles.packages = [
-    host_clean_conf
+    host_conf
   ];
   systemd.services = services_config;
 }
