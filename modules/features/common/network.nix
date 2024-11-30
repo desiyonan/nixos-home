@@ -31,14 +31,14 @@
     #   DNS=192.168.123.251 192.168.123.1
     # '';
   };
-  services.create_ap = {
-    enable = true;
-    settings = {
-      INTERNET_IFACE = "eth0";
-      WIFI_IFACE = "wlp0s20f3";
-      SSID = "DnF-WF";
-      PASSPHRASE = "DnFn_WF159753";
-      FREQ_BAND="2.4";
-    };
-  };
+  # services.create_ap = {
+  #   enable = true;
+  #   settings = {
+  #     INTERNET_IFACE = "eth0";
+  #     WIFI_IFACE = "wlp0s20f3";
+  #     SSID = "DnF-WF";
+  #     PASSPHRASE = "DnFn_WF159753";
+  #     FREQ_BAND="2.4";
+  #   };
+  # };
 }

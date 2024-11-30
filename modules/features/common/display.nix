@@ -7,7 +7,7 @@
   services = {
     desktopManager={
       plasma6={
-        enable=true;
+        enable = true;
       };
     };
     displayManager= {
@@ -22,6 +22,7 @@
       desktopManager = {
         # plasma5.enable = true;
         # plasma5.runUsingSystemd = true;
+        # gnome.enable = true;
       };
       # displayManager = {
       #   gdm.enable = true;

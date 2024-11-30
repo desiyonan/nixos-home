@@ -30,14 +30,7 @@ let
   };
   services_config  = {
     "secrets-tmpfiles-setup@" = {
-      enable = true;
       restartIfChanged = false;
-      wantedBy = [
-        "user-runtime-dir@%i.service"
-      ];
-      after = [ "user-runtime-dir@%i.service" ];
-      before = [ "nixos-activation.service" ];
-      unitConfig.DefaultDependencies = "no";
 
       serviceConfig = {
         Type = "oneshot";
@@ -59,7 +52,14 @@ let
     name = "secrets-tmpfiles-setup@${builtins.toString u.uid}";
     value = {
       enable = true;
-      wantedBy = [ "multi-user.target" ];
+      requiredBy = [
+        "user@%i.service"
+        "user-runtime-dir@%i.service"
+      ];
+      after = [
+        "user@%i.service"
+        "user-runtime-dir@%i.service"
+      ];
       overrideStrategy = "asDropin";
     };
   }) users))

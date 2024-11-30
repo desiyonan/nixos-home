@@ -1,16 +1,17 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  sound.enable = false;
+  sound.enable = lib.mkForce false;
 
-  # hardware = {
-  #   pulseaudio.enable = true;
-  # };
+  hardware = {
+    pulseaudio.enable = lib.mkForce false;
+  };
 
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    # wireplumber.enable= true;
+    socketActivation = false; # start at boot instead.
+    wireplumber.enable= true;
     # audio.enable = true;
     pulse.enable = true;
     alsa = {
@@ -19,5 +20,7 @@
     };
     # jack.enable = true;
   };
+
+  systemd.user.services.wireplumber.wantedBy = [ "default.target" ];
 
 }
