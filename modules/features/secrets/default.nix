@@ -32,6 +32,10 @@ let
     "secrets-tmpfiles-setup@" = {
       restartIfChanged = false;
 
+      environment = {
+        SYSTEMD_LOG_LEVEL="debug";
+      };
+
       serviceConfig = {
         Type = "oneshot";
 
@@ -44,7 +48,7 @@ let
           "systemd-tmpfiles --create --remove --clean --exclude-prefix=/dev --prefix=/run/user/%i --prefix=/home/dnf"
         ];
         ExecStartPost = [
-          "/bin/sh -c 'rm -rf /run/tmpfiles.d/00-user-%i.conf'"
+          # "/bin/sh -c 'rm -rf /run/tmpfiles.d/00-user-%i.conf'"
         ];
       };
     };

@@ -41,7 +41,7 @@ in rec {
       buildMountRules = callTmpFilesRules (
         {n, uid, gid, ...} : [
           "R  /run/user/${uid}/secrets 700 ${uid} ${gid} 0 -"
-          "C+ /run/user/${uid}/secrets/ - - - - /run/secrets/hosts/%l/${n}"
+          "C+ /run/user/${uid}/secrets/ - - - - /run/secrets/hosts/%l/users/${n}"
           "Z  /run/user/${uid}/secrets/ 400 ${uid} ${gid} - -"
         ]
       );
@@ -56,7 +56,7 @@ in rec {
         buildMountRules = callTmpFilesRules (
           {n, uid, gid, ...} : [
             "R  /home/${n}/.ssh 700 ${uid} ${gid} - -"
-            "C+ /home/${n}/.ssh - - - - /run/secrets/hosts/%l/${n}/.ssh"
+            "C+ /home/${n}/.ssh - - - - /run/secrets/hosts/%l/users/${n}/.ssh"
             "Z  /home/${n}/.ssh 600 ${uid} ${gid} - -"
             "z  /home/${n}/.ssh/*.pub 644 ${uid} ${gid} - -"
             "z  /home/${n}/.ssh/config.d 700 ${uid} ${gid} - -"
@@ -77,19 +77,6 @@ in rec {
 
   host = rec {
     runtime = rec {
-      buildCleanRules = callTmpFilesRules (
-        {n, uid, gid, ...} : [
-          "R! /run/user/${uid}/secrets 700 ${uid} ${gid} - -"
-        ]
-      );
-
-      buildMountRules = callTmpFilesRules (
-        {n, uid, gid, ...} : [
-          "R  /run/user/${uid}/secrets 700 ${uid} ${gid} 0 -"
-          "C+ /run/user/${uid}/secrets/ - - - - /run/secrets/hosts/%l/${n}"
-          "Z  /run/user/${uid}/secrets/ 400 ${uid} ${gid} - -"
-        ]
-      );
     };
     program = rec {
       clash = {
@@ -121,7 +108,6 @@ in rec {
     );
 
     buildMountRules = g: u: (
-      user.buildCleanRules g u ++
       # runtime.buildMountRules g u ++
       program.buildMountRules g u
     );
