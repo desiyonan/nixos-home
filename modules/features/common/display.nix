@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  # programs.xwayland.enable = true;
-  programs.xwayland.enable = false;
+  programs.xwayland.enable = true;
+  # programs.xwayland.enable = false;
 #   programs.qt5ct.enable = true;
   services = {
     desktopManager={
@@ -46,4 +46,5 @@
   #     MOZ_ENABLE_WAYLAND="1";
   #   };
   # };
+
 }

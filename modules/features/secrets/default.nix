@@ -35,6 +35,17 @@ let
       environment = {
         SYSTEMD_LOG_LEVEL="debug";
       };
+      wantedBy = [
+        "user@.service"
+      ];
+      # requires = [
+      #   "user@%i.service"
+      #   "user-runtime-dir@%i.service"
+      # ];
+      after = [
+        "user@%i.service"
+        "user-runtime-dir@%i.service"
+      ];
 
       serviceConfig = {
         Type = "oneshot";
@@ -52,21 +63,15 @@ let
         ];
       };
     };
-  } // (builtins.listToAttrs (map (u: {
-    name = "secrets-tmpfiles-setup@${builtins.toString u.uid}";
-    value = {
-      enable = true;
-      requiredBy = [
-        "user@%i.service"
-        "user-runtime-dir@%i.service"
-      ];
-      after = [
-        "user@%i.service"
-        "user-runtime-dir@%i.service"
-      ];
-      overrideStrategy = "asDropin";
-    };
-  }) users))
+  }
+    # // (builtins.listToAttrs (map (u:
+    # {
+    #   name = "secrets-tmpfiles-setup@${builtins.toString u.uid}";
+    #   value = {
+    #     enable = true;
+    #     overrideStrategy = "asDropin";
+    #   };
+    # }) users))
   ;
 in
 {

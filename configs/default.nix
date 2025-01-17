@@ -59,12 +59,6 @@ in
     # };
   };
 
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-
   # systemConfig = systemConfig;
   environment.systemPackages = systemPackages;
 
@@ -74,6 +68,7 @@ in
 
   networking.useDHCP = false;
   networking.networkmanager.enable = true;
+  networking.dhcpcd.wait = "background";
 
   # nix.settings.max-jobs = lib.mkDefault cpuCores;
   nix.settings.max-jobs = cpuCores;

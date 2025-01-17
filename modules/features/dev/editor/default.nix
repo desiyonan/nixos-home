@@ -11,6 +11,7 @@
     jetbrains.pycharm-professional
     jetbrains.rust-rover
     jetbrains.datagrip
+    code-cursor
   ];
 
 }

@@ -27,6 +27,7 @@
     adbfs-rootless
     android-tools
 
+    bzip2
     bash
     bind
     bat
@@ -91,6 +92,10 @@
     ncdu
     nix-index
     # netease-cloud-music-gtk
+    qcm
+    # waylyrics
+    yesplaymusic
+    freerdp3
 
     obs-studio
     opencv
@@ -102,7 +107,8 @@
     procs
     pipewire
     # pipewire-media-session
-    wireplumber
+    # wireplumber
+    wechat-uos
 
     redli
     refind
@@ -113,6 +119,10 @@
     tree
     tmux
     thunderbird
+    thunderbolt
+    kdePackages.plasma-thunderbolt
+    bolt
+
     tailscale
     # termius
     #softmaker-office #收费不好用
@@ -122,6 +132,10 @@
     wpsoffice
     xournal
     vlc
+    waveterm
+    warp-terminal
+    webcat
+
 
     zip
     # llvm
@@ -156,21 +170,23 @@
   environment = {
     variables = {
       # DOCKER_HOST = "dk.dnfn.tech:5732";
-      QT_DEBUG_PLUGINS= "1";
-      LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+      # QT_DEBUG_PLUGINS= "1";
+      # LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       # QT_QPA_PLATFORMTHEME="qt5ct";
       # QT_QPA_PLATFORM="wayland";
     };
     sessionVariables = {
       # DOCKER_HOST = "dk.dnfn.tech:5732";
-      QT_DEBUG_PLUGINS= "1";
-      LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+      # QT_DEBUG_PLUGINS= "1";
+      # LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       # QT_QPA_PLATFORMTHEME="qt5ct";
       # QT_QPA_PLATFORM="wayland";
     };
   };
   services.openiscsi = {
-    enable = true;
+    enable = false;
     name = "iqn.2020-08.org.linux-iscsi.initiatorhost:ws";
   };
+  services.fwupd.enable = true;
+  services.hardware.bolt.enable = true;
 }

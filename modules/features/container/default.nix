@@ -13,7 +13,7 @@
     ./kubectl
     ./etcd
     ./helm
-    ./waydroid
+    # ./waydroid
   ];
 
   environment.systemPackages = with pkgs; [

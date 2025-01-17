@@ -12,7 +12,7 @@
       dejavu_fonts
       dejavu_fontsEnv
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       sarasa-gothic
       wqy_microhei

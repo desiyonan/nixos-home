@@ -3,7 +3,7 @@
 {
 
   programs.bash = {
-    enableCompletion = true;
+    completion.enable = true;
     promptInit =
       ''
         PROMPT_COLOR="1;31m"

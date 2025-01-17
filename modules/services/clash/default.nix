@@ -22,7 +22,7 @@ in {
   config = mkIf(cfg.enable) {
     environment.systemPackages = with pkgs; [
       clash-meta
-      clash-verge
+      clash-verge-rev
     ];
 
     systemd.services.clash = {
