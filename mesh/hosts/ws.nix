@@ -3,7 +3,7 @@
   system = "x86_64-linux";
 
   initrdMods = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" "nvidia" ];
-  kernelMods = [ "kvm-intel" "nvidia" ];
+  kernelMods = [ "kvm-intel" "nvidia" "iwlwifi"];
 
   NICs = [ "wlp0s20f3" ];
   wifi = [ "wlp0s20f3" ];
@@ -55,7 +55,7 @@
     # nvidia-offload.enable = true;
     nvidia-sync.enable = true;
     clash.enable = true;
-    dockerd.enable =true;
+    # dockerd.enable =true;
   };
 
   groups = [ "manage" "develop" "gateway" "server" "worker" "edge" ];

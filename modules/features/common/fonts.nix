@@ -3,7 +3,7 @@
 {
   fonts = {
     # enableGhostscriptFonts = true;
-    # fontDir.enable = true;
+    fontDir.enable = true;
 
     packages = with pkgs; [
       inconsolata
@@ -17,10 +17,17 @@
       sarasa-gothic
       wqy_microhei
       wqy_zenhei
+
+      corefonts
+      vistafonts
+      vistafonts-cht
+      vistafonts-chs
     ];
 
     fontconfig = {
       enable = true;
+      allowType1 = true;
+      allowBitmaps= true;
       defaultFonts = {
         monospace = [ "Sarasa Mono SC" ];
         sansSerif = [ "Sarasa UI SC" ];

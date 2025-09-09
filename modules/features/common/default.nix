@@ -165,6 +165,23 @@
     patchelf
     todoist-electron
     linux-wifi-hotspot
+    usbutils
+    kuro
+    python312Packages.huggingface-hub
+    micromamba
+    qemu_kvm
+    glab
+
+    librecad
+    libredwg
+    freecad-wayland
+    freetype
+    libsForQt5.qt5.qtwayland
+    # kdePackages.qtwayland
+    recode
+    todesk
+    wineWowPackages.full
+    distrobox
   ];
 
   environment = {
@@ -174,6 +191,10 @@
       # LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       # QT_QPA_PLATFORMTHEME="qt5ct";
       # QT_QPA_PLATFORM="wayland";
+      HF_ENDPOINT="https://hf-mirror.com";
+      HF_HOME="/data/workspace/huggingface/";
+      MAMBA_ROOT_PREFIX="/data/workspace/mamba";
+      MAMBARC="/data/workspace/mamba/mambarc.yml";
     };
     sessionVariables = {
       # DOCKER_HOST = "dk.dnfn.tech:5732";
@@ -181,6 +202,10 @@
       # LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       # QT_QPA_PLATFORMTHEME="qt5ct";
       # QT_QPA_PLATFORM="wayland";
+      HF_ENDPOINT="https://hf-mirror.com";
+      HF_HOME="/data/workspace/huggingface/";
+      MAMBA_ROOT_PREFIX="/data/workspace/mamba";
+      MAMBARC="/data/workspace/mamba/mambarc.yml";
     };
   };
   services.openiscsi = {
@@ -189,4 +214,11 @@
   };
   services.fwupd.enable = true;
   services.hardware.bolt.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    # enableNvidia = true;
+  };
+  hardware.nvidia-container-toolkit.enable = true;
+  programs.kde-pim.merkuro=true;
+  programs.nix-ld.enable = true;
 }

@@ -67,8 +67,21 @@ in
   networking.wireless.interfaces = wifi;
 
   networking.useDHCP = false;
-  networking.networkmanager.enable = true;
-  networking.dhcpcd.wait = "background";
+  networking.networkmanager = {
+    enable = true;
+    # dhcp = "dhcpcd";
+  };
+  networking.dhcpcd={
+    enable = true;
+    wait = "background";
+  };
+  #   networking = {
+  #   # useDHCP = true;
+  #   extraHosts =
+  #   ''
+  #   198.19.0.0 gitlab.thundersoft.com
+  #   '';
+  # };
 
   # nix.settings.max-jobs = lib.mkDefault cpuCores;
   nix.settings.max-jobs = cpuCores;

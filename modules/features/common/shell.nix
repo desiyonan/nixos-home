@@ -82,7 +82,15 @@
           # PS4="\[$(stop_refresh_prompt_time)\]$PS4"
         fi
       '';
-    interactiveShellInit = ''eval "$(direnv hook bash)"'';
+
+    shellAliases={
+      conda="micromamba";
+    };
+    interactiveShellInit = ''
+      mkdir -p $MAMBA_ROOT_PREFIX
+      eval "$(direnv hook bash)"
+      eval "$(micromamba shell hook -s bash)"
+    '';
   };
 
   # environment.binsh = "${pkgs.bash}/bin/bash";
