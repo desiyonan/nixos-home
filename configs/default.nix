@@ -74,6 +74,10 @@ in
   networking.dhcpcd={
     enable = true;
     wait = "background";
+    extraConfig = ''
+      interface enp59s0u1u4u2
+      vendorclassid "MSFT 5.0"
+    '';
   };
   #   networking = {
   #   # useDHCP = true;
@@ -82,6 +86,7 @@ in
   #   198.19.0.0 gitlab.thundersoft.com
   #   '';
   # };
+  # systemd.network.enable = true;
 
   # nix.settings.max-jobs = lib.mkDefault cpuCores;
   nix.settings.max-jobs = cpuCores;

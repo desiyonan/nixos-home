@@ -6,7 +6,11 @@
     bluetooth = {
       enable = true;
       powerOnBoot = true;
-      settings.General.ControllerMode = "dual";
+      settings.General = {
+		    Experimental = true;
+        Enable = "Source,Sink,Media,Socket";
+        ControllerMode = "dual";
+      };
     };
   };
 

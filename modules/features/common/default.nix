@@ -105,6 +105,7 @@
     p7zip
     pciutils
     procs
+    pulseaudioFull
     pipewire
     # pipewire-media-session
     # wireplumber
@@ -182,6 +183,8 @@
     todesk
     wineWowPackages.full
     distrobox
+
+    dhcpcd
   ];
 
   environment = {
