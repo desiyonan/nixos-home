@@ -2,7 +2,7 @@
 {
   imports = [
     ./aliyun
-    ./aws
+    # ./aws
   ];
 
 }

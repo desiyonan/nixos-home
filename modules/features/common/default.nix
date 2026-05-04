@@ -19,16 +19,17 @@
   ];
 
   environment.systemPackages =  with pkgs; [
-    ark
+    #ark
+    kdePackages.ark
     appimage-run
-    appimagekit
+    #appimagekit
     anydesk
     # adb-sync-unstable
     adbfs-rootless
     android-tools
 
     bzip2
-    bash
+    #bash
     bind
     bat
     blender
@@ -37,7 +38,8 @@
     gnumake
     cmake
     clang
-    du-dust
+    #du-dust
+    dust
 
     dbeaver-bin
 
@@ -57,7 +59,8 @@
 
     envsubst
     # firefox
-    filelight
+    #filelight
+    kdePackages.filelight
     flameshot
     fzf
     fd
@@ -83,7 +86,8 @@
     hexyl
 
     kdiff3
-    kompare
+    #kompare
+    kdePackages.kompare
 
     mutt
     mcfly
@@ -92,10 +96,11 @@
     ncdu
     nix-index
     # netease-cloud-music-gtk
-    qcm
+    # qcm
     # waylyrics
-    yesplaymusic
-    freerdp3
+    # yesplaymusic
+    # freerdp3
+    freerdp
 
     obs-studio
     opencv
@@ -131,7 +136,7 @@
     vim
     wget
     wpsoffice
-    xournal
+    # xournal
     vlc
     waveterm
     warp-terminal
@@ -144,7 +149,7 @@
     # latte-dock
     # mpkgs.latte-dock
     # mpkgs.qv2ray-full
-    qv2ray-full
+    # qv2ray-full
     clash-meta
     # mpkgs.wechat-uos
     # mpkgs.netease-cloud-music
@@ -157,7 +162,7 @@
     tesseract
     vlc
     # umbrello
-    drawio
+    # drawio
     android-tools
     adbfs-rootless
     # adb-sync-unstable
@@ -167,7 +172,7 @@
     todoist-electron
     linux-wifi-hotspot
     usbutils
-    kuro
+    #kuro
     python312Packages.huggingface-hub
     micromamba
     qemu_kvm
@@ -181,8 +186,9 @@
     # kdePackages.qtwayland
     recode
     todesk
-    wineWowPackages.full
+    # wineWowPackages.full
     distrobox
+    waybar
 
     dhcpcd
   ];
@@ -221,7 +227,7 @@
     enable = true;
     # enableNvidia = true;
   };
-  hardware.nvidia-container-toolkit.enable = true;
-  programs.kde-pim.merkuro=true;
+  # hardware.nvidia-container-toolkit.enable = true;
+  #programs.kde-pim.merkuro=true;
   programs.nix-ld.enable = true;
 }

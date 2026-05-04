@@ -50,6 +50,9 @@ in
     };
     systemd-boot = {
       enable = true;
+      # Limit the number of boot entries copied into EFI partition
+      # to avoid filling small ESPs (e.g. 512M).
+      configurationLimit = 5;
       # edk2-uefi-shell.enable = true;
     };
     # grub = {

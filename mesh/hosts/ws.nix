@@ -53,7 +53,7 @@
 
   services = {
     # nvidia-offload.enable = true;
-    nvidia-sync.enable = true;
+    nvidia-prime.enable = true;
     clash.enable = true;
     # dockerd.enable =true;
   };

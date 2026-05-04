@@ -14,7 +14,7 @@ pkgs.symlinkJoin {
       v2ray-geoip
       v2ray-domain-list-community
       pkgs.v2ray
-      pkgs.qv2ray
+      # pkgs.qv2ray
     ];
 
     # postBuild = ''

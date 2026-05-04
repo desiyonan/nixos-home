@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ lib, ... }:
 
 {
 
@@ -8,60 +8,8 @@
       ''
         PROMPT_COLOR="1;31m"
         let $UID && PROMPT_COLOR="1;32m"
-        update_prompt_time() {
-            tput sc;
-            echo -ne "\e[$(tput sgr0 && tput hpa 1)\033[$PROMPT_COLOR$(date "+%T")\e[$(tput sgr0)";
-            # echo -ne "\e[$(tput sgr0 && tput hpa 1)$(date "+%T")\e[$(tput sgr0)";
-            tput rc;
-        }
-
-        init_session_upt() {
-            session_scope="/tmp/shell-$$"
-            mkdir -p $session_scope
-            upt_pipe=$session_scope/upt.pipe
-            upt_pid=$session_scope/upt.pid
-            echo "scope=$session_scope"
-
-            if [[ ! -p $upt_pipe ]]; then
-                mkfifo $upt_pipe
-            fi
-            trap "rm -rf $session_scope" EXIT
-
-            (
-                while true
-                do
-                    sleep 5
-                    update_prompt_time
-                done &
-                echo $! > $upt_pid
-            )
-            cat $upt_pid
-
-            trap "cat $upt_pid | xargs kill -9 " EXIT
-            trap "rm -rf $session_scope;" EXIT
-        }
-
-        start_refresh_prompt_time() {
-          UPT_ID=$(cat $session_scope/upt.pid)
-          if ps -p $UPT_ID > /dev/null 2>&1;
-          then
-              kill -SIGCONT $UPT_ID
-          fi
-        }
-
-        stop_refresh_prompt_time() {
-          UPT_ID=$(cat $session_scope/upt.pid)
-          if ps -p $UPT_ID > /dev/null 2>&1;
-          then
-              kill -SIGTSTP $UPT_ID
-          fi
-        }
-
-        # init_session_upt
 
         if [ "$TERM" != "dumb" -o -n "$INSIDE_EMACS" ]; then
-          PROMPT_COLOR="1;31m"
-          let $UID && PROMPT_COLOR="1;32m"
           if [ -n "$INSIDE_EMACS" -o "$TERM" == "eterm" -o "$TERM" == "eterm-color" ]; then
             # Emacs term mode doesn't support xterm title escape sequence (\e]0;)
             # PS1="\n\[\033[$PROMPT_COLOR\][\u@\h:\W]\\$\[\033[0m\] "
@@ -83,14 +31,7 @@
         fi
       '';
 
-    shellAliases={
-      conda="micromamba";
-    };
-    interactiveShellInit = ''
-      mkdir -p $MAMBA_ROOT_PREFIX
-      eval "$(direnv hook bash)"
-      eval "$(micromamba shell hook -s bash)"
-    '';
+    shellAliases = { };
   };
 
   # environment.binsh = "${pkgs.bash}/bin/bash";

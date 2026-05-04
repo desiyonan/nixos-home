@@ -6,9 +6,11 @@
     vscode
     vim
 
-    kate
-    jetbrains.idea-ultimate
-    jetbrains.pycharm-professional
+    #kate
+    kdePackages.kate
+
+    jetbrains.idea
+    jetbrains.pycharm
     jetbrains.rust-rover
     jetbrains.datagrip
     code-cursor

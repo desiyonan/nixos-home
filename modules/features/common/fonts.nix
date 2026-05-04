@@ -7,21 +7,26 @@
 
     packages = with pkgs; [
       inconsolata
-      inconsolata-nerdfont
+      # inconsolata-nerdfont
+      nerd-fonts.inconsolata
       jetbrains-mono
       dejavu_fonts
       dejavu_fontsEnv
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      # noto-fonts-emoji
+      noto-fonts-color-emoji
       sarasa-gothic
       wqy_microhei
       wqy_zenhei
 
       corefonts
-      vistafonts
-      vistafonts-cht
-      vistafonts-chs
+      # vistafonts
+      # vistafonts-cht
+      # vistafonts-chs
+      vista-fonts
+      vista-fonts-cht
+      vista-fonts-chs
     ];
 
     fontconfig = {

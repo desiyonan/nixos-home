@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = [
-    pkgs.jdk23
+    #pkgs.jdk23
     pkgs.jdk17
     pkgs.jdk11
     pkgs.jdk8
