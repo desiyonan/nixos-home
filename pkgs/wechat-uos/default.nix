@@ -130,8 +130,9 @@ let
     fi
     # WeChat screenshot fallback uses external scrot binary.
     export PATH="${scrot}/bin:${xdg-utils}/bin:$PATH"
-    # Keep X11 backend for better screenshot compatibility on Wayland sessions.
-    export QT_QPA_PLATFORM=xcb
+    # Prefer Wayland backend so fcitx5 text-input works consistently.
+    export QT_QPA_PLATFORM=wayland
+    export QT_IM_MODULE=fcitx
     ${steam-run}/bin/steam-run \
       ${resource}/opt/wechat/wechat
   '';

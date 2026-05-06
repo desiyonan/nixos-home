@@ -4,7 +4,7 @@
   # GTK 应用在 Plasma 下从 GSettings 读图标主题；未启用时常见「几乎全部」缺图标或齿轮。
   #programs.dconf.enable = true;
 
-  programs.xwayland.enable = lib.mkForce false;
+  programs.xwayland.enable = true;
   services = {
     desktopManager={
       plasma6={
@@ -28,8 +28,6 @@
   environment.systemPackages = [
     # ... other packages
     pkgs.plasma-panel-colorizer
-    # 全局图标兜底：hicolor 为 Freedesktop 默认回退；Adwaita 供 GTK；Breeze 与 Plasma 菜单一致
-    pkgs.hicolor-icon-theme
   ];
 
   # environment = {
