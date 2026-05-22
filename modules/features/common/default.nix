@@ -151,6 +151,7 @@
     # mpkgs.qv2ray-full
     # qv2ray-full
     clash-meta
+    gui-for-singbox
     # mpkgs.wechat-uos
     # mpkgs.netease-cloud-music
 
@@ -222,6 +223,7 @@
     name = "iqn.2020-08.org.linux-iscsi.initiatorhost:ws";
   };
   services.fwupd.enable = true;
+  services.todesk.enable = true;
   services.hardware.bolt.enable = true;
   virtualisation.docker = {
     enable = true;
