@@ -2,5 +2,5 @@
 
 final: prev:
 {
-  mesh = import ../mesh;
+  mesh = import ../mesh {lib = final.lib;};
 }

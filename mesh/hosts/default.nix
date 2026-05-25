@@ -1,5 +1,9 @@
+{lib, ...}@args:
+let
+  users = import ../users args;
+  ws = import ./ws args;
+  withUsers = host: [ host ] ++ users.defaults;
+in
 {
-  wl = import ./wl.nix;
-  ws = import ./ws.nix;
-  wss = import ./wss.nix;
+  ws = lib.mkHost (withUsers ws);
 }

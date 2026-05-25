@@ -1,4 +1,4 @@
-{ nixpkgs, lib, inputs, ... }@args:
+{ nixpkgs, lib, ... }@args:
 
 {
   nixpkgs.overlays = lib.importModules ./. args;

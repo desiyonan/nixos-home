@@ -1,8 +1,8 @@
-{inputs, ...}:
+{ nixpkgs-unstable, ... }:
 
 final: _prev:
 let
-  nixpkgs-unstable = inputs.nixpkgs-unstable;
+  inherit nixpkgs-unstable;
 in
 {
   unstable = import nixpkgs-unstable {

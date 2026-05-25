@@ -1,15 +1,20 @@
-{ lib, inputs, outputs, ... }@args:
+{ lib, nixpkgs, ... }@args:
+let
+  overlays = import ../overlays args;
+  emodules = import ../modules args;
+in
 {
-  mkHost = hostConfigs: users:
-  let
-    sys_users = (map (u: lib.mkSystemUser u) users);
-  in lib.nixosSystem {
-    specialArgs = args;
-    modules = [
-      # nixpkgs.nixosModules.notDetected
-      (import ../configs hostConfigs)
-      (import ../overlays)
-      (inputs.secret-hub.nixosModules.default)
-    ] ++ sys_users;
-  };
+  mkHost = hostModules:
+    let
+      modules = if builtins.isList hostModules then hostModules else [ hostModules ];
+    in
+    lib.nixosSystem {
+      specialArgs = args;
+      modules = [
+        args.nixpkgs.nixosModules.notDetected
+        args.secret-hub.nixosModules.default
+        overlays
+        emodules
+      ] ++ modules;
+    };
 }

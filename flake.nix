@@ -29,17 +29,13 @@
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
     let
-      mesh = import ./mesh;
-      mlib = import ./lib self;
-      lib = nixpkgs.lib.extend mlib;
+      flakeArgs = inputs // { inherit self nixpkgs; };
+      lib = import ./lib flakeArgs;
+      mesh = import ./mesh (flakeArgs // { inherit lib; });
     in
     with lib;
-    with mesh;
-    {
+    rec {
       inherit lib;
-      nixosConfigurations = {
-        wl = mkHost hosts.wl users.defaults;
-        ws = mkHost hosts.ws users.defaults;
-      };
+      nixosConfigurations = mesh.hosts;
     };
 }

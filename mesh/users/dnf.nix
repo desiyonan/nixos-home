@@ -1,6 +1,22 @@
+{ ... }@args:
+{pkgs,...}:
 {
-  name = "dnf";
-  groups = [ "users" "wheel" "networkmanager" "video" "libvirtd" "root" "audio" "docker" "sudo"];
-  # linger = true; # keep user services running
-  uid = 1000;
+  users.users.dnf = {
+    name = "dnf";
+    isNormalUser = true;
+    isSystemUser = false;
+    extraGroups = [
+      "users"
+      "wheel"
+      "networkmanager"
+      "video"
+      "libvirtd"
+      "root"
+      "audio"
+      "docker"
+      "sudo"
+    ];
+    uid = 1000;
+    initialPassword = "password";
+  };
 }

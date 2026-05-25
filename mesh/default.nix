@@ -1,5 +1,6 @@
+{ lib, nixpkgs, self, ... }@flake:
 {
-  dotfiles = import ./dotfiles;
-  users = import ./users;
-  hosts = import ./hosts;
+  dotfs = import ./dotfs flake;
+  hosts = import ./hosts flake;
+  users = import ./users flake;
 }

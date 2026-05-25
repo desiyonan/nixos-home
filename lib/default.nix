@@ -1,25 +1,15 @@
-{...}@args: # flake self
-
-finalLib: prevLib: # lib overlay
+{ nixpkgs, ... }@args:
 let
-  inherit (prevLib) makeExtensible;
-
-  mlib = makeExtensible(self:
+  lib = nixpkgs.lib;
+  overlay = finalLib: _prevLib:
     let
-      callLibs = file: import file ({ lib = finalLib;} // args);
-    in {
-      host = callLibs ./host.nix;
-      user = callLibs ./user.nix;
-      pkg = callLibs ./pkg.nix;
-      module = callLibs ./module.nix;
-
-      inherit (self.host) mkHost;
-      inherit (self.user) mkSystemUser;
-      inherit (self.module) listModuleDirs listNixFiles listModules importModules;
-  });
+      callLibs = file: import file ({lib = finalLib;} // args);
+      roots = {
+        host = callLibs ./host.nix;
+        module = callLibs ./module.nix;
+      };
+    in
+    # 用 // 合併子模組導出的頂層鍵；右側覆蓋同名鍵
+    roots // roots.host // roots.module;
 in
-{
-  inherit mlib;
-  inherit (mlib) host user pkg module;
-  inherit (mlib) mkHost mkSystemUser listModuleDirs listNixFiles listModules importModules;
-}
+lib.extend overlay

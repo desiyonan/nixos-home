@@ -2,7 +2,7 @@
 
 final: prev:
 let
-  conf = final.mesh.dotfiles.latte-dock.conf;
+  conf = final.mesh.dotfs.latte-dock.conf;
 in
  {
   latte-dock = prev.latte-dock.overrideAttrs  (finalAttrs: previousAttrs: {
