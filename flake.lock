@@ -124,11 +124,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1766511415,
-        "narHash": "sha256-TCXZDAd9jJt2EzADp01qczvO0cqe2qIPwTEVx07ejjI=",
+        "lastModified": 1779767685,
+        "narHash": "sha256-uCB87tYmD5gSdKdjndJRNwytFy7flbr6R/Ad51/7VRQ=",
         "ref": "refs/heads/main",
-        "rev": "ab5ccb6e9c6c1f7d6195242fce8314dd9276a266",
-        "revCount": 81,
+        "rev": "830d863b9530652fb8b784bcc5d58cdefd10e7a6",
+        "revCount": 84,
         "type": "git",
         "url": "ssh://git@github.com/desiyonan/secret-hub.git"
       },

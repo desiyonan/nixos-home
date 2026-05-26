@@ -1,4 +1,4 @@
-{ config, lib, pkgs, system, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.modules.devops;
@@ -7,7 +7,7 @@ let
     url = "https://github.com/NixOS/nixpkgs/archive/c2c0373ae7abf25b7d69b2df05d3ef8014459ea3.tar.gz";
     sha256 = "19a98q762lx48gxqgp54f5chcbq4cpbq85lcinpd0gh944qindmm";
   }) {
-    inherit system;
+    system = pkgs.stdenv.hostPlatform.system;
   };
   k3s_1_24 = old_pkgs.k3s;
 in

@@ -3,9 +3,12 @@
 let
   cfg = config.modules.network;
   proxyCfg = cfg.proxy;
-  verge = pkgs.clash-verge-rev;
 in
 {
+  imports = [
+    ./mihomo-service.nix
+  ];
+
   options.modules.network = {
     enable = lib.mkEnableOption "System networking (proxy, systemd-resolved, NetworkManager)";
 
@@ -28,10 +31,10 @@ in
         type = lib.types.bool;
         default = false;
         description = ''
-          System-wide HTTP(S) proxy and local Mihomo (Clash) daemon (default http://localhost:7890).
+          System-wide HTTP(S) proxy and `services.mihomo` (default http://localhost:7890).
 
-          Enables networking.proxy, environment variables, nix-daemon proxy, and
-          systemd service `clash` (verge-mihomo). GUI: `clash-verge` → external :9090.
+          Config: `modules.secrets` + secret-hub → `/run/secrets/programs/mihomo/config.yaml`.
+          Web UI: http://127.0.0.1:9090/ui/ (metacubexd, when mihomo.webui.enable).
         '';
       };
 
@@ -41,11 +44,25 @@ in
         description = "Proxy URL for allProxy, httpProxy, and httpsProxy.";
       };
 
-      clash = {
-        configDir = lib.mkOption {
-          type = lib.types.str;
-          default = "/etc/clash";
-          description = "Mihomo configuration directory (config.yaml).";
+      mihomo = {
+        configFile = lib.mkOption {
+          type = lib.types.path;
+          default = "/run/secrets/programs/mihomo/config.yaml";
+          description = "Mihomo config (SOPS decrypted at boot).";
+        };
+
+        webui = {
+          enable = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "Serve metacubexd at http://127.0.0.1:9090/ui/ (-ext-ui).";
+          };
+        };
+
+        tunMode = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "CAP_NET_ADMIN for mihomo when TUN is enabled in config.yaml.";
         };
       };
     };
@@ -101,7 +118,6 @@ in
         NO_PROXY = config.networking.proxy.noProxy;
       };
 
-      # Nix 2.24+ 不再接受 nix.conf 的 http-proxy/https-proxy，改由 daemon 环境变量
       systemd.services.nix-daemon.environment = {
         HTTP_PROXY = proxyCfg.url;
         HTTPS_PROXY = proxyCfg.url;
@@ -110,28 +126,15 @@ in
         ALL_PROXY = proxyCfg.url;
         NO_PROXY = config.networking.proxy.noProxy;
       };
-
-      environment.systemPackages = [ verge ];
-
-      systemd.services.clash = {
-        enable = true;
-        description = "Mihomo proxy (Clash Verge Rev kernel)";
-        script = "${verge}/bin/verge-mihomo -d ${proxyCfg.clash.configDir}";
-        serviceConfig = {
-          Restart = "always";
-          RestartSec = 5;
-        };
-        wants = [ "multi-user.target" "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network-online.target" ];
-      };
     })
     (lib.mkIf cfg.resolved.enable {
       services.resolved = {
         enable = true;
-        dnssec = cfg.resolved.dnssec;
-        domains = cfg.resolved.domains;
-        fallbackDns = cfg.resolved.fallbackDns;
+        settings.Resolve = {
+          DNSSEC = cfg.resolved.dnssec;
+          Domains = cfg.resolved.domains;
+          FallbackDNS = cfg.resolved.fallbackDns;
+        };
       };
     })
   ]);

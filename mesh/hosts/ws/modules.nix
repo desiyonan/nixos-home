@@ -5,6 +5,7 @@
 {
   modules.network.enable = true;
   modules.network.proxy.enable = true;
+
   modules.gui.enable = true;
   modules.gui.nvidia.enable = true;
   modules.secrets.enable = true;

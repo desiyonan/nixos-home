@@ -21,7 +21,8 @@
     sops-nix.url = "github:Mic92/sops-nix";
     # with secrets by base on sops-nix;
     secret-hub = {
-      url = "git+ssh://git@github.com/desiyonan/secret-hub.git"; #./secrets
+      # 子模块 secrets/ → github.com/desiyonan/secret-hub
+      url = "git+ssh://git@github.com/desiyonan/secret-hub.git";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };

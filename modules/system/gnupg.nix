@@ -2,6 +2,15 @@
 
 let
   cfg = config.modules.gnupg;
+  pinentryAuto = pkgs.writeShellScriptBin "pinentry" ''
+    set -euo pipefail
+
+    if [[ -n "''${DISPLAY-}" || -n "''${WAYLAND_DISPLAY-}" ]]; then
+      exec ${pkgs.pinentry-qt}/bin/pinentry-qt "''$@"
+    fi
+
+    exec ${pkgs.pinentry-curses}/bin/pinentry-curses "''$@"
+  '';
 in
 {
   options.modules.gnupg = {
@@ -17,8 +26,8 @@ in
         enableExtraSocket = true;
         enableSSHSupport = true;
         enableBrowserSocket = true;
-        # qt/gnome3 用于 Plasma 等图形会话，curses/tty 用于 SSH 与纯终端
-        pinentryPackage = pkgs.pinentry-all;
+        # 图形会话优先使用 qt；无图形/SSH 自动回落到 curses
+        pinentryPackage = pinentryAuto;
         settings = {
           default-cache-ttl = 2 * 60 * 60;
         };
@@ -26,7 +35,8 @@ in
     };
     # GPG_TTY 由 programs.gnupg 模块写入 interactiveShellInit，供终端下弹出 passphrase
     environment.systemPackages = with pkgs; [
-      pinentry-all
+      pinentry-qt
+      pinentry-curses
     ];
   };
 }

@@ -49,7 +49,7 @@
   # services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -89,7 +89,6 @@
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
     git
-    clash-meta
     openssh
     sops
   ];
@@ -112,5 +111,8 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+  # Keep this pinned to the first installed NixOS version.
+  system.stateVersion = "26.05";
 
 }

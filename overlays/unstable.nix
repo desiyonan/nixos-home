@@ -6,6 +6,7 @@ let
 in
 {
   unstable = import nixpkgs-unstable {
-    inherit (final) system config;
+    system = final.stdenv.hostPlatform.system;
+    inherit (final) config;
   };
 }

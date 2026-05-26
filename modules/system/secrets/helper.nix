@@ -77,27 +77,9 @@ rec {
 
   host = rec {
     runtime = { };
-    program = rec {
-      clash = {
-        buildCleanRules = callTmpFilesRules (
-          { n, uid, gid, ... }: [
-            "R! /etc/clash/config.yaml 700 0 0 - -"
-          ]
-        );
-        buildMountRules = callTmpFilesRules (
-          { n, uid, gid, ... }: [
-            "R  /etc/clash/config.yaml 700 0 0 - -"
-            "C+ /etc/clash/config.yaml - - - - /run/secrets/programs/clash/clash.yaml"
-            "z  /etc/clash/config.yaml 644 0 0 - -"
-          ]
-        );
-      };
-      buildCleanRules = g: u: (
-        clash.buildCleanRules g u
-      );
-      buildMountRules = g: u: (
-        clash.buildMountRules g u
-      );
+    program = {
+      buildCleanRules = _g: _u: [ ];
+      buildMountRules = _g: _u: [ ];
     };
     buildCleanRules = g: u: (
       user.buildCleanRules g u
