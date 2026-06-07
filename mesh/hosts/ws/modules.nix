@@ -4,12 +4,19 @@
 
 {
   modules.network.enable = true;
+  modules.network.enableIPv6 = false;
   modules.network.proxy.enable = true;
 
-  modules.gui.enable = true;
-  modules.gui.nvidia.enable = true;
+  modules.graphical.enable = true;
+  modules.graphical.nvidia.enable = true;
   modules.secrets.enable = true;
+  secret-hub.extraSecrets = [
+    "programs"
+    "account"
+  ];
   modules.vlan.enable = true;
 
   modules.devops.enable = true;
+
+  modules.game.enable = true;
 }
