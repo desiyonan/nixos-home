@@ -18,7 +18,6 @@ in
     ];
 
     services.k3s.serverAddr = lib.mkDefault "https://10.241.2.1:6443";
-    services.k3s.token = lib.mkDefault
-      "K10587fcd071df338ba1a3501719ac1f04f201ed3779439aadc081240420c863183::server:9c5659b24b8f7eaf5120a92cef67b9d2";
+    services.k3s.tokenFile = lib.mkDefault "/run/secrets/programs/k3s/token";
   };
 }

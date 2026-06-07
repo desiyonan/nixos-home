@@ -1,5 +1,6 @@
 {lib, ...}@args:
 rec {
   dnf = import ./dnf.nix args;
-  defaults = [dnf];
+  root = import ./root.nix args;
+  defaults = [ dnf root ];
 }

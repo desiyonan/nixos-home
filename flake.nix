@@ -21,14 +21,26 @@
     sops-nix.url = "github:Mic92/sops-nix";
     # with secrets by base on sops-nix;
     secret-hub = {
-      # 子模块 secrets/ → github.com/desiyonan/secret-hub
-      url = "git+ssh://git@github.com/desiyonan/secret-hub.git";
+      # 子模块 secrets/（与 github.com/desiyonan/secret-hub 同步）
+      url = "path:./secrets";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-anywhere = {
+      url = "github:nix-community/nixos-anywhere";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-images = {
+      url = "github:nix-community/nixos-images";
+      inputs.nixos-unstable.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-anywhere, nixos-images, ... }@inputs:
     let
       flakeArgs = inputs // { inherit self nixpkgs; };
       lib = import ./lib flakeArgs;

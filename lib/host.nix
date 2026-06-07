@@ -12,6 +12,7 @@ in
       specialArgs = args;
       modules = [
         args.nixpkgs.nixosModules.notDetected
+        args.home-manager.nixosModules.default
         args.secret-hub.nixosModules.default
         overlays
         emodules

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   fonts = {
@@ -12,8 +12,11 @@
       jetbrains-mono
       dejavu_fonts
       dejavu_fontsEnv
+
+      # CJK（系统全局 + Steam FHS 默认继承 fonts.packages）
       noto-fonts
       noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
       # noto-fonts-emoji
       noto-fonts-color-emoji
       sarasa-gothic
@@ -32,7 +35,8 @@
     fontconfig = {
       enable = true;
       allowType1 = true;
-      allowBitmaps= true;
+      allowBitmaps = true;
+      cache32Bit = true;
       defaultFonts = {
         monospace = [ "Sarasa Mono SC" ];
         sansSerif = [ "Sarasa UI SC" ];

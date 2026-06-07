@@ -3,6 +3,7 @@
     "disko": {
       "inputs": {
         "nixpkgs": [
+          "nixos-home",
           "nixpkgs"
         ]
       },
@@ -23,6 +24,7 @@
     "disko_2": {
       "inputs": {
         "nixpkgs": [
+          "nixos-home",
           "nixos-anywhere",
           "nixpkgs"
         ]
@@ -63,6 +65,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "nixos-home",
           "nixpkgs"
         ]
       },
@@ -84,6 +87,7 @@
     "nix-vm-test": {
       "inputs": {
         "nixpkgs": [
+          "nixos-home",
           "nixos-anywhere",
           "nixpkgs"
         ]
@@ -109,6 +113,7 @@
         "nixos-images": "nixos-images",
         "nixos-stable": "nixos-stable",
         "nixpkgs": [
+          "nixos-home",
           "nixpkgs"
         ],
         "treefmt-nix": "treefmt-nix"
@@ -127,13 +132,37 @@
         "type": "github"
       }
     },
+    "nixos-home": {
+      "inputs": {
+        "disko": "disko",
+        "flake-utils": "flake-utils",
+        "home-manager": "home-manager",
+        "nixos-anywhere": "nixos-anywhere",
+        "nixos-images": "nixos-images_2",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "secret-hub": "secret-hub",
+        "sops-nix": "sops-nix_2"
+      },
+      "locked": {
+        "path": "../../../..",
+        "type": "path"
+      },
+      "original": {
+        "path": "../../../..",
+        "type": "path"
+      },
+      "parent": []
+    },
     "nixos-images": {
       "inputs": {
         "nixos-stable": [
+          "nixos-home",
           "nixos-anywhere",
           "nixos-stable"
         ],
         "nixos-unstable": [
+          "nixos-home",
           "nixos-anywhere",
           "nixpkgs"
         ]
@@ -156,6 +185,7 @@
       "inputs": {
         "nixos-stable": "nixos-stable_2",
         "nixos-unstable": [
+          "nixos-home",
           "nixpkgs"
         ]
       },
@@ -222,6 +252,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1721524707,
+        "narHash": "sha256-5NctRsoE54N86nWd0psae70YSLfrOek3Kv1e8KoXe/0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "556533a23879fc7e5f98dd2e0b31a6911a213171",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "release-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1777268161,
@@ -256,33 +302,27 @@
     },
     "root": {
       "inputs": {
-        "disko": "disko",
-        "flake-utils": "flake-utils",
-        "home-manager": "home-manager",
-        "nixos-anywhere": "nixos-anywhere",
-        "nixos-images": "nixos-images_2",
-        "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "secret-hub": "secret-hub",
-        "sops-nix": "sops-nix_2"
+        "nixos-home": "nixos-home"
       }
     },
     "secret-hub": {
       "inputs": {
         "home-manager": [
+          "nixos-home",
           "home-manager"
         ],
         "nixpkgs": [
+          "nixos-home",
           "nixpkgs"
         ],
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1780829380,
-        "narHash": "sha256-hXsMHMBuDnvGdcfvtJi7XNGlh6BSB1MQpNN5eaczYRE=",
+        "lastModified": 1779767685,
+        "narHash": "sha256-uCB87tYmD5gSdKdjndJRNwytFy7flbr6R/Ad51/7VRQ=",
         "ref": "refs/heads/main",
-        "rev": "f12943c1621814967bfeb5ad72acb606418b0212",
-        "revCount": 86,
+        "rev": "830d863b9530652fb8b784bcc5d58cdefd10e7a6",
+        "revCount": 84,
         "type": "git",
         "url": "ssh://git@github.com/desiyonan/secret-hub.git"
       },
@@ -294,16 +334,18 @@
     "sops-nix": {
       "inputs": {
         "nixpkgs": [
+          "nixos-home",
           "secret-hub",
           "nixpkgs"
-        ]
+        ],
+        "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1780547341,
-        "narHash": "sha256-Gq8KNx5A7hBB3uGJaj6eQfLDIz5YdLu92gqBcvHvoUo=",
+        "lastModified": 1721688883,
+        "narHash": "sha256-9jsjsRKtJRqNSTXKj9zuDFRf2PGix30nMx9VKyPgD2U=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "9ed65852b6257fbeae4355bc24ecfea307ca759a",
+        "rev": "aff2f88277dabe695de4773682842c34a0b7fd54",
         "type": "github"
       },
       "original": {
@@ -348,6 +390,7 @@
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
+          "nixos-home",
           "nixos-anywhere",
           "nixpkgs"
         ]

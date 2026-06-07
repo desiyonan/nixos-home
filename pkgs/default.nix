@@ -7,4 +7,5 @@ with pkgs;
   wechat-uos = pkgs.callPackage ./wechat-uos { };
   gui-for-singbox = pkgs.callPackage ./gui-for-singbox { };
   spotbugs = pkgs.callPackage ./spotbugs { };
+  "@colbymchenry/codegraph" = pkgs.callPackage ./codegraph { };
 }

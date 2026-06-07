@@ -18,7 +18,9 @@
     };
   };
 
-  networking.hostName = "ws"; 
+  networking.hostName = "ws";
+
+  hardware.enableAllFirmware = true; 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.

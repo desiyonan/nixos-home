@@ -27,4 +27,6 @@
       NIX_CURL_FLAGS="-L";
     };
   };
+
+  programs.nix-ld.enable = true;
 }

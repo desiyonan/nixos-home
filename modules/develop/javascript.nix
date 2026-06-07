@@ -9,6 +9,10 @@ in
       nodejs
       biome
       prettier
+      codex
+      claude-code
+    ] ++ [
+      pkgs."@colbymchenry/codegraph"
     ];
   };
 }
