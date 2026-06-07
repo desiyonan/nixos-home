@@ -7,5 +7,6 @@
     ./disko.nix
     ./configuration.nix
     ./modules.nix
+    ./3x-ui.nix
   ];
 }

@@ -40,7 +40,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-anywhere, nixos-images, ... }@inputs:
+  outputs = { self, nixpkgs, ... }@inputs:
     let
       flakeArgs = inputs // { inherit self nixpkgs; };
       lib = import ./lib flakeArgs;

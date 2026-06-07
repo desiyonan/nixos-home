@@ -27,7 +27,7 @@
     enableIPv6 = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 443 31944 ];
+      allowedTCPPorts = [ 22 443 ];
     };
   };
 

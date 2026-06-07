@@ -8,4 +8,5 @@ with pkgs;
   gui-for-singbox = pkgs.callPackage ./gui-for-singbox { };
   spotbugs = pkgs.callPackage ./spotbugs { };
   "@colbymchenry/codegraph" = pkgs.callPackage ./codegraph { };
+  x3-ui = pkgs.callPackage ./3x-ui { };
 }
