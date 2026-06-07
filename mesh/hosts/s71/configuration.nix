@@ -36,7 +36,6 @@
   environment.systemPackages = with pkgs; [
     curl
     git
-    sops
     vim
   ];
 

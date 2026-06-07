@@ -64,10 +64,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    modules.gnupg.enable = lib.mkIf (
-      !(config.modules.sops-host.enable or false)
-      || (config.modules.sops-host.gnupg.enable or true)
-    ) (lib.mkForce true);
+    modules.gnupg.enable = lib.mkForce true;
 
     systemd.tmpfiles.packages = [ host_conf ];
     systemd.services = services_config;

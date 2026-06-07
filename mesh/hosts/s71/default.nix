@@ -7,6 +7,5 @@
     ./disko.nix
     ./configuration.nix
     ./modules.nix
-    ./secrets.nix
   ];
 }

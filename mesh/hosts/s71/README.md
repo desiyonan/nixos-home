@@ -14,32 +14,12 @@
 
 root 公钥见 `mesh/users/root.nix`（经 `withUsers` 注入）。
 
-## Secrets（age）
-
-s71 用 **age** 解密，仅挂载 `hosts/srimsiuh-71/**`（见 `secrets.nix`）。私钥在 ws 本机：
-
-```
-~/.config/sops/srimsiuh-71-age-key
-```
-
-首次生成：
-
-```bash
-nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/srimsiuh-71-age-key
-```
-
 ## 部署
 
-推荐一键部署（含 age-key 分发）：
+在 ws 本机构建，复制到远端（不要用 `--build-host`，VPS 内存不够）：
 
 ```bash
 cd /data/workspace/repos/nixos-home
-bash mesh/hosts/s71/deploy.sh root@s71.dnfn.tech
-```
-
-仅 switch、不分发密钥：
-
-```bash
 nixos-rebuild switch --flake .#s71 --target-host root@s71.dnfn.tech
 ```
 
