@@ -19,9 +19,6 @@
     device = lib.mkDefault "/dev/vda";
   };
 
-  networking.networkmanager.enable = true;
-  services.resolved.enable = true;
-
   networking = {
     hostName = "srimsiuh-71";
     enableIPv6 = true;

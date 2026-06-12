@@ -33,7 +33,7 @@ in
         description = ''
           System-wide HTTP(S) proxy and `services.mihomo` (default http://localhost:7890).
 
-          Config: `modules.secrets` + secret-hub → `/run/secrets/programs/mihomo/config.yaml`.
+          Config: secret-hub → `/run/secrets/programs/mihomo/config.yaml`.
           Web UI: http://127.0.0.1:9090/ui/ (metacubexd, when mihomo.webui.enable).
         '';
       };

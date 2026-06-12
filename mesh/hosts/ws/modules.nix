@@ -9,7 +9,7 @@
 
   modules.graphical.enable = true;
   modules.graphical.nvidia.enable = true;
-  modules.secrets.enable = true;
+  secret-hub.legacyUsersPrefix = true;
   secret-hub.extraSecrets = [
     "programs"
     "account"

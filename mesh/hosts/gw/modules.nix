@@ -10,7 +10,7 @@
 
   modules.openssh.enable = true;
   modules.vlan.enable = true;
-  modules.secrets.enable = false;
+  secret-hub.enable = false;
 
   modules.graphical.enable = false;
   modules.devops.enable = false;

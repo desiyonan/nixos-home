@@ -5,13 +5,12 @@
 {
   modules.network.enable = true;
   modules.network.enableIPv6 = true;
-  modules.network.networkManager.enable = true;
+  modules.network.networkManager.enable = false;
   modules.network.resolved.enable = true;
   modules.network.proxy.enable = false;
 
   modules.openssh.enable = true;
   modules.vlan.enable = false;
-  modules.secrets.enable = true;
 
   modules.graphical.enable = false;
   modules.devops.enable = false;
