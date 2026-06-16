@@ -62,6 +62,10 @@ in
       port = cfg.headscalePort;
       settings = {
         server_url = cfg.serverUrl;
+        dns = {
+          magic_dns = false;
+          override_local_dns = false;
+        };
       };
     };
 
