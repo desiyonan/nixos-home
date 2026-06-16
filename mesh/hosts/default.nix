@@ -5,6 +5,7 @@ let
   ws = import ./ws args;
   s60 = import ./s60 args;
   s71 = import ./s71 args;
+  s72 = import ./s72 args;
   withUsers = host: [ host ] ++ users.defaults;
 in
 {
@@ -12,4 +13,5 @@ in
   ws = lib.mkHost (withUsers ws);
   s60 = lib.mkHost (withUsers s60);
   s71 = lib.mkHost (withUsers s71);
+  s72 = lib.mkHost (withUsers s72);
 }

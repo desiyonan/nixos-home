@@ -11,6 +11,7 @@ in
   config = lib.mkIf cfg.enable {
     services.openssh = {
       enable = true;
+      settings.MaxAuthTries = 10;
       extraConfig = ''
         AllowTcpForwarding=yes
       '';
