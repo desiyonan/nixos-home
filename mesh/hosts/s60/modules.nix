@@ -9,6 +9,7 @@
   modules.network.proxy.enable = false;
 
   modules.openssh.enable = true;
+  modules.headscale.enable = true;
   modules.vlan.enable = false;
 
   modules.graphical.enable = false;

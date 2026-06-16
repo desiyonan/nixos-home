@@ -9,5 +9,6 @@
     ./modules.nix
     ./memory.nix
     ./3x-ui.nix
+    ./headscale.nix
   ];
 }
