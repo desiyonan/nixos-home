@@ -73,17 +73,16 @@ in
     virtualisation.oci-containers.backend = "podman";
     virtualisation.oci-containers.containers.headplane = {
       image = "ghcr.io/tale/headplane:latest";
-      ports = [ "${toString cfg.headplanePort}:3000" ];
       volumes = [
         "${cfg.headplaneConfigPath}:/etc/headplane/config.yaml:ro"
         "/var/lib/headplane:/var/lib/headplane"
       ];
-      extraOptions = [ "--pull=always" ];
+      # Use host network so headplane can reach headscale on 127.0.0.1.
+      extraOptions = [ "--pull=missing" "--network=host" ];
     };
 
     systemd.services.podman-headplane = {
-      after = [ "network-online.target" "sops-nix.service" ];
-      requires = [ "sops-nix.service" ];
+      after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
     };
 

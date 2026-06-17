@@ -12,8 +12,12 @@ in
     certs.${certName} = {
       inherit domain;
       group = "x3-ui";
-      listenHTTP = ":80";
-      reloadServices = [ "x3-ui.service" ];
+      dnsProvider = "cloudflare";
+      environmentFile = "/var/lib/acme/cloudflare-dns-dnfn-tech";
+      reloadServices = [
+        "x3-ui.service"
+        "nginx.service"
+      ];
     };
   };
 
