@@ -19,7 +19,7 @@
   };
 
   networking = {
-    hostName = "srimsiuh-72";
+    hostName = "srimsiuh-62";
     enableIPv6 = true;
     firewall = {
       enable = true;

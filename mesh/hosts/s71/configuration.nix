@@ -5,6 +5,7 @@
     (modulesPath + "/profiles/minimal.nix")
     (modulesPath + "/profiles/headless.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
+    ../common/bbr.nix
   ];
 
   # 1GB KVM VPS：不拉全量 firmware，仅 ext4（见 disko.nix）
