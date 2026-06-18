@@ -1,2 +1,4 @@
 result
 .idea
+.codegraph/.gitignore
+.cursor/rules/codegraph.mdc

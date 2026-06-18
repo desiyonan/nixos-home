@@ -1,4 +1,4 @@
-# 4GB VPS 内存优化（DediOne LA，网卡 eth0）
+# 4GB VPS 内存优化（静态 IP，网卡 ens17）
 { lib, ... }:
 
 {
@@ -14,10 +14,29 @@
 
   networking.networkmanager.enable = lib.mkForce false;
   networking.useNetworkd = true;
-  networking.useDHCP = lib.mkDefault true;
-  systemd.network.networks."50-eth0" = {
-    matchConfig.Name = "eth0";
-    networkConfig.DHCP = "yes";
+  networking.useDHCP = lib.mkForce false;
+  systemd.network.networks."50-ens17" = {
+    matchConfig.Name = "ens17";
+    networkConfig = {
+      Address = [
+        "45.144.136.16/24"
+        "2001:df1:7880:100::871/64"
+      ];
+      DNS = [
+        "172.16.36.100"
+        "172.16.36.101"
+      ];
+    };
+    routes = [
+      {
+        Destination = "0.0.0.0/0";
+        Gateway = "45.144.136.254";
+      }
+      {
+        Destination = "::/0";
+        Gateway = "2001:df1:7880:100::1";
+      }
+    ];
   };
 
   home-manager.users = lib.mkForce { };
