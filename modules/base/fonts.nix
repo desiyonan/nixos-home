@@ -1,5 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 
+let
+  # 与系统 /etc/fonts/local.conf 同内容；HM 复制为可写文件（Cursor 等会尝试写 fonts.conf）
+  userFontsConf = pkgs.writeText "user-fonts.conf" config.fonts.fontconfig.localConf;
+in
 {
   fonts = {
     fontDir.enable = true;
@@ -115,16 +119,18 @@
     };
   };
 
-  # Steam 只读用户级配置：直接链到系统 local.conf，不维护第二份内容
-  # https://github.com/ValveSoftware/steam-for-linux/issues/10422
+  # Steam 需要用户级 fonts.conf（https://github.com/ValveSoftware/steam-for-linux/issues/10422）
+  # 勿用 xdg.configFile→store 只读 symlink：Cursor 启动会尝试写入并弹窗。
+  # 系统已管 fontconfig；关掉 HM 自带 conf.d，避免再堆只读链接。
   home-manager.sharedModules = [
     (
-      { config, ... }:
+      { lib, ... }:
       {
-        xdg.configFile."fontconfig/fonts.conf" = {
-          source = config.lib.file.mkOutOfStoreSymlink "/etc/fonts/local.conf";
-          force = true;
-        };
+        fonts.fontconfig.enable = false;
+        home.activation.fontconfigWritable = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+          install -d -m 755 "$HOME/.config/fontconfig"
+          install -m 644 ${userFontsConf} "$HOME/.config/fontconfig/fonts.conf"
+        '';
       }
     )
   ];

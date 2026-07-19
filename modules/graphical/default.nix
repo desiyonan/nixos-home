@@ -14,7 +14,7 @@ in
     };
 
     nvidia = {
-      enable = lib.mkEnableOption "NVIDIA Prime sync（Intel + NVIDIA 混显）";
+      enable = lib.mkEnableOption "NVIDIA Prime offload（Intel 出图 + NVIDIA 按需；Wayland 推荐）";
 
       nvidiaBusId = lib.mkOption {
         type = lib.types.str;
@@ -182,15 +182,51 @@ in
         enable32Bit = true;
       };
 
+      # 唤醒时勿冻结用户会话，避免 KWin 抢不到 DRM（NixOS Wiki / discourse #54341）
+      systemd.services.systemd-suspend.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+      systemd.services.systemd-hibernate.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+      systemd.services.systemd-suspend-then-hibernate.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+
+      # s2h 不走 systemd-suspend：首阶段需 nvidia-suspend，收尾需 nvidia-resume（VT 切换）
+      systemd.services.nvidia-suspend = {
+        before = [ "systemd-suspend-then-hibernate.service" ];
+        requiredBy = [ "systemd-suspend-then-hibernate.service" ];
+      };
+      systemd.services.nvidia-resume = {
+        after = [ "systemd-suspend-then-hibernate.service" ];
+        requiredBy = [ "systemd-suspend-then-hibernate.service" ];
+      };
+
+      # NixOS 未把 systemd.packages 的 system-sleep 装进 /etc；s2h 中段进 hibernate 靠此 hook。
+      # stock hook 的 post 会调 nvidia-sleep.sh，但 PATH 无 kbd → chvt 失败，且先删掉
+      # /var/run/nvidia-sleep/Xorg.vt_number，导致随后 nvidia-resume 无法切回图形 TTY。
+      environment.etc."systemd/system-sleep/nvidia".source =
+        let
+          upstream = "${config.hardware.nvidia.package}/lib/systemd/system-sleep/nvidia";
+        in
+        pkgs.writeShellScript "nvidia-system-sleep" ''
+          export PATH="${pkgs.kbd}/bin:${pkgs.kbd}/sbin''${PATH:+:$PATH}"
+          exec ${pkgs.runtimeShell} ${upstream} "$@"
+        '';
+
+      # 显存快照落到磁盘；空路径时驱动默认 /tmp（虽本机 /tmp 非 tmpfs，仍更稳妥）
+      boot.kernelParams = [
+        "nvidia.NVreg_TemporaryFilePath=/var/tmp"
+      ];
+
       hardware.nvidia = {
         open = false;
         modesetting.enable = true;
         nvidiaSettings = true;
+        # 睡眠保留显存 + nvidia-suspend/resume
+        powerManagement.enable = true;
+        # Wayland 下 sync 无效；内屏已在 Intel(eDP)。offload：Intel 出图，NVIDIA 按需
+        # 日志：resume 后 Failed to open /dev/dri/card0 → Atomic modeset 权限不够 → 黑屏
         prime = {
-          sync.enable = true;
+          sync.enable = false;
           offload = {
-            enable = false;
-            enableOffloadCmd = false;
+            enable = true;
+            enableOffloadCmd = true;
           };
           intelBusId = nvidiaCfg.intelBusId;
           nvidiaBusId = nvidiaCfg.nvidiaBusId;

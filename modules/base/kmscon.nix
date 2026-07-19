@@ -61,7 +61,9 @@ in
 
   environment.systemPackages = [ pkgs.uim ];
   environment.interactiveShellInit = autoUim;
-  environment.variables.UIM_FEP = "py";
+  # 勿设 environment.variables.UIM_FEP：会进 Plasma/Cursor 等桌面进程，
+  # libuim 初始化时尝试写 ~/.uim.d/customs，HM 只读 symlink 时弹「无法写入」。
+  # 默认引擎由 overlays/uim.nix 的 wrap --set-default UIM_FEP=py，以及下方 -u py 保证。
 
   # root 无 HM：与 HM 用户同一套 mesh/dotfs/uim 配置
   system.activationScripts.uim-root-config = {
@@ -73,20 +75,19 @@ in
     '';
   };
 
+  # HM：复制为可写普通文件（勿用 home.file→store 只读 symlink，uim/Cursor 会报无法写入）
   home-manager.sharedModules = [
-    {
-      home.file.".uim" = {
-        force = true;
-        source = uimDot.dotUim;
-      };
-      home.file.".uim.d/customs/custom-global.scm" = {
-        force = true;
-        source = uimDot.customGlobal;
-      };
-      home.file.".uim.d/customs/custom-global-keys1.scm" = {
-        force = true;
-        source = uimDot.customKeys1;
-      };
-    }
+    (
+      { lib, ... }:
+      {
+        # 须在 linkGeneration 之后：否则旧 home.file 清理/链接会覆盖刚复制的可写文件
+        home.activation.uimDotfs = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+          install -d -m 700 "$HOME/.uim.d/customs"
+          install -m 600 ${uimDot.dotUim} "$HOME/.uim"
+          install -m 600 ${uimDot.customGlobal} "$HOME/.uim.d/customs/custom-global.scm"
+          install -m 600 ${uimDot.customKeys1} "$HOME/.uim.d/customs/custom-global-keys1.scm"
+        '';
+      }
+    )
   ];
 }

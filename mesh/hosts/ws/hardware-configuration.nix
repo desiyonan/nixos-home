@@ -33,6 +33,9 @@
     [ { device = "/dev/disk/by-uuid/a85e03cd-5822-40ee-88c6-62adba3b6d12"; }
     ];
 
+  # 休眠唤醒：与上方 swap 同一分区（须 >= RAM）
+  boot.resumeDevice = "/dev/disk/by-uuid/a85e03cd-5822-40ee-88c6-62adba3b6d12";
+
   networking.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
