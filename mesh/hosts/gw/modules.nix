@@ -9,9 +9,13 @@
   modules.network.proxy.enable = false;
 
   modules.openssh.enable = true;
-  modules.vlan.enable = true;
+  modules.vlan = {
+    enable = true;
+    tailscale.enable = false;
+  };
   secret-hub.enable = false;
 
   modules.graphical.enable = false;
   modules.devops.enable = false;
+  modules.develop.enable = false;
 }

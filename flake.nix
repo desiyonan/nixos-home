@@ -38,6 +38,10 @@
       url = "github:nix-community/nixos-images";
       inputs.nixos-unstable.follows = "nixpkgs";
     };
+    mt7927 = {
+      url = "github:cmspam/MT7927-Nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs:

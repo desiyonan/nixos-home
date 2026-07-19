@@ -81,6 +81,43 @@
         "type": "github"
       }
     },
+    "mediatek-mt7927-dkms": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779566214,
+        "narHash": "sha256-uJiAJSAgPHSR7/ixepQn43VWnARipfUxrDiARr4PrCs=",
+        "owner": "jetm",
+        "repo": "mediatek-mt7927-dkms",
+        "rev": "9dfa7d168b1ba94b9d83d4b09e2f4a878cff7a47",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jetm",
+        "repo": "mediatek-mt7927-dkms",
+        "type": "github"
+      }
+    },
+    "mt7927": {
+      "inputs": {
+        "mediatek-mt7927-dkms": "mediatek-mt7927-dkms",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781648162,
+        "narHash": "sha256-foNu1K5OnDxdi+nVIZyqxZ8uqLuHHXgz/mxsntcqz1g=",
+        "owner": "cmspam",
+        "repo": "MT7927-Nixos",
+        "rev": "9fb54773344f4950cd0b630ef60549ad3864bee2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cmspam",
+        "repo": "MT7927-Nixos",
+        "type": "github"
+      }
+    },
     "nix-vm-test": {
       "inputs": {
         "nixpkgs": [
@@ -259,6 +296,7 @@
         "disko": "disko",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "mt7927": "mt7927",
         "nixos-anywhere": "nixos-anywhere",
         "nixos-images": "nixos-images_2",
         "nixpkgs": "nixpkgs",
@@ -278,11 +316,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1781775335,
-        "narHash": "sha256-kC9cbUrUODRPFVbx5pHB7qIHyCifCtAnd3f8i6CrGA4=",
+        "lastModified": 1784429332,
+        "narHash": "sha256-CPk2ARvLrO5z/ZfeBgH/F3sI/a010TC5GYwpfBL2ifA=",
         "ref": "refs/heads/main",
-        "rev": "f4ba9c7fa2215b645e1fc7f5544a8c90c255a528",
-        "revCount": 116,
+        "rev": "72eb1cc47e1dc2fc1344df712031a9a010b7b1db",
+        "revCount": 117,
         "type": "git",
         "url": "ssh://git@github.com/desiyonan/secret-hub.git"
       },
