@@ -3,8 +3,8 @@
 
   inputs = {
     # https://status.nixos.org/
-    # track unstable channel for system packages/modules
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # NixOS 26.05 stable (pinned)
+    nixpkgs.url = "github:nixos/nixpkgs/293d6abedf0478e681a4dfcfcb35b30fc796a32f";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     # nixos-cn = {
@@ -14,8 +14,8 @@
     # };
 
     home-manager = {
-      # keep HM aligned with unstable nixpkgs
-      url = "github:nix-community/home-manager/master";
+      # keep HM aligned with nixos-26.05
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix.url = "github:Mic92/sops-nix";

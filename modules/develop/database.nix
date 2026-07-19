@@ -10,7 +10,6 @@ in
       dbeaver-bin
       beekeeper-studio
       # redisinsight
-      tableplus
       sqlfluff
       liquibase
     ];

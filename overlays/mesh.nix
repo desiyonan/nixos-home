@@ -1,6 +1,5 @@
-{...}:
+{ ... }@args:
 
-final: prev:
-{
-  mesh = import ../mesh {lib = final.lib;};
+final: prev: {
+  mesh = import ../mesh args;
 }

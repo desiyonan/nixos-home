@@ -15,7 +15,7 @@
 ################################################################################
 
 let
-  version = "4.1.1.4";
+  version = "4.1.1.8";
 
   license = stdenv.mkDerivation {
     pname = "wechat-uos-license";
@@ -33,7 +33,8 @@ let
     inherit version;
     src = fetchurl {
       url = "https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_x86_64.deb";
-      sha256 = "1qlpqw10x8nw3z3awi1hh1ibsx62rrp0530rn1m3sf1r30h5qsnf";
+      # Upstream reuploads at the same URL; update when hash mismatches.
+      hash = "sha256-yXZeh+5RM79LtQ1YXBgU+v2ZXj+w2mLF7Qclm0Pa2ns=";
     };
 
     unpackPhase = ''

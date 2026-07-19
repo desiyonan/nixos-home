@@ -39,7 +39,8 @@ in
       programs.xwayland.enable = true;
 
       services.flatpak.enable = true;
-      services.todesk.enable = true;
+      # todesk：nixpkgs 源走 archive.org，常 429；官网 CDN 有反爬，暂不可构建
+      # services.todesk.enable = true;
       services.fwupd.enable = true;
       services.hardware.bolt.enable = true;
 
@@ -82,14 +83,12 @@ in
         vlc
         waveterm
         warp-terminal
-        gui-for-singbox
         gImageReader
         normcap
         todoist-electron
         librecad
         freecad-wayland
         libsForQt5.qt5.qtwayland
-        todesk
         waybar
 
         # 不常用 / 偏工作站（自 base 迁入）

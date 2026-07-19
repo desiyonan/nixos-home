@@ -1,35 +1,4 @@
 { ... }:
-let
-  # Steam 等沙箱应用只读用户级 fontconfig
-  cjkFontconfig = ''
-    <?xml version="1.0"?>
-    <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
-    <fontconfig>
-      <alias binding="strong">
-        <family>sans-serif</family>
-        <prefer>
-          <family>Noto Sans CJK SC</family>
-          <family>WenQuanYi Zen Hei</family>
-        </prefer>
-      </alias>
-      <alias binding="strong">
-        <family>serif</family>
-        <prefer>
-          <family>Noto Serif CJK SC</family>
-          <family>WenQuanYi Zen Hei</family>
-        </prefer>
-      </alias>
-      <alias binding="strong">
-        <family>monospace</family>
-        <prefer>
-          <family>Noto Sans Mono CJK SC</family>
-          <family>WenQuanYi Zen Hei</family>
-        </prefer>
-      </alias>
-    </fontconfig>
-  '';
-in
-{ ... }:
 {
   users.users.dnf = {
     name = "dnf";
@@ -59,7 +28,7 @@ in
     users.dnf = {
       home.stateVersion = "26.05";
 
-      xdg.configFile."fontconfig/fonts.conf".text = cjkFontconfig;
+      # 字体：系统 defaultFonts + HM sharedModules 用户级 fonts.conf（Steam 必需）
 
       programs.bash.enable = true;
 

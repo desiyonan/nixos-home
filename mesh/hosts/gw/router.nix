@@ -141,15 +141,23 @@ in
     };
   };
 
-  # 启动前清理 DBDC 残留虚拟接口（避免 hostapd 初始化失败）
+  # 监管域必须在 hostapd 选信道前生效；否则 country 00 下 ch149 为 NO-IR，AP 起不来并疯狂重启。
+  hardware.wirelessRegulatoryDatabase = true;
+  boot.extraModprobeConfig = ''
+    options cfg80211 ieee80211_regdom=${wifiRegCountry}
+  '';
+
+  # 启动前：清理 DBDC 残留接口，并强制 iw reg set CN
   systemd.services.hostapd-prep = {
-    description = "Prepare WiFi interface before hostapd";
+    description = "Prepare WiFi interface and regulatory domain before hostapd";
     after = [ "sys-subsystem-net-devices-${wifiInterface}.device" ];
     before = [ "hostapd.service" ];
     wantedBy = [ "multi-user.target" ];
     path = [
       pkgs.iw
       pkgs.iproute2
+      pkgs.coreutils
+      pkgs.gnugrep
     ];
     serviceConfig = {
       Type = "oneshot";
@@ -163,6 +171,20 @@ in
           iw dev "$iface" del || true
         fi
       done
+
+      iw reg set ${wifiRegCountry}
+      for _ in $(seq 1 20); do
+        if iw reg get | grep -q "country ${wifiRegCountry}:"; then
+          break
+        fi
+        sleep 0.25
+        iw reg set ${wifiRegCountry} || true
+      done
+      if ! iw reg get | grep -q "country ${wifiRegCountry}:"; then
+        echo "ERROR: failed to set regulatory domain to ${wifiRegCountry}" >&2
+        iw reg get >&2 || true
+        exit 1
+      fi
     '';
   };
 
@@ -237,6 +259,13 @@ in
       "network-addresses-${wifiInterface}.service"
       "hostapd-prep.service"
     ];
+    requires = [ "hostapd-prep.service" ];
+    serviceConfig = {
+      # 失败时避免秒级重启打满日志（曾出现 30 万+ 次重启）
+      RestartSec = "5s";
+      StartLimitIntervalSec = 120;
+      StartLimitBurst = 10;
+    };
   };
 
   systemd.tmpfiles.rules = [

@@ -1,0 +1,13 @@
+;; Managed by NixOS (mesh/dotfs/uim)
+;; 勿用裸 (define generic-on-key ...)，会 SIGSEGV
+(custom-set-value! 'custom-activate-default-im-name? #t)
+(custom-set-value! 'custom-preserved-default-im-name 'py)
+(custom-set-value! 'enabled-im-list '(py direct))
+(custom-set-value! 'enable-im-switch? #f)
+(custom-set-value! 'enable-im-toggle? #f)
+(custom-set-value! 'generic-on-key '("<Control> " "F12"))
+(custom-set-value! 'generic-off-key '("<Control> " "F12"))
+(custom-set-value! 'generic-use-candidate-window? #t)
+(custom-set-value! 'generic-show-candidate-implicitly? #t)
+(custom-set-value! 'generic-nr-candidate-max 10)
+(custom-set-value! 'generic-commit-candidate-by-numeral-key? #t)
