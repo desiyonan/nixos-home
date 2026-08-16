@@ -6,6 +6,11 @@ let
   nvidiaCfg = cfg.nvidia;
 in
 {
+  imports = [
+    ./howdy.nix
+    ./bluelock.nix
+  ];
+
   options.modules.graphical = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -82,10 +87,11 @@ in
         wpsoffice
         vlc
         waveterm
-        warp-terminal
+        unstable.warp-terminal
         gImageReader
         normcap
         todoist-electron
+        slack
         librecad
         freecad-wayland
         libsForQt5.qt5.qtwayland
@@ -127,9 +133,7 @@ in
         lshw
         llvmPackages.clangUseLLVM
         llvmPackages.libclang
-        direnv
         iptables
-        nix-direnv
         dog
         duf
         envsubst

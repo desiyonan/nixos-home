@@ -3,7 +3,7 @@
 {
   modules.headscale = {
     openFirewall = false;
-    serverUrl = "https://s60.dnfn.tech";
+    serverUrl = "https://s61.dnfn.tech";
     headplaneUrl = "http://127.0.0.1:26616";
     headscalePort = 26616;
     headplanePort = 3000;
@@ -14,9 +14,10 @@
     enable = true;
     group = "x3-ui";
     recommendedProxySettings = true;
-    virtualHosts."s60.dnfn.tech" = {
+    virtualHosts."s61.dnfn.tech" = {
+      serverAliases = [ "s60.dnfn.tech" ];
       forceSSL = true;
-      useACMEHost = "s60-dnfn-tech";
+      useACMEHost = "s61-dnfn-tech";
       locations = {
         "/" = {
           proxyPass = "http://127.0.0.1:26616";
@@ -34,7 +35,7 @@
   };
 
   systemd.services.nginx = {
-    after = [ "acme-s60-dnfn-tech.service" ];
-    requires = [ "acme-s60-dnfn-tech.service" ];
+    after = [ "acme-s61-dnfn-tech.service" ];
+    requires = [ "acme-s61-dnfn-tech.service" ];
   };
 }

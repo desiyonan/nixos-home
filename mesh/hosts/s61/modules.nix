@@ -1,4 +1,4 @@
-# s60 host 模块开关（网络/SSH 见 configuration.nix）
+# s61 host 模块开关（网络/SSH 见 configuration.nix）
 { ... }:
 
 {
@@ -6,7 +6,9 @@
   modules.network.enableIPv6 = true;
   modules.network.networkManager.enable = false;
   modules.network.resolved.enable = true;
-  modules.network.proxy.enable = false;
+  modules.network.proxy.enable = true;
+  # mihomo 等共享配置：secrets/data/programs/
+  secret-hub.extraSecrets = [ "programs" ];
 
   modules.openssh.enable = true;
   modules.headscale.enable = true;

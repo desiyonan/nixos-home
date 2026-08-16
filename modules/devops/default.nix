@@ -38,7 +38,7 @@ in
     waydroid.enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "Waydroid and LXD";
+      description = "Waydroid + waydroid-helper GUI";
     };
     rancher.enable = devopsEnable "Rancher CLI";
   };

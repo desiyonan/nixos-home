@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
-  time.timeZone = "Asia/Shanghai";
+  # 按 geoclue 定位自动设置时区（无图形界面也可；会强制 time.timeZone = null）
+  services.automatic-timezoned.enable = true;
 
   location = {
     latitude = 29.471919;

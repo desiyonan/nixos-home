@@ -1,10 +1,10 @@
 # 云 VPS 主机通用说明
 
-适用于 `mesh/hosts` 下各 VPS 主机（如 `s60`、`s71`、`s72`）的统一部署与维护流程。主机通常采用最小化 KVM 方案：`disko` MBR 分区 + `lib.mkHost`（`secret-hub` / `dnf` 用户 / root 公钥）。
+适用于 `mesh/hosts` 下各 VPS 主机（如 `s61`、`s71`、`s72`）的统一部署与维护流程。主机通常采用最小化 KVM 方案：`disko` MBR 分区 + `lib.mkHost`（`secret-hub` / `dnf` 用户 / root 公钥）。
 
 ## 约定占位符
 
-- `<HOST_FLAKE>`：主机 flake 名称（例如 `s60`）
+- `<HOST_FLAKE>`：主机 flake 名称（例如 `s61`）
 - `<PUBLIC_IP>`：主机公网 IP
 - `<HOSTNAME_OR_DOMAIN>`：主机域名或主机名
 - `<HOST_ID>`：主机 ID（对应 `secrets/data/hosts/<HOST_ID>/`）
@@ -63,7 +63,7 @@ nix path-info -rSh result
 
 ## Secret（secret-hub）
 
-当 `secrets/data/hosts/<HOST_ID>/` 尚无数据时，`secret-hub` 仅加载 `extraSecrets`（默认无）。需要主机级 secret 时再登记 GPG 子钥：
+当 `secrets/data/hosts/<HOST_ID>/` 尚无数据时，`secret-hub` 仅加载 `extraSecrets`（默认无）。需要主机级 secret 时为该机生成**独立 RSA 钥**（非 dnfn 子钥），登记加密指纹到 `.sops.yaml`，并同步到目标机 `/var/lib/sops`（只装本机钥）：
 
 ```bash
 cd secrets

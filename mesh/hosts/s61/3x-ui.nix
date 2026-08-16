@@ -2,8 +2,8 @@
 { lib, ... }:
 
 let
-  domain = "s60.dnfn.tech";
-  certName = "s60-dnfn-tech";
+  domain = "s61.dnfn.tech";
+  certName = "s61-dnfn-tech";
 in
 {
   security.acme = {
@@ -11,6 +11,8 @@ in
     defaults.email = "1310332521@qq.com";
     certs.${certName} = {
       inherit domain;
+      # 过渡期：ws/手机 Tailscale ControlURL 仍为 s60，证书需同时覆盖
+      extraDomainNames = [ "s60.dnfn.tech" ];
       group = "x3-ui";
       dnsProvider = "cloudflare";
       environmentFile = "/var/lib/acme/cloudflare-dns-dnfn-tech";

@@ -9,8 +9,11 @@ in
       nodejs
       biome
       prettier
-      codex
+      unstable.codex
       claude-code
+      unstable.opencode
+      unstable.opencode-desktop
+      unstable.pi-coding-agent
     ] ++ [
       pkgs."@colbymchenry/codegraph"
     ];

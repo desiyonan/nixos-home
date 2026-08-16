@@ -1,0 +1,481 @@
+--- a/src/bluelock/app.py
++++ b/src/bluelock/app.py
+@@ -13,7 +13,7 @@
+ from bluelock.bluetooth import get_monitor
+ from bluelock.config import Config
+ from bluelock.session_locker import LockError, ScreenSaverInhibitor, SessionLocker
+-from bluelock.signal_processor import SignalProcessor
++from bluelock.signal_processor import NO_SIGNAL, SignalProcessor
+ from bluelock.state_machine import ProximityState, ProximityStateMachine
+ from bluelock.tray import TrayIcon
+ 
+@@ -35,6 +35,8 @@
+             self._config = Config()
+         self._monitor = get_monitor()
+         self._monitor.rssi_method = self._config.rssi_method
++        self._monitor.proximity_mode = self._config.proximity_mode
++        log.info("Proximity mode: %s", self._config.proximity_mode)
+         self._processor = SignalProcessor(self._config.buffer_size)
+         self._machine = ProximityStateMachine(
+             lock_rssi_threshold=self._config.lock_rssi_threshold,
+@@ -98,11 +100,17 @@
+                               self._config.device_name, paused=True)
+             return
+ 
+-        if self._device_present and not self._processor.has_readings:
+-            return
++        if self._config.proximity_mode == "connection":
++            rssi = 0.0 if self._device_present else float(NO_SIGNAL)
++            present = self._device_present
++        else:
++            if self._device_present and not self._processor.has_readings:
++                return
++            rssi = self._processor.smoothed_rssi
++            present = self._device_present
+ 
+         prev_state = self._machine.state
+-        new_state = self._machine.evaluate(self._processor.smoothed_rssi, self._device_present)
++        new_state = self._machine.evaluate(rssi, present)
+ 
+         # Only act on transitions from a known state (not the initial UNKNOWN→* transition)
+         if new_state is not None and prev_state != ProximityState.UNKNOWN:
+@@ -177,6 +185,8 @@
+         self._locker.lock_command = new_cfg.lock_command
+         self._locker.unlock_command = new_cfg.unlock_command
+         self._monitor.rssi_method = new_cfg.rssi_method
++        self._monitor.proximity_mode = new_cfg.proximity_mode
++        log.info("Proximity mode: %s", new_cfg.proximity_mode)
+         self._processor.buffer_size = new_cfg.buffer_size
+         self._machine = ProximityStateMachine(
+             lock_rssi_threshold=new_cfg.lock_rssi_threshold,
+--- a/src/bluelock/bluetooth/_bluez_dbus.py
++++ b/src/bluelock/bluetooth/_bluez_dbus.py
+@@ -11,12 +11,11 @@
+ from collections.abc import Callable
+ 
+ from PyQt6.QtCore import QObject, QTimer, pyqtSlot
+-from PyQt6.QtDBus import QDBusConnection, QDBusInterface, QDBusMessage
++from PyQt6.QtDBus import QDBusConnection, QDBusInterface, QDBusMessage, QDBusVariant
+ 
+ from bluelock.bluetooth._adapters import AdapterInfo, list_adapters, resolve_addresses
+ from bluelock.bluetooth._base import AbstractBluetoothMonitor
+ from bluelock.bluetooth._types import DeviceInfo, mac_to_dbus_path, normalize_mac
+-from bluelock.bluetooth._utils import poll_rssi
+ 
+ log = logging.getLogger(__name__)
+ 
+@@ -29,7 +28,8 @@
+ _RSSI_POLL_MS = 2_000
+ # A per-adapter sample is considered fresh if newer than this many seconds.
+ # Beyond it, that adapter no longer contributes to the aggregate or to presence.
+-_STALE_WINDOW_S = 5.0
++_STALE_WINDOW_S = 8.0
++_PROXIMITY_MODES = ("ble-scan", "connection")
+ # Late-bind retry delay when StartDiscovery races with adapter initialisation.
+ _DISCOVERY_RETRY_MS = 250
+ 
+@@ -66,6 +66,7 @@
+         self._monitoring: bool = False
+         self._scanning: bool = False
+         self._rssi_method: str = "auto"
++        self._proximity_mode: str = "ble-scan"
+ 
+         # Configured selection (BD addresses); empty ⇒ use all available adapters.
+         self._selected_addresses: list[str] = []
+@@ -112,8 +113,8 @@
+         self._selected_addresses = [normalize_mac(a) for a in (adapter_addresses or []) if normalize_mac(a)]
+         self._monitoring = True
+         self._aggregate_present = False
+-        log.info("Starting monitoring for %s on adapters=%s",
+-                 mac, self._selected_addresses or "all")
++        log.info("Starting monitoring for %s on adapters=%s mode=%s",
++                 mac, self._selected_addresses or "all", self._proximity_mode)
+ 
+         self._connect_object_manager_signals()
+         self._start_adapter_watching()
+@@ -197,6 +198,17 @@
+         self._rssi_method = value
+ 
+     @property
++    def proximity_mode(self) -> str:
++        return self._proximity_mode
++
++    @proximity_mode.setter
++    def proximity_mode(self, value: str) -> None:
++        mode = value if value in _PROXIMITY_MODES else "ble-scan"
++        if mode != value:
++            log.warning("Unknown proximity_mode %r, using %s", value, mode)
++        self._proximity_mode = mode
++
++    @property
+     def bound_adapters(self) -> list[AdapterInfo]:
+         """Adapters currently bound for monitoring (read-only snapshot)."""
+         return [s.info for s in self._adapter_states.values()]
+@@ -234,7 +246,10 @@
+         if device_path:
+             self._connect_device_signals(device_path)
+         self._connect_adapter_props(ainfo.path)
+-        self._start_discovery(ainfo.path, on_state=state)
++        if self._proximity_mode == "connection":
++            self._seed_connected(state)
++        else:
++            self._start_discovery(ainfo.path, on_state=state)
+         self.adapters_changed.emit()
+ 
+     def _unbind_adapter(self, address: str, *, adapter_gone: bool = False) -> None:
+@@ -257,21 +272,25 @@
+     # ------------------------------------------------------------------ #
+ 
+     def _state_present(self, state: _AdapterState, now: float) -> bool:
+-        if state.connected:
+-            return True
++        if self._proximity_mode == "connection":
++            return state.connected
+         if state.latest_rssi is None:
+             return False
+         return (now - state.latest_ts) < _STALE_WINDOW_S
+ 
+     def _recompute_aggregate(self) -> None:
+         now = self._clock()
+-        fresh = [s for s in self._adapter_states.values()
+-                 if s.latest_rssi is not None and (now - s.latest_ts) < _STALE_WINDOW_S]
+-        if fresh:
+-            best = max(s.latest_rssi for s in fresh)  # type: ignore[type-var]
+-            self.rssi_updated.emit(int(best))
+-
+-        any_present = any(self._state_present(s, now) for s in self._adapter_states.values())
++        if self._proximity_mode == "connection":
++            any_present = any(s.connected for s in self._adapter_states.values())
++            if any_present:
++                self.rssi_updated.emit(0)
++        else:
++            fresh = [s for s in self._adapter_states.values()
++                     if s.latest_rssi is not None and (now - s.latest_ts) < _STALE_WINDOW_S]
++            if fresh:
++                best = max(s.latest_rssi for s in fresh)  # type: ignore[type-var]
++                self.rssi_updated.emit(int(best))
++            any_present = any(self._state_present(s, now) for s in self._adapter_states.values())
+         if any_present and not self._aggregate_present:
+             self._aggregate_present = True
+             self.device_appeared.emit()
+@@ -395,7 +414,20 @@
+     # BlueZ adapter control                                                #
+     # ------------------------------------------------------------------ #
+ 
++    def _set_le_discovery_filter(self, adapter_path: str) -> None:
++        adapter = QDBusInterface(_BLUEZ_SVC, adapter_path, _BLUEZ_ADAPTER_IFACE, self._bus)
++        filt = {
++            "Transport": QDBusVariant("le"),
++            "DuplicateData": QDBusVariant(True),
++        }
++        reply = adapter.call("SetDiscoveryFilter", filt)
++        if reply.type() == QDBusMessage.MessageType.ErrorMessage:
++            log.warning("SetDiscoveryFilter(le) on %s failed: %s",
++                        adapter_path, reply.errorMessage())
++
+     def _start_discovery(self, adapter_path: str, *, on_state: _AdapterState | None = None) -> None:
++        if on_state is not None and self._proximity_mode == "ble-scan":
++            self._set_le_discovery_filter(adapter_path)
+         adapter = QDBusInterface(_BLUEZ_SVC, adapter_path, _BLUEZ_ADAPTER_IFACE, self._bus)
+         reply = adapter.call("StartDiscovery")
+         if reply.type() == QDBusMessage.MessageType.ErrorMessage:
+@@ -421,6 +453,8 @@
+         current = self._adapter_states.get(state.info.address)
+         if current is not state:
+             return
++        if self._proximity_mode == "ble-scan":
++            self._set_le_discovery_filter(adapter_path)
+         adapter = QDBusInterface(_BLUEZ_SVC, adapter_path, _BLUEZ_ADAPTER_IFACE, self._bus)
+         reply = adapter.call("StartDiscovery")
+         if reply.type() == QDBusMessage.MessageType.ErrorMessage:
+@@ -518,10 +552,14 @@
+                         state.device_path = path
+                         self._device_path_to_addr[path] = addr
+                         self._connect_device_signals(path)
+-                        if rssi is not None:
++                        if self._proximity_mode == "connection":
++                            connected = props.get("Connected")
++                            if connected is not None:
++                                self._handle_connected(addr, bool(connected))
++                            elif rssi is not None:
++                                self._handle_connected(addr, True)
++                        elif rssi is not None:
+                             self._handle_rssi(addr, int(rssi), source="dbus")
+-                        else:
+-                            self._handle_connected(addr, True)
+                         break
+ 
+     @pyqtSlot('QDBusMessage')
+@@ -550,17 +588,43 @@
+     # Polling fallback (per adapter)                                       #
+     # ------------------------------------------------------------------ #
+ 
++    def _dbus_get(self, path: str, prop: str):
++        """Read a Device1 property. PropertiesChanged is often silent for BR/EDR."""
++        if not path:
++            return None
++        iface = QDBusInterface(_BLUEZ_SVC, path, _DBUS_PROPS_IFACE, self._bus)
++        reply = iface.call("Get", _BLUEZ_DEVICE_IFACE, prop)
++        if reply.type() == QDBusMessage.MessageType.ErrorMessage:
++            return None
++        args = reply.arguments()
++        if not args:
++            return None
++        val = args[0]
++        if hasattr(val, "variant"):
++            try:
++                val = val.variant()
++            except Exception:  # noqa: BLE001
++                return None
++        return val
++
++    def _seed_connected(self, state: _AdapterState) -> None:
++        if not state.device_path:
++            return
++        connected = self._dbus_get(state.device_path, "Connected")
++        if connected is not None:
++            self._handle_connected(state.info.address, bool(connected))
++
+     def _on_stale_check(self) -> None:
+         if not self._monitoring or not self._target_mac:
+             return
+-        if self._rssi_method != "dbus":
+-            now = self._clock()
++        if self._proximity_mode == "connection":
+             for addr, state in list(self._adapter_states.items()):
+-                if state.latest_rssi is not None and (now - state.latest_ts) < _STALE_WINDOW_S:
+-                    continue
+-                rssi, _err, tool = poll_rssi(self._target_mac, self._rssi_method, adapter=state.info.hci_name)
+-                if rssi is not None:
+-                    self._handle_rssi(addr, rssi, source=tool)
++                raw = self._dbus_get(state.device_path, "Connected") if state.device_path else None
++                if raw is not None and bool(raw) != state.connected:
++                    self._handle_connected(addr, bool(raw))
++            self._recompute_aggregate()
++            return
++        # ble-scan: expire stale advertisements; do not Get cached Device1.RSSI.
+         self._recompute_aggregate()
+ 
+     # ------------------------------------------------------------------ #
+二进制文件 a/src/bluelock/bluetooth/__pycache__/_bluez_dbus.cpython-313.pyc 和 b/src/bluelock/bluetooth/__pycache__/_bluez_dbus.cpython-313.pyc 不同
+--- a/src/bluelock/config_dialog.py
++++ b/src/bluelock/config_dialog.py
+@@ -36,7 +36,7 @@
+ from bluelock.bluetooth._adapters import AdapterInfo, list_adapters
+ from bluelock.bluetooth._base import AbstractBluetoothMonitor
+ from bluelock.bluetooth._types import DeviceInfo, normalize_mac
+-from bluelock.config import Config, DeviceConfig
++from bluelock.config import Config, DeviceConfig, default_proximity_mode, normalize_proximity_mode
+ from bluelock.signal_processor import estimate_distance_m
+ 
+ _AUTOSTART_FILE = Config.config_dir().parent / "autostart" / "bluelock.desktop"
+@@ -220,6 +220,7 @@
+         buffer_size: int = 16,
+         scan_interval: float = 1.0,
+         rssi_method: str = "auto",
++        proximity_mode: str | None = None,
+         parent: QWidget | None = None,
+     ) -> None:
+         super().__init__(parent)
+@@ -249,7 +250,7 @@
+         forget_btn.clicked.connect(lambda: self.forget_requested.emit(self._mac))
+         outer.addWidget(forget_btn)
+ 
+-        self._populate(dev, buffer_size, scan_interval, rssi_method)
++        self._populate(dev, buffer_size, scan_interval, rssi_method, proximity_mode)
+ 
+     @property
+     def buffer_size(self) -> int:
+@@ -264,6 +265,10 @@
+         return self._rssi_method_combo.currentData()
+ 
+     @property
++    def proximity_mode(self) -> str:
++        return normalize_proximity_mode(self._proximity_combo.currentData())
++
++    @property
+     def autostart_enabled(self) -> bool:
+         return self._autostart_check.isChecked()
+ 
+@@ -368,18 +373,46 @@
+         self._interval_spin.setSuffix(" s")
+         self._interval_spin.setToolTip("How often to evaluate the lock/unlock state")
+         form.addRow("Scan interval:", self._interval_spin)
++        self._proximity_combo = QComboBox()
++        self._proximity_combo.addItem("E · BLE advertisement scan (default)", "ble-scan")
++        self._proximity_combo.addItem("A · Bluetooth connection presence", "connection")
++        self._proximity_combo.setToolTip(
++            "E: lock/unlock from live BLE advertisement RSSI.\n"
++            "A: lock after disconnect (grace = lock duration); unlock on reconnect.\n"
++            "Phones that stop advertising while connected should use A."
++        )
++        self._proximity_combo.currentIndexChanged.connect(self._sync_mode_widgets)
++        form.addRow("Proximity mode:", self._proximity_combo)
+         self._rssi_method_combo = QComboBox()
+         self._rssi_method_combo.addItem("Auto-detect (D-Bus → btmgmt → hcitool)", "auto")
+         self._rssi_method_combo.addItem("Force D-Bus only (no polling fallback)", "dbus")
+         self._rssi_method_combo.addItem("Force sudo btmgmt conn-info", "btmgmt")
+         self._rssi_method_combo.addItem("Force hcitool rssi", "hcitool")
+-        self._rssi_method_combo.setToolTip("How to read RSSI when D-Bus updates are not available")
++        self._rssi_method_combo.setToolTip("How to read RSSI when D-Bus updates are not available (ble-scan fallback)")
+         form.addRow("RSSI method:", self._rssi_method_combo)
+         self._autostart_check = QCheckBox("Start BlueLock automatically on login")
+         form.addRow("Auto-start:", self._autostart_check)
+         return box
+ 
+-    def _populate(self, dev: DeviceConfig, buffer_size: int, scan_interval: float, rssi_method: str = "auto") -> None:
++    def _sync_mode_widgets(self) -> None:
++        ble = self.proximity_mode == "ble-scan"
++        for w in (
++            self._lock_rssi_spin,
++            self._lock_rssi_slider,
++            self._unlock_rssi_spin,
++            self._unlock_rssi_slider,
++            self._rssi_method_combo,
++        ):
++            w.setEnabled(ble)
++
++    def _populate(
++        self,
++        dev: DeviceConfig,
++        buffer_size: int,
++        scan_interval: float,
++        rssi_method: str = "auto",
++        proximity_mode: str | None = None,
++    ) -> None:
+         self._lock_rssi_spin.setValue(dev.lock_rssi_threshold)
+         self._lock_rssi_slider.setValue(dev.lock_rssi_threshold)
+         self._lock_dur_spin.setValue(dev.lock_duration)
+@@ -392,6 +425,9 @@
+         self._interval_spin.setValue(scan_interval)
+         idx = self._rssi_method_combo.findData(rssi_method)
+         self._rssi_method_combo.setCurrentIndex(idx if idx >= 0 else 0)
++        mode_idx = self._proximity_combo.findData(normalize_proximity_mode(proximity_mode or default_proximity_mode()))
++        self._proximity_combo.setCurrentIndex(mode_idx if mode_idx >= 0 else 0)
++        self._sync_mode_widgets()
+         self._autostart_check.setChecked(_autostart_enabled())
+         self._adapters_group.set_configured(dev.adapter_addresses)
+ 
+@@ -407,11 +443,15 @@
+         self._monitor = None
+         self._scan_results: dict[str, DeviceInfo] = {}
+         self._device_tab: _DeviceTab | None = None
++        self._proximity_mode = config.proximity_mode
+ 
+         self._build_ui()
+ 
+         if config.device:
+-            self._set_device_tab(config.device, config.buffer_size, config.scan_interval, config.rssi_method)
++            self._set_device_tab(
++                config.device, config.buffer_size, config.scan_interval,
++                config.rssi_method, config.proximity_mode,
++            )
+ 
+     # ------------------------------------------------------------------ #
+     # Public                                                               #
+@@ -432,6 +472,9 @@
+             buffer_size=self._device_tab.buffer_size if self._device_tab else 16,
+             scan_interval=self._device_tab.scan_interval if self._device_tab else 1.0,
+             rssi_method=self._device_tab.rssi_method if self._device_tab else "auto",
++            proximity_mode=(
++                self._device_tab.proximity_mode if self._device_tab else default_proximity_mode()
++            ),
+         )
+ 
+     # ------------------------------------------------------------------ #
+@@ -484,13 +527,18 @@
+         return tab
+ 
+     def _set_device_tab(
+-        self, dev: DeviceConfig, buffer_size: int = 16, scan_interval: float = 1.0, rssi_method: str = "auto"
++        self,
++        dev: DeviceConfig,
++        buffer_size: int = 16,
++        scan_interval: float = 1.0,
++        rssi_method: str = "auto",
++        proximity_mode: str | None = None,
+     ) -> int:
+         """Create or update the settings tab for *dev*, lock the Device tab, and return the index."""
+         if self._device_tab:
+             self._tabs.removeTab(1)
+ 
+-        self._device_tab = _DeviceTab(dev, buffer_size, scan_interval, rssi_method)
++        self._device_tab = _DeviceTab(dev, buffer_size, scan_interval, rssi_method, proximity_mode)
+         self._device_tab.forget_requested.connect(self._on_forget)
+         idx = self._tabs.addTab(self._device_tab, "Settings")
+         self._tabs.setTabEnabled(0, False)
+@@ -557,7 +605,8 @@
+         if not mac:
+             return
+ 
+-        self._set_device_tab(DeviceConfig(mac=mac, name=name))
++        mode = self._device_tab.proximity_mode if self._device_tab else self._proximity_mode
++        self._set_device_tab(DeviceConfig(mac=mac, name=name), proximity_mode=mode)
+ 
+     def _on_forget(self, mac: str) -> None:
+         """Remove the device tab and unlock the Device tab."""
+--- a/src/bluelock/config.py
++++ b/src/bluelock/config.py
+@@ -2,9 +2,24 @@
+ from __future__ import annotations
+ 
+ import dataclasses
++import os
+ import tomllib
+ from pathlib import Path
+ 
++PROXIMITY_MODES = ("ble-scan", "connection")
++DEFAULT_PROXIMITY_MODE = "ble-scan"
++
++
++def normalize_proximity_mode(value: str | None) -> str:
++    raw = (value or "").strip()
++    if raw in PROXIMITY_MODES:
++        return raw
++    return DEFAULT_PROXIMITY_MODE
++
++
++def default_proximity_mode() -> str:
++    return normalize_proximity_mode(os.environ.get("BLUELOCK_PROXIMITY_MODE", DEFAULT_PROXIMITY_MODE))
++
+ 
+ @dataclasses.dataclass
+ class DeviceConfig:
+@@ -33,6 +48,9 @@
+     buffer_size: int = 16
+     scan_interval: float = 1.0
+     rssi_method: str = "auto"
++    # ble-scan (E): presence from BLE advertisement RSSI.
++    # connection (A): presence from BlueZ Connected.
++    proximity_mode: str = dataclasses.field(default_factory=default_proximity_mode)
+ 
+     # ------------------------------------------------------------------
+     # Properties for easy access to device settings
+@@ -106,10 +124,16 @@
+             return cls()
+ 
+         advanced = data.get("advanced", {})
++        raw_mode = advanced.get("proximity_mode")
++        if raw_mode in (None, ""):
++            proximity_mode = default_proximity_mode()
++        else:
++            proximity_mode = normalize_proximity_mode(str(raw_mode))
+         cfg = cls(
+             buffer_size=int(advanced.get("buffer_size", 16)),
+             scan_interval=float(advanced.get("scan_interval", 1.0)),
+             rssi_method=str(advanced.get("rssi_method", "auto")),
++            proximity_mode=proximity_mode,
+         )
+ 
+         # Current format: [device] single table with all fields
+@@ -169,6 +193,7 @@
+     lines.append(f"buffer_size = {cfg.buffer_size}")
+     lines.append(f"scan_interval = {cfg.scan_interval!r}")
+     lines.append(f'rssi_method = "{_escape(cfg.rssi_method)}"')
++    lines.append(f'proximity_mode = "{_escape(cfg.proximity_mode)}"')
+     lines.append("")
+ 
+     if cfg.device:
+二进制文件 a/src/bluelock/__pycache__/app.cpython-313.pyc 和 b/src/bluelock/__pycache__/app.cpython-313.pyc 不同
+二进制文件 a/src/bluelock/__pycache__/config.cpython-313.pyc 和 b/src/bluelock/__pycache__/config.cpython-313.pyc 不同
+二进制文件 a/src/bluelock/__pycache__/config_dialog.cpython-313.pyc 和 b/src/bluelock/__pycache__/config_dialog.cpython-313.pyc 不同

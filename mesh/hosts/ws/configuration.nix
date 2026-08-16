@@ -23,9 +23,6 @@
   hardware.enableAllFirmware = true; 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Set your time zone.
-  time.timeZone = "Asia/Shanghai";
-
   # Select internationalisation properties.
   i18n.defaultLocale = "zh_CN.UTF-8";
 

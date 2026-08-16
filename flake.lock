@@ -261,11 +261,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1784356753,
-        "narHash": "sha256-12KrbMiWLcf8m7pCvAtZh1ZrgF85ZXDXvfR/fWTKy84=",
+        "lastModified": 1785090369,
+        "narHash": "sha256-m0pDuRJG7EDo9ri+4Ksu83VsI+PlxNC9lNBfydejce4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "61b7c44c4073f0b827768aff0049561b5110ea5a",
+        "rev": "624af665418d3c65d544145b4d34ad696439570e",
         "type": "github"
       },
       "original": {
@@ -316,11 +316,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1784442375,
-        "narHash": "sha256-28wKUaomoAkYuPP0VofC74VcbFDZNE/jr0WiDBCGY+g=",
+        "lastModified": 1784502390,
+        "narHash": "sha256-m/1o+Xevb0Z3Ebyo6QDj+YgdpWSFx6jFu1IMUVZsodM=",
         "ref": "refs/heads/main",
-        "rev": "74d158a6d2f167b0a5c212dfa716c8262ec32c6a",
-        "revCount": 118,
+        "rev": "f4905c440564f6b457e481cd3174d756f5f1cef3",
+        "revCount": 124,
         "type": "git",
         "url": "ssh://git@github.com/desiyonan/secret-hub.git"
       },
