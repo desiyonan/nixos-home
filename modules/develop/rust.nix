@@ -7,7 +7,7 @@ in
   config = lib.mkIf (cfg.enable && cfg.rust.enable) {
     environment.systemPackages = with pkgs; [
       rustup
-      jetbrains.rust-rover
+      #jetbrains.rust-rover
       rust-analyzer
       cargo-watch
       cargo-edit

@@ -66,8 +66,10 @@ in
       control = cfg.control;
       settings = {
         video.device_path = cfg.devicePath;
-        # SDDM / kscreenlocker：识别成功后不要再等回车
+        # 识别成功后不自动注入 Enter，也不在 PAM 层强制结束密码提示；
+        # 由用户手动提交当前认证界面，避免 native 路径遗留 TTY 的 -echo 状态。
         core.no_confirmation = true;
+        core.workaround = "off";
       };
     };
 

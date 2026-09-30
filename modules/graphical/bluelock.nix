@@ -9,7 +9,7 @@ in
   options.modules.graphical.bluelock = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = true;
+      default = false;
       description = ''
         Bluetooth proximity lock/unlock for Plasma (phone / watch / earbuds).
         Walk away → lock; return → unlock. Ignored unless modules.graphical.enable.

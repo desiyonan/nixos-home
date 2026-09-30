@@ -3,6 +3,49 @@
 let
   # 与系统 /etc/fonts/local.conf 同内容；HM 复制为可写文件（Cursor 等会尝试写 fonts.conf）
   userFontsConf = pkgs.writeText "user-fonts.conf" config.fonts.fontconfig.localConf;
+
+  # WPS/Word 中文默认宋体、黑体、楷体只有 Regular。90-synthetic.conf 会 embolden，
+  # FreeType 描边后 CJK 笔画糊成一团黑。粗体改走 Noto CJK 真 Bold。
+  fcBoldAlias =
+    to: froms:
+    lib.concatMapStrings (from: ''
+          <match target="pattern">
+            <test name="family"><string>${from}</string></test>
+            <test name="weight" compare="more"><const>medium</const></test>
+            <edit name="family" mode="assign" binding="strong">
+              <string>${to}</string>
+            </edit>
+          </match>
+    '') froms;
+
+  fcAlias =
+    to: froms:
+    lib.concatMapStrings (from: ''
+          <match target="pattern">
+            <test name="family"><string>${from}</string></test>
+            <edit name="family" mode="assign" binding="strong">
+              <string>${to}</string>
+            </edit>
+          </match>
+    '') froms;
+
+  # 无独立 Bold 的 CJK；须排在 90-synthetic.conf 之后，否则 faux-bold 会被重新打开
+  cjkNoFauxBoldFamilies = [
+    "宋体"
+    "SimSun"
+    "新宋体"
+    "NSimSun"
+    "黑体"
+    "SimHei"
+    "楷体"
+    "KaiTi"
+    "楷体_GB2312"
+    "KaiTi_GB2312"
+    "文泉驿正黑"
+    "WenQuanYi Zen Hei"
+    "文泉驿微米黑"
+    "WenQuanYi Micro Hei"
+  ];
 in
 {
   fonts = {
@@ -114,8 +157,53 @@ in
               <string>Microsoft YaHei</string>
             </edit>
           </match>
+
+          <!-- WPS：宋体/黑体/楷体无 Bold，faux-bold 一团黑 → Noto CJK 真 Bold -->
+    ${fcBoldAlias "Noto Serif CJK SC" [
+      "宋体"
+      "SimSun"
+      "新宋体"
+      "NSimSun"
+      "楷体"
+      "KaiTi"
+      "楷体_GB2312"
+      "KaiTi_GB2312"
+    ]}
+    ${fcBoldAlias "Noto Sans CJK SC" [
+      "黑体"
+      "SimHei"
+    ]}
+          <!-- 系统无仿宋 TTF；WPS/Word 常用名全部转到 Noto Serif -->
+    ${fcAlias "Noto Serif CJK SC" [
+      "仿宋"
+      "FangSong"
+      "仿宋_GB2312"
+      "FangSong_GB2312"
+    ]}
         </fontconfig>
       '';
+
+      # 51-local.conf 早于 90-synthetic.conf；关 embolden 必须用更大序号。
+      # 不能用 environment.etc."fonts/conf.d/..."：NixOS 已把 /etc/fonts 整树
+      # 指到 fontconfig-etc，再往 conf.d 里 ln 会 Permission denied。
+      confPackages = [
+        (pkgs.writeTextFile {
+          name = "cjk-no-faux-bold";
+          destination = "/etc/fonts/conf.d/91-cjk-no-faux-bold.conf";
+          text = ''
+            <?xml version="1.0"?>
+            <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+            <fontconfig>
+            ${lib.concatMapStrings (f: ''
+              <match target="font">
+                <test name="family"><string>${f}</string></test>
+                <edit name="embolden" mode="assign"><bool>false</bool></edit>
+              </match>
+            '') cjkNoFauxBoldFamilies}
+            </fontconfig>
+          '';
+        })
+      ];
     };
   };
 

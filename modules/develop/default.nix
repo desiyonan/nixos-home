@@ -19,8 +19,14 @@ in
     rust.enable = developEnable "Rust toolchain";
     javascript.enable = developEnable "Node.js toolchain";
     java.enable = developEnable "Java JDKs and programs.java";
+    android.enable = developEnable "Android cmdline-tools (apkanalyzer, sdkmanager, …)";
     database.enable = developEnable "Database management tools";
     clang.enable = developEnable "Clang / LLVM toolchain";
+    memorix.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Memorix HTTP control plane (user systemd). Disabled by default; run via Docker instead.";
+    };
   };
 
   imports = lib.listModules ./.;
@@ -29,7 +35,7 @@ in
     environment.systemPackages = with pkgs; [
       feishu
       vscode
-      code-cursor
+      unstable.code-cursor
       kdePackages.kate
       plantuml
     ];

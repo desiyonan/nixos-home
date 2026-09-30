@@ -2,3 +2,4 @@ result
 .idea
 .codegraph/
 .cursor/rules/codegraph.mdc
+local_cache

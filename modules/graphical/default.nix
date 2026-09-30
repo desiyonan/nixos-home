@@ -43,6 +43,15 @@ in
 
       programs.xwayland.enable = true;
 
+      # 双击 / 直接执行 .AppImage：内核 binfmt 交给 appimage-run（FHS，非 FUSE 挂载）
+      programs.appimage.enable = true;
+      programs.appimage.binfmt = true;
+      xdg.mime.defaultApplications = {
+        "application/vnd.appimage" = "run-appimage.desktop";
+        "application/x-iso9660-appimage" = "run-appimage.desktop";
+        "application/x-appimage" = "run-appimage.desktop";
+      };
+
       services.flatpak.enable = true;
       # todesk：nixpkgs 源走 archive.org，常 429；官网 CDN 有反爬，暂不可构建
       # services.todesk.enable = true;
@@ -70,7 +79,19 @@ in
 
         # 图形化 / 桌面应用
         kdePackages.ark
-        appimage-run
+        # 不可再用 name=appimage-run：与 programs.appimage 自带 desktop 撞路径。
+        (pkgs.makeDesktopItem {
+          name = "run-appimage";
+          desktopName = "Run AppImage";
+          exec = "${lib.getExe pkgs.appimage-run} %f";
+          mimeTypes = [
+            "application/vnd.appimage"
+            "application/x-iso9660-appimage"
+            "application/x-appimage"
+          ];
+          noDisplay = true;
+          terminal = false;
+        })
         anydesk
         blender
         kdePackages.filelight
@@ -85,6 +106,8 @@ in
         thunderbird
         kdePackages.plasma-thunderbolt
         wpsoffice
+        libreoffice-qt6-fresh
+        onlyoffice-desktopeditors
         vlc
         waveterm
         unstable.warp-terminal
@@ -92,6 +115,7 @@ in
         normcap
         todoist-electron
         slack
+        chatbox
         librecad
         freecad-wayland
         libsForQt5.qt5.qtwayland

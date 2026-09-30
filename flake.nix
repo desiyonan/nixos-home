@@ -4,7 +4,7 @@
   inputs = {
     # https://status.nixos.org/
     # NixOS 26.05 stable (pinned)
-    nixpkgs.url = "github:nixos/nixpkgs/293d6abedf0478e681a4dfcfcb35b30fc796a32f";
+    nixpkgs.url = "github:nixos/nixpkgs/f4f698677b11021a8f84f452e23ae9ef2427bec3";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     # nixos-cn = {
