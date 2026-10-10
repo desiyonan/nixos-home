@@ -3,3 +3,5 @@ result
 .codegraph/
 .cursor/rules/codegraph.mdc
 local_cache
+__pycache__/
+*.pyc

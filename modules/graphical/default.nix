@@ -9,6 +9,7 @@ in
   imports = [
     ./howdy.nix
     ./bluelock.nix
+    ./yunshu.nix
   ];
 
   options.modules.graphical = {
@@ -46,6 +47,7 @@ in
       # 双击 / 直接执行 .AppImage：内核 binfmt 交给 appimage-run（FHS，非 FUSE 挂载）
       programs.appimage.enable = true;
       programs.appimage.binfmt = true;
+      programs.localsend.enable = true;
       xdg.mime.defaultApplications = {
         "application/vnd.appimage" = "run-appimage.desktop";
         "application/x-iso9660-appimage" = "run-appimage.desktop";
@@ -53,7 +55,7 @@ in
       };
 
       services.flatpak.enable = true;
-      # todesk：nixpkgs 源走 archive.org，常 429；官网 CDN 有反爬，暂不可构建
+      # ToDesk 4.7.2.0 可以构建，这里先不启用。
       # services.todesk.enable = true;
       services.fwupd.enable = true;
       services.hardware.bolt.enable = true;
@@ -69,6 +71,10 @@ in
         };
         xserver.enable = false;
       };
+
+      # 界面只连本地服务。单元在 sunlogin 包里，不启用的话会一直停在「连接服务器中」。
+      systemd.packages = [ pkgs.sunlogin ];
+      systemd.services.awesun.wantedBy = [ "multi-user.target" ];
 
       environment.systemPackages = with pkgs; [
         plasma-panel-colorizer
@@ -93,6 +99,7 @@ in
           terminal = false;
         })
         anydesk
+        sunlogin
         blender
         kdePackages.filelight
         flameshot

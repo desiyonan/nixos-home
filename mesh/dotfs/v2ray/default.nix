@@ -1,3 +1,0 @@
-{
-  conf=./config.json;
-}

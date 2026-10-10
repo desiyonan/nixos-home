@@ -36,6 +36,9 @@ in
       feishu
       vscode
       unstable.code-cursor
+      unstable.cursor-cli
+      unstable.grok-build
+      deepseek-harness
       kdePackages.kate
       plantuml
     ];

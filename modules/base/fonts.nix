@@ -105,8 +105,10 @@ in
 
       # 系统唯一方案源。Steam 用户配置符号链接到此文件。
       # 内含 include：Steam 不读 /etc/fonts 整树时也能拉到字体目录与 defaultFonts。
+      # <?xml 必须在文件第 1 列。多行字符串会按最少缩进剥离，
+      # 插值行更靠左时，声明前会留下空格，fontconfig 直接报错。
       localConf = ''
-        <?xml version="1.0"?>
+<?xml version="1.0"?>
         <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
         <fontconfig>
           <include ignore_missing="yes">/etc/fonts/conf.d/00-nixos-cache.conf</include>

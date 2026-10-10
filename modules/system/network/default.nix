@@ -174,7 +174,8 @@ in
         # 始终用 loopback，不绑会变的局域网 IP；sandbox 内 127.0.0.1 ≠ 宿主机，
         # 故同时关掉 sandbox，让 fetchurl builder 能打到本机 mihomo。
         proxyUrl = proxyCfg.url;
-        noProxy = "127.0.0.1,localhost";
+        # .thundersoft.com 只在云枢内网 DNS 有记录。进 mihomo 后会用公共 DNS 解析，直连失败。
+        noProxy = "127.0.0.1,localhost,.thundersoft.com";
         proxyEnv = {
           HTTP_PROXY = proxyUrl;
           HTTPS_PROXY = proxyUrl;
@@ -191,7 +192,7 @@ in
           allProxy = proxyUrl;
           httpProxy = proxyUrl;
           httpsProxy = proxyUrl;
-          noProxy = "127.0.0.1,localhost";
+          noProxy = noProxy;
         };
 
         environment.variables = config.networking.proxy.envVars // proxyEnv;

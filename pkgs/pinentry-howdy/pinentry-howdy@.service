@@ -1,0 +1,14 @@
+[Unit]
+Description=Howdy compare for pinentry
+
+[Service]
+ExecStart=@compare@
+StandardInput=socket
+StandardOutput=socket
+User=root
+Group=root
+SupplementaryGroups=video
+RuntimeMaxSec=25
+NoNewPrivileges=true
+PrivateNetwork=true
+DeviceAllow=char-video4linux rw

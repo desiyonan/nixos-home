@@ -1,0 +1,14 @@
+[Unit]
+Description=Howdy compare socket for pinentry
+
+[Socket]
+ListenStream=/run/pinentry-howdy/compare.sock
+SocketMode=0660
+SocketGroup=users
+Accept=yes
+RuntimeDirectory=pinentry-howdy
+RuntimeDirectoryGroup=users
+DirectoryMode=0750
+
+[Install]
+WantedBy=sockets.target

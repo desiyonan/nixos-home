@@ -78,7 +78,18 @@ in
       device = irDevice;
     };
 
-    environment.systemPackages = [ pkgs.v4l-utils ];
+    environment.systemPackages = [
+      pkgs.v4l-utils
+      pkgs.pinentry-howdy
+    ];
+
+    # 缓存时间不改。agent 只有在失效后才会来要口令；已登记 keygrip 先扫脸，
+    # 再从已解开的 org.freedesktop.secrets 取出。比对由 root 套接字执行，不走 sudo。
+    # root 使用自己的 Secret Service，不降权到图形用户。
+    programs.gnupg.agent.pinentryPackage = pkgs.pinentry-howdy;
+    systemd.packages = [ pkgs.pinentry-howdy ];
+    systemd.sockets.pinentry-howdy.wantedBy = [ "sockets.target" ];
+    systemd.services.pinentry-howdy-secrets.wantedBy = [ "multi-user.target" ];
 
     # SDDM greeter 默认不在 video 组，登录界面无法打开摄像头
     users.users.sddm.extraGroups = [ "video" ];

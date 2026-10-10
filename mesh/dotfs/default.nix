@@ -1,6 +1,6 @@
 { lib, ... }:
 {
   latte-dock = import ./latte-dock;
-  v2ray = import ./v2ray;
+  shell = import ./shell;
   uim = import ./uim;
 }
