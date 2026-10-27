@@ -17,11 +17,13 @@ in
     };
   };
 
+  # 443：VLESS Reality（16881 在运营商侧 QoS/大包变慢；对齐 s72）
+  # 31944/2096：面板与订阅；80：ACME HTTP-01
   networking.firewall.allowedTCPPorts = lib.mkAfter [
     80
+    443
     2096
     31944
-    16881
   ];
 
   modules.x3-ui.enable = true;
