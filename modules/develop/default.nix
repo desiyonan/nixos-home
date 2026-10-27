@@ -22,11 +22,6 @@ in
     android.enable = developEnable "Android cmdline-tools (apkanalyzer, sdkmanager, …)";
     database.enable = developEnable "Database management tools";
     clang.enable = developEnable "Clang / LLVM toolchain";
-    memorix.enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Memorix HTTP control plane (user systemd). Disabled by default; run via Docker instead.";
-    };
   };
 
   imports = lib.listModules ./.;

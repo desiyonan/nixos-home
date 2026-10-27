@@ -76,6 +76,10 @@ in
         (lib.mkIf dockerCfg.daemonActive {
           virtualisation.docker.enable = true;
         })
+        # CDI only. Containers see the GPU when started with --gpus; the default runtime stays runc.
+        (lib.mkIf (dockerCfg.daemonActive && config.modules.graphical.nvidia.enable) {
+          hardware.nvidia-container-toolkit.enable = true;
+        })
         (lib.mkIf dockerCfg.proxyActive {
           systemd.services.docker.environment = {
             ALL_PROXY = dockerCfg.daemon.proxy.url;
