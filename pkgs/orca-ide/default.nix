@@ -49,6 +49,7 @@ stdenv.mkDerivation {
   dontPatchELF = true;
   dontStrip = true;
   dontPatchShebangs = true;
+  doInstallCheck = true;
 
   installPhase = ''
     runHook preInstall
@@ -71,14 +72,34 @@ stdenv.mkDerivation {
 
   postFixup = ''
     autoPatchelf --no-recurse "$out/lib/orca-ide"
+    # Bundled ripgrep is static PIE: adding an RPATH makes it segfault at startup.
+    # Keep resources/ripgrep unchanged instead of passing it to autoPatchelf.
     autoPatchelf \
       "$out/lib/orca-ide/resources/agent-browser-linux-x64" \
       "$out/lib/orca-ide/resources/bin" \
-      "$out/lib/orca-ide/resources/node_modules" \
-      "$out/lib/orca-ide/resources/ripgrep/linux-x64"
+      "$out/lib/orca-ide/resources/node_modules"
     makeWrapper "$out/lib/orca-ide/orca-ide" "$out/bin/orca-ide-gui" \
       --prefix PATH : ${lib.makeBinPath [ python xclip xdotool xorg-server xdg-utils ]} \
       "''${gappsWrapperArgs[@]}"
+  '';
+
+  installCheckPhase = ''
+    runHook preInstallCheck
+    orcaRg="$out/lib/orca-ide/resources/ripgrep/linux-x64/rg"
+    "$orcaRg" --version
+    orcaCheckDir=$(mktemp -d)
+    printf '# Markdown listing check\n' > "$orcaCheckDir/README.md"
+    (
+      cd "$orcaCheckDir"
+      "$orcaRg" --files --hidden --no-ignore --no-config --null \
+        --path-separator / \
+        --glob '*.{[mM][dD],[mM][dD][xX],[mM][aA][rR][kK][dD][oO][wW][nN]}' \
+        --glob '!**/.*/' --glob '**/.github/' --glob '!**/node_modules/' \
+        . > actual
+      printf './README.md\0' > expected
+      cmp expected actual
+    )
+    runHook postInstallCheck
   '';
 
   meta = {
