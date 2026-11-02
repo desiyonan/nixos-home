@@ -9,4 +9,5 @@ with pkgs;
   sunlogin = pkgs.callPackage ./sunlogin { };
   yunshu = pkgs.callPackage ./yunshu { };
   pinentry-howdy = pkgs.callPackage ./pinentry-howdy { };
+  orca-ide = pkgs.callPackage ./orca-ide { };
 }

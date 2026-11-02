@@ -10,6 +10,7 @@ in
     ./howdy.nix
     ./bluelock.nix
     ./yunshu.nix
+    ./orca-cli.nix
   ];
 
   options.modules.graphical = {
@@ -82,6 +83,7 @@ in
         chromium
         firefox
         google-chrome
+        orca-ide
 
         # 图形化 / 桌面应用
         kdePackages.ark
