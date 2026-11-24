@@ -44,7 +44,7 @@
     };
     # Pin routerd API and executor to the same verified revision.
     nixos-router = {
-      url = "github:dnfn-tech/nixos-router/3aa2d1124d3e515a7a0b2b3bcf1dd485a7c97b8a";
+      url = "github:dnfn-tech/nixos-router/1a1de5bfa1a7d7f3285d3185b7e4c8b8dc909cf8";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };

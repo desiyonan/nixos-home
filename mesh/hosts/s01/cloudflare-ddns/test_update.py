@@ -76,6 +76,21 @@ class UpdateTests(unittest.TestCase):
         api.request.assert_called_once()
         self.assertIn("type=AAAA&name.exact=edge.example.net", api.request.call_args.args[1])
 
+    def test_page_settings_override_target_and_credentials(self):
+        with tempfile.TemporaryDirectory() as directory:
+            settings = Path(directory) / "ddns-settings.json"
+            settings.write_text(json.dumps({
+                "record": "edge.example.net", "zoneId": ZONE, "apiToken": TOKEN,
+            }), encoding="utf-8")
+            default = {"record": "original.example.net", "recordType": "A", "interface": "wan0"}
+            with patch.dict(os.environ, {
+                "NIXOS_ROUTER_MANAGED_DDNS_CONFIG": json.dumps(default),
+                "NIXOS_ROUTER_DDNS_SETTINGS_FILE": str(settings),
+            }):
+                saved = update.read_settings()
+                self.assertEqual(update.read_target(saved), ("edge.example.net", "A", "wan0"))
+                self.assertEqual(update.read_credentials(saved), (ZONE, TOKEN))
+
     def test_unchanged(self):
         status, api, _, _ = self.invoke(["1.1.1.1"], [listing(RECORD)])
         self.assertEqual(status, 0)

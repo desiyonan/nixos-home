@@ -220,17 +220,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1795536449,
-        "narHash": "sha256-oyFCpFQlkEex4yoWzlYclu4VLU1dx/y9u+UijXPVsLI=",
+        "lastModified": 1795538110,
+        "narHash": "sha256-4rMLZiaDTFf0vDV979O30KdNti2KBrBQiDkUrE3M2Q8=",
         "owner": "dnfn-tech",
         "repo": "nixos-router",
-        "rev": "3aa2d1124d3e515a7a0b2b3bcf1dd485a7c97b8a",
+        "rev": "1a1de5bfa1a7d7f3285d3185b7e4c8b8dc909cf8",
         "type": "github"
       },
       "original": {
         "owner": "dnfn-tech",
         "repo": "nixos-router",
-        "rev": "3aa2d1124d3e515a7a0b2b3bcf1dd485a7c97b8a",
+        "rev": "1a1de5bfa1a7d7f3285d3185b7e4c8b8dc909cf8",
         "type": "github"
       }
     },

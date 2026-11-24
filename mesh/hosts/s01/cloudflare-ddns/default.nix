@@ -2,8 +2,9 @@
 
 let
   cfg = config.s01.cloudflareDDNS;
-  target = builtins.toJSON (cfg // { provider = "Cloudflare"; });
-  disabledFile = "${config.services.nixos-router.backend.managed.apiStateDir}/cloudflare-ddns.disabled";
+  target = builtins.toJSON (cfg // { provider = "Cloudflare"; settingsEditable = true; });
+  apiStateDir = config.services.nixos-router.backend.managed.apiStateDir;
+  disabledFile = "${apiStateDir}/cloudflare-ddns.disabled";
   checkEnabled = pkgs.writeShellScript "s01-cloudflare-ddns-enabled" ''
     marker=${lib.escapeShellArg disabledFile}
     [[ ! -e "$marker" && ! -L "$marker" ]]
@@ -18,8 +19,9 @@ in
 {
   options.s01.cloudflareDDNS = {
     record = lib.mkOption {
-      type = lib.types.strMatching "[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+";
-      description = "Existing Cloudflare DNS-only record to update.";
+      type = lib.types.strMatching "([a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+)?";
+      default = "";
+      description = "Initial DNS-only record. May also be set in the router DDNS page.";
     };
     recordType = lib.mkOption {
       type = lib.types.enum [ "A" "AAAA" ];
@@ -51,17 +53,22 @@ in
       environment.NIXOS_ROUTER_MANAGED_DDNS_CONFIG = target;
       path = [ pkgs.iproute2 ];
       environment.SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-      unitConfig.ConditionPathExists = "/var/lib/cloudflare-ddns/credentials.json";
+      environment.NIXOS_ROUTER_DDNS_SETTINGS_FILE = "${apiStateDir}/ddns-settings.json";
+      after = [ "nixos-router-state-init.service" ];
+      wants = [ "nixos-router-state-init.service" ];
       serviceConfig = {
         Type = "oneshot";
-        # This check needs read access to the router API's private state directory.
-        ExecCondition = "+${checkEnabled}";
+        # The API owns its private settings file. The updater reads it without elevated privileges.
+        User = "nixos-router-api";
+        Group = "nixos-router-api";
+        ExecCondition = checkEnabled;
         ExecStart = "${pkgs.python3}/bin/python3 -I ${updater}/update.py";
         TimeoutStartSec = "35s";
         # Provision this host-local file as root:root 0600, containing
         # {"zone_id": "...", "api_token": "..."} for DNS Write on dnfn.tech.
         LoadCredential = [ "cloudflare:/var/lib/cloudflare-ddns/credentials.json" ];
-        DynamicUser = true;
+        # An empty default allows a fresh host to provision credentials from the page.
+        SetCredential = [ "cloudflare:{}" ];
         NoNewPrivileges = true;
         ProtectSystem = "strict";
         ProtectHome = true;

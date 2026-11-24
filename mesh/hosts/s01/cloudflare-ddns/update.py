@@ -25,10 +25,28 @@ class UpdateError(Exception):
     """A diagnostic safe to send to the journal."""
 
 
-def read_target():
+def read_settings():
+    path = os.environ.get("NIXOS_ROUTER_DDNS_SETTINGS_FILE")
+    if not path:
+        return {}
+    try:
+        settings = json.loads(Path(path).read_text(encoding="utf-8"))
+        if not isinstance(settings, dict):
+            raise ValueError
+        return settings
+    except FileNotFoundError:
+        return {}
+    except (OSError, ValueError, RecursionError):
+        raise UpdateError("could not read saved DDNS settings") from None
+
+
+def read_target(settings=None):
     try:
         target = json.loads(os.environ["NIXOS_ROUTER_MANAGED_DDNS_CONFIG"])
-        name, record_type, interface = target["record"], target["recordType"], target["interface"]
+        name = (settings or {}).get("record", target.get("record", ""))
+        record_type, interface = target["recordType"], target["interface"]
+        if not name and not settings:
+            return None
         if (len(name) > 253 or "." not in name
                 or not all(DNS_LABEL.fullmatch(label) for label in name.split("."))
                 or record_type not in ADDRESS_TYPES or not INTERFACE_NAME.fullmatch(interface)):
@@ -75,11 +93,17 @@ def public_address(interface_name, record_type):
     return None
 
 
-def read_credentials():
+def read_credentials(settings=None):
     try:
-        path = Path(os.environ["CREDENTIALS_DIRECTORY"]) / "cloudflare"
-        data = json.loads(path.read_text(encoding="utf-8"))
-        zone, token = data["zone_id"], data["api_token"]
+        settings = settings or {}
+        if settings.get("zoneId") or settings.get("apiToken"):
+            zone, token = settings["zoneId"], settings["apiToken"]
+        else:
+            path = Path(os.environ["CREDENTIALS_DIRECTORY"]) / "cloudflare"
+            data = json.loads(path.read_text(encoding="utf-8"))
+            if data == {}:
+                return None
+            zone, token = data["zone_id"], data["api_token"]
         if not IDENTIFIER.fullmatch(zone) or not re.fullmatch(r"[A-Za-z0-9_-]+", token):
             raise ValueError
         return zone, token
@@ -157,10 +181,19 @@ def update_record(address, zone, token, name, record_type):
 
 def main():
     try:
-        name, record_type, interface = read_target()
+        settings = read_settings()
+        target = read_target(settings)
+        if target is None:
+            print("Skipping DDNS: no domain configured")
+            return 0
+        name, record_type, interface = target
         address = public_address(interface, record_type)
         if address is not None:
-            update_record(address, *read_credentials(), name, record_type)
+            credentials = read_credentials(settings)
+            if credentials is None:
+                print("Skipping DDNS: no Cloudflare credential configured")
+            else:
+                update_record(address, *credentials, name, record_type)
     except UpdateError as error:
         print(f"DDNS failed: {error}", file=sys.stderr)
         return 1
