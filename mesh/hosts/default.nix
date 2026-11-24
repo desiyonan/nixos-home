@@ -1,7 +1,7 @@
 {lib, ...}@args:
 let
   users = import ../users args;
-  gw = import ./gw args;
+  s01 = import ./s01 args;
   ws = import ./ws args;
   s61 = import ./s61 args;
   s62 = import ./s62 args;
@@ -10,7 +10,7 @@ let
   withUsers = host: [ host ] ++ users.defaults;
 in
 {
-  gw = lib.mkHost (withUsers gw);
+  s01 = lib.mkHost (withUsers s01);
   ws = lib.mkHost (withUsers ws);
   s61 = lib.mkHost (withUsers s61);
   s62 = lib.mkHost (withUsers s62);

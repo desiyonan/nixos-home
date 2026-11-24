@@ -1,5 +1,5 @@
 # 按 host 启用 modules/ 下可复用模块（options.modules.<name>.enable）
-{ ... }:
+{ lib, ... }:
 
 {
   modules.network.enable = true;
@@ -12,6 +12,7 @@
   modules.vlan = {
     enable = true;
     tailscale.enable = false;
+    zerotier.joinNetworks = lib.mkAfter [ "958563d1c2000001" ];
   };
   secret-hub.enable = false;
 

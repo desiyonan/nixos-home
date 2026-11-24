@@ -42,6 +42,12 @@
       url = "github:cmspam/MT7927-Nixos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Pin routerd API and executor to the same verified revision.
+    nixos-router = {
+      url = "github:dnfn-tech/nixos-router/3aa2d1124d3e515a7a0b2b3bcf1dd485a7c97b8a";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
